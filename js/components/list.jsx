@@ -24,7 +24,7 @@ class List extends Component {
 
     $.ajax({
       type: 'GET',
-      url: 'https://www.reddit.com/.rss',
+      url: `${this.props.url}`,
       success: success,
       error
     });
@@ -34,18 +34,26 @@ class List extends Component {
     let fpLis = [];
     if(this.state.data) {
       let entries = Array.from(this.state.data.getElementsByTagName("entry"));
-      entries.forEach( entry => {
-        let title = entry.getElementsByTagName("title");
-        fpLis.push(<li>{title[0].innerHTML}</li>);
+      let items = Array.from(this.state.data.getElementsByTagName("item"));
+
+
+      let toAdd = entries.length > 0 ? entries : items;
+
+      toAdd.forEach(item => {
+        let title = item.getElementsByTagName("title");
+        let link = item.getElementsByTagName("link");
+        fpLis.push(<li><a href={link[0].innerHTML}>{title[0].innerHTML}</a></li>);
       });
+
     }
     return (
-      <ResizableBox className="box box react-resizable" width={200} height={200} draggableOpts={{}}
-          minConstraints={[100, 100]} maxConstraints={[300, 300]}>
+      <ResizableBox className="box box react-resizable" width={300} height={700} draggableOpts={{}}
+          minConstraints={[100, 100]} maxConstraints={[700, 1500]}>
           {this.state.data ? fpLis : null}
       </ResizableBox>
     );
   }
 }
+
 
 export default List;

@@ -184,25 +184,40 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 	
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
 	(function () {
 	    try {
-	        cachedSetTimeout = setTimeout;
-	    } catch (e) {
-	        cachedSetTimeout = function () {
-	            throw new Error('setTimeout is not defined');
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
 	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
 	    }
 	    try {
-	        cachedClearTimeout = clearTimeout;
-	    } catch (e) {
-	        cachedClearTimeout = function () {
-	            throw new Error('clearTimeout is not defined');
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
 	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
 	    }
 	} ())
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
 	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
 	        return setTimeout(fun, 0);
 	    }
 	    try {
@@ -223,6 +238,11 @@
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
 	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
 	        return clearTimeout(marker);
 	    }
 	    try {
@@ -21434,6 +21454,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -21443,21 +21465,96 @@
 	var Root = function (_Component) {
 	  _inherits(Root, _Component);
 	
-	  function Root() {
+	  function Root(props) {
 	    _classCallCheck(this, Root);
 	
-	    return _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).call(this, props));
+	
+	    _this.addFeed = _this.addFeed.bind(_this);
+	    _this.state = {
+	      feedUrl: null,
+	      feedList: []
+	    };
+	    _this.updateState = _this.updateState.bind(_this);
+	    _this.addReddit = _this.addReddit.bind(_this);
+	    _this.addnytimes = _this.addnytimes.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(Root, [{
+	    key: 'addFeed',
+	    value: function addFeed(e) {
+	      e.preventDefault();
+	      var feeds = this.state.feedList;
+	      feeds.push(_react2.default.createElement(_list2.default, { url: this.state.feedUrl }));
+	      this.setState({ feedList: feeds });
+	    }
+	  }, {
+	    key: 'updateState',
+	    value: function updateState(field) {
+	      var _this2 = this;
+	
+	      return function (e) {
+	        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+	      };
+	    }
+	  }, {
+	    key: 'addReddit',
+	    value: function addReddit(e) {
+	      e.preventDefault();
+	      var feeds = this.state.feedList;
+	      feeds.push(_react2.default.createElement(_list2.default, { url: 'https://www.reddit.com/.rss' }));
+	      this.setState({ feedList: feeds });
+	    }
+	  }, {
+	    key: 'addnytimes',
+	    value: function addnytimes(e) {
+	      e.preventDefault();
+	      var feeds = this.state.feedList;
+	      feeds.push(_react2.default.createElement(_list2.default, { url: 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml' }));
+	      this.setState({ feedList: feeds });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(_list2.default, null);
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('input', { type: 'text', value: this.state.feedUrl, onChange: this.updateState("feedUrl") }),
+	        _react2.default.createElement(
+	          'button',
+	          { style: styles.button, onClick: this.addFeed },
+	          'Add Feed'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { style: styles.button, onClick: this.addReddit },
+	          'Add Reddit'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { style: styles.button, onClick: this.addnytimes },
+	          'Add NYTIMES'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { style: styles.container },
+	          this.state.feedList
+	        )
+	      );
 	    }
 	  }]);
 	
 	  return Root;
 	}(_react.Component);
+	
+	var styles = {
+	  button: {},
+	  container: {
+	    display: 'flex'
+	  }
+	};
 	
 	exports.default = Root;
 
@@ -21520,7 +21617,7 @@
 	
 	      _jQuery2.default.ajax({
 	        type: 'GET',
-	        url: 'https://www.reddit.com/.rss',
+	        url: '' + this.props.url,
 	        success: success,
 	        error: error
 	      });
@@ -21531,19 +21628,28 @@
 	      var fpLis = [];
 	      if (this.state.data) {
 	        var entries = Array.from(this.state.data.getElementsByTagName("entry"));
-	        entries.forEach(function (entry) {
-	          var title = entry.getElementsByTagName("title");
+	        var items = Array.from(this.state.data.getElementsByTagName("item"));
+	
+	        var toAdd = entries.length > 0 ? entries : items;
+	
+	        toAdd.forEach(function (item) {
+	          var title = item.getElementsByTagName("title");
+	          var link = item.getElementsByTagName("link");
 	          fpLis.push(_react2.default.createElement(
 	            'li',
 	            null,
-	            title[0].innerHTML
+	            _react2.default.createElement(
+	              'a',
+	              { href: link[0].innerHTML },
+	              title[0].innerHTML
+	            )
 	          ));
 	        });
 	      }
 	      return _react2.default.createElement(
 	        _reactResizable.ResizableBox,
-	        { className: 'box box react-resizable', width: 200, height: 200, draggableOpts: {},
-	          minConstraints: [100, 100], maxConstraints: [300, 300] },
+	        { className: 'box box react-resizable', width: 300, height: 700, draggableOpts: {},
+	          minConstraints: [100, 100], maxConstraints: [700, 1500] },
 	        this.state.data ? fpLis : null
 	      );
 	    }
