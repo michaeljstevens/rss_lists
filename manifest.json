@@ -15,6 +15,9 @@
   "permissions": [
     "activeTab",
     "storage",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+    "https://reddit.com/*",
+    "<all_urls>",
+    "*://*/*"
   ]
 }
