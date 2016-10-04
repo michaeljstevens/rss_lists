@@ -21478,24 +21478,53 @@
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.addReddit = _this.addReddit.bind(_this);
 	    _this.addnytimes = _this.addnytimes.bind(_this);
+	    _this.delete = _this.delete.bind(_this);
+	    _this.key = 0;
 	    return _this;
 	  }
 	
 	  _createClass(Root, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      var feeds = [];
+	      chrome.storage.sync.get('feeds', function (feedsObj) {
+	        var feedsArr = feedsObj.feeds;
+	        feedsArr.forEach(function (feed) {
+	          feeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: feed.props.url }));
+	          _this2.key++;
+	        });
+	        _this2.setState({ feedList: feeds });
+	      });
+	    }
+	  }, {
+	    key: 'delete',
+	    value: function _delete(key) {
+	      var feeds = this.state.feedList;
+	      feeds = feeds.filter(function (feed) {
+	        return parseInt(feed.key) !== key;
+	      });
+	      this.key--;
+	      chrome.storage.sync.set({ 'feeds': feeds });
+	      this.setState({ feedList: feeds });
+	    }
+	  }, {
 	    key: 'addFeed',
 	    value: function addFeed(e) {
 	      e.preventDefault();
 	      var feeds = this.state.feedList;
-	      feeds.push(_react2.default.createElement(_list2.default, { url: this.state.feedUrl }));
+	      feeds.push(_react2.default.createElement(_list2.default, { url: this.state.feedUrl, id: this.key, key: this.key, 'delete': this.delete }));
+	      this.key++;
 	      this.setState({ feedList: feeds });
 	    }
 	  }, {
 	    key: 'updateState',
 	    value: function updateState(field) {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      return function (e) {
-	        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+	        _this3.setState(_defineProperty({}, field, e.currentTarget.value));
 	      };
 	    }
 	  }, {
@@ -21503,7 +21532,9 @@
 	    value: function addReddit(e) {
 	      e.preventDefault();
 	      var feeds = this.state.feedList;
-	      feeds.push(_react2.default.createElement(_list2.default, { url: 'https://www.reddit.com/.rss' }));
+	      feeds.push(_react2.default.createElement(_list2.default, { url: 'https://www.reddit.com/.rss', id: this.key, key: this.key, 'delete': this.delete }));
+	      this.key++;
+	      chrome.storage.sync.set({ 'feeds': feeds });
 	      this.setState({ feedList: feeds });
 	    }
 	  }, {
@@ -21511,7 +21542,9 @@
 	    value: function addnytimes(e) {
 	      e.preventDefault();
 	      var feeds = this.state.feedList;
-	      feeds.push(_react2.default.createElement(_list2.default, { url: 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml' }));
+	      feeds.push(_react2.default.createElement(_list2.default, { url: 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml', id: this.key, key: this.key, 'delete': this.delete }));
+	      this.key++;
+	      chrome.storage.sync.set({ 'feeds': feeds });
 	      this.setState({ feedList: feeds });
 	    }
 	  }, {
@@ -21520,7 +21553,7 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { style: styles.outerContainer },
 	        _react2.default.createElement('input', { type: 'text', value: this.state.feedUrl, onChange: this.updateState("feedUrl") }),
 	        _react2.default.createElement(
 	          'button',
@@ -21554,7 +21587,8 @@
 	  container: {
 	    display: 'flex',
 	    overflow: 'scroll'
-	  }
+	  },
+	  outerContainer: {}
 	};
 	
 	exports.default = Root;
@@ -21600,6 +21634,7 @@
 	    _this.state = {
 	      data: null
 	    };
+	    _this.delete = _this.delete.bind(_this);
 	    return _this;
 	  }
 	
@@ -21624,6 +21659,12 @@
 	      });
 	    }
 	  }, {
+	    key: 'delete',
+	    value: function _delete(e) {
+	      e.preventDefault();
+	      this.props.delete(this.props.id);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var fpLis = [];
@@ -21634,7 +21675,9 @@
 	        var toAdd = entries.length > 0 ? entries : items;
 	
 	        toAdd.forEach(function (item) {
-	          var title = item.getElementsByTagName("title");
+	          var title = item.getElementsByTagName("title")[0].innerHTML;
+	          title = title.replace("<![CDATA[", "");
+	          title = title.replace("]]>", "");
 	          var link = item.getElementsByTagName("link");
 	          var content = item.getElementsByTagName("content");
 	          var img = null;
@@ -21648,13 +21691,13 @@
 	          }
 	          link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
 	          fpLis.push(_react2.default.createElement(
-	            'li',
-	            { style: styles.item },
-	            _react2.default.createElement('img', { src: img, style: styles.image }),
+	            'a',
+	            { href: link },
 	            _react2.default.createElement(
-	              'a',
-	              { href: link },
-	              title[0].innerHTML
+	              'li',
+	              { className: 'outerLink', style: styles.item },
+	              _react2.default.createElement('img', { src: img, style: styles.image }),
+	              title
 	            )
 	          ));
 	        });
@@ -21663,6 +21706,11 @@
 	        _reactResizable.ResizableBox,
 	        { className: 'box box react-resizable', width: 300, height: 700, draggableOpts: {},
 	          minConstraints: [200, 100], maxConstraints: [700, 1500] },
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.delete },
+	          'Delete'
+	        ),
 	        this.state.data ? fpLis : null
 	      );
 	    }

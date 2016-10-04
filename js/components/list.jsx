@@ -9,6 +9,7 @@ class List extends Component {
     this.state = {
       data: null,
     };
+    this.delete = this.delete.bind(this);
   }
 
   componentDidMount() {
@@ -30,6 +31,11 @@ class List extends Component {
     });
   }
 
+  delete(e) {
+    e.preventDefault();
+    this.props.delete(this.props.id);
+  }
+
   render() {
     let fpLis = [];
     if(this.state.data) {
@@ -40,7 +46,9 @@ class List extends Component {
       let toAdd = entries.length > 0 ? entries : items;
 
       toAdd.forEach(item => {
-        let title = item.getElementsByTagName("title");
+        let title = item.getElementsByTagName("title")[0].innerHTML;
+        title = title.replace("<![CDATA[","");
+        title = title.replace("]]>","");
         let link = item.getElementsByTagName("link");
         let content = item.getElementsByTagName("content");
         let img = null;
@@ -53,13 +61,14 @@ class List extends Component {
           }
         }
         link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
-        fpLis.push(<li style={styles.item}><img src={img} style={styles.image}></img><a href={link}>{title[0].innerHTML}</a></li>);
+        fpLis.push(<a href={link}><li className="outerLink" style={styles.item}><img src={img} style={styles.image}></img>{title}</li></a>);
       });
 
     }
     return (
       <ResizableBox className="box box react-resizable" width={300} height={700} draggableOpts={{}}
           minConstraints={[200, 100]} maxConstraints={[700, 1500]}>
+          <button onClick={this.delete}>Delete</button>
           {this.state.data ? fpLis : null}
       </ResizableBox>
     );
