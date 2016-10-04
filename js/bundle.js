@@ -21516,6 +21516,7 @@
 	      var feeds = this.state.feedList;
 	      feeds.push(_react2.default.createElement(_list2.default, { url: this.state.feedUrl, id: this.key, key: this.key, 'delete': this.delete }));
 	      this.key++;
+	      chrome.storage.sync.set({ 'feeds': feeds });
 	      this.setState({ feedList: feeds });
 	    }
 	  }, {
@@ -21586,9 +21587,11 @@
 	  button: {},
 	  container: {
 	    display: 'flex',
-	    overflow: 'scroll'
+	    height: "100%"
 	  },
-	  outerContainer: {}
+	  outerContainer: {
+	    height: '100%'
+	  }
 	};
 	
 	exports.default = Root;
@@ -21703,15 +21706,18 @@
 	        });
 	      }
 	      return _react2.default.createElement(
-	        _reactResizable.ResizableBox,
-	        { className: 'box box react-resizable', width: 300, height: 700, draggableOpts: {},
-	          minConstraints: [200, 100], maxConstraints: [700, 1500] },
+	        'div',
+	        null,
 	        _react2.default.createElement(
 	          'button',
 	          { onClick: this.delete },
 	          'Delete'
 	        ),
-	        this.state.data ? fpLis : null
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'list' },
+	          this.state.data ? fpLis : null
+	        )
 	      );
 	    }
 	  }]);

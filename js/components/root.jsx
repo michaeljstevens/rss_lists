@@ -44,6 +44,7 @@ class Root extends Component {
     const feeds = this.state.feedList;
     feeds.push(<List url={this.state.feedUrl} id={this.key} key={this.key} delete={this.delete} />);
     this.key ++;
+    chrome.storage.sync.set({'feeds': feeds})
     this.setState({feedList: feeds});
   }
 
@@ -93,10 +94,10 @@ const styles = {
   },
   container: {
     display: 'flex',
-    overflow: 'scroll',
+    height: "100%",
   },
   outerContainer: {
-
+    height: '100%',
   }
 };
 

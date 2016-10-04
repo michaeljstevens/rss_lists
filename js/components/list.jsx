@@ -66,11 +66,12 @@ class List extends Component {
 
     }
     return (
-      <ResizableBox className="box box react-resizable" width={300} height={700} draggableOpts={{}}
-          minConstraints={[200, 100]} maxConstraints={[700, 1500]}>
-          <button onClick={this.delete}>Delete</button>
+      <div>
+        <button onClick={this.delete}>Delete</button>
+        <div className="list">
           {this.state.data ? fpLis : null}
-      </ResizableBox>
+        </div>
+      </div>
     );
   }
 }
