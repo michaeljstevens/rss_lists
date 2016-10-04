@@ -43,10 +43,14 @@ class List extends Component {
         let title = item.getElementsByTagName("title");
         let link = item.getElementsByTagName("link");
         let content = item.getElementsByTagName("content");
-        debugger
         let img = null;
         if(content[0]) {
           img = content[0].getAttribute("url");
+          if(!img && content[0]) {
+            let regex = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
+            let match = regex.exec(content[0].innerHTML);
+            if(match) img = match[0];
+          }
         }
         link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
         fpLis.push(<li style={styles.item}><img src={img} style={styles.image}></img><a href={link}>{title[0].innerHTML}</a></li>);

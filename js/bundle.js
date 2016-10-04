@@ -21637,10 +21637,14 @@
 	          var title = item.getElementsByTagName("title");
 	          var link = item.getElementsByTagName("link");
 	          var content = item.getElementsByTagName("content");
-	          debugger;
 	          var img = null;
 	          if (content[0]) {
 	            img = content[0].getAttribute("url");
+	            if (!img && content[0]) {
+	              var regex = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
+	              var match = regex.exec(content[0].innerHTML);
+	              if (match) img = match[0];
+	            }
 	          }
 	          link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
 	          fpLis.push(_react2.default.createElement(
