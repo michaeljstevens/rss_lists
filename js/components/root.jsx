@@ -64,6 +64,7 @@ const styles = {
   },
   container: {
     display: 'flex',
+    overflow: 'scroll',
   }
 };
 

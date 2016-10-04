@@ -42,18 +42,40 @@ class List extends Component {
       toAdd.forEach(item => {
         let title = item.getElementsByTagName("title");
         let link = item.getElementsByTagName("link");
-        fpLis.push(<li><a href={link[0].innerHTML}>{title[0].innerHTML}</a></li>);
+        let content = item.getElementsByTagName("content");
+        debugger
+        let img = null;
+        if(content[0]) {
+          img = content[0].getAttribute("url");
+        }
+        link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
+        fpLis.push(<li style={styles.item}><img src={img} style={styles.image}></img><a href={link}>{title[0].innerHTML}</a></li>);
       });
 
     }
     return (
       <ResizableBox className="box box react-resizable" width={300} height={700} draggableOpts={{}}
-          minConstraints={[100, 100]} maxConstraints={[700, 1500]}>
+          minConstraints={[200, 100]} maxConstraints={[700, 1500]}>
           {this.state.data ? fpLis : null}
       </ResizableBox>
     );
   }
 }
+
+const styles = {
+  image: {
+    width: 75,
+    height: 75,
+    minWidth: 75,
+    minHeight: 75,
+    marginRight: 10,
+  },
+
+  item: {
+    display: 'flex',
+    flexDirection: 'row',
+  }
+};
 
 
 export default List;

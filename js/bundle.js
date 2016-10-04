@@ -21552,7 +21552,8 @@
 	var styles = {
 	  button: {},
 	  container: {
-	    display: 'flex'
+	    display: 'flex',
+	    overflow: 'scroll'
 	  }
 	};
 	
@@ -21635,12 +21636,20 @@
 	        toAdd.forEach(function (item) {
 	          var title = item.getElementsByTagName("title");
 	          var link = item.getElementsByTagName("link");
+	          var content = item.getElementsByTagName("content");
+	          debugger;
+	          var img = null;
+	          if (content[0]) {
+	            img = content[0].getAttribute("url");
+	          }
+	          link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
 	          fpLis.push(_react2.default.createElement(
 	            'li',
-	            null,
+	            { style: styles.item },
+	            _react2.default.createElement('img', { src: img, style: styles.image }),
 	            _react2.default.createElement(
 	              'a',
-	              { href: link[0].innerHTML },
+	              { href: link },
 	              title[0].innerHTML
 	            )
 	          ));
@@ -21649,7 +21658,7 @@
 	      return _react2.default.createElement(
 	        _reactResizable.ResizableBox,
 	        { className: 'box box react-resizable', width: 300, height: 700, draggableOpts: {},
-	          minConstraints: [100, 100], maxConstraints: [700, 1500] },
+	          minConstraints: [200, 100], maxConstraints: [700, 1500] },
 	        this.state.data ? fpLis : null
 	      );
 	    }
@@ -21657,6 +21666,21 @@
 	
 	  return List;
 	}(_react.Component);
+	
+	var styles = {
+	  image: {
+	    width: 75,
+	    height: 75,
+	    minWidth: 75,
+	    minHeight: 75,
+	    marginRight: 10
+	  },
+	
+	  item: {
+	    display: 'flex',
+	    flexDirection: 'row'
+	  }
+	};
 	
 	exports.default = List;
 
