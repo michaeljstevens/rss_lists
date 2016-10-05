@@ -78,7 +78,7 @@ class List extends Component {
     return (
       <div className="list">
         <div className="list-header">
-          {this.listImg ? <img src={this.listImg} /> : <div>{this.listTitle}</div>}
+          {this.listImg ? <img src={this.listImg} /> : <div className="title-text">{this.listTitle}</div>}
           <img className="delete" src='../../assets/img/ic_close_black_24dp_1x.png' onClick={this.delete} />
         </div>
         <div className="list-content">

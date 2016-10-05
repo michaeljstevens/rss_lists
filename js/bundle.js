@@ -21724,7 +21724,7 @@
 	          { className: 'list-header' },
 	          this.listImg ? _react2.default.createElement('img', { src: this.listImg }) : _react2.default.createElement(
 	            'div',
-	            null,
+	            { className: 'title-text' },
 	            this.listTitle
 	          ),
 	          _react2.default.createElement('img', { className: 'delete', src: '../../assets/img/ic_close_black_24dp_1x.png', onClick: this.delete })
