@@ -21672,6 +21672,17 @@
 	    value: function render() {
 	      var fpLis = [];
 	      if (this.state.data) {
+	        this.listImg = Array.from(this.state.data.getElementsByTagName("img"));
+	        if (this.listImg.length < 1) {
+	          var image = Array.from(this.state.data.getElementsByTagName("image"));
+	          var imgRegex = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
+	          if (image.length > 0) {
+	            this.listImg = imgRegex.exec(image[0].innerHTML)[0];
+	          } else {
+	            this.listImg = null;
+	          }
+	        }
+	        this.listTitle = Array.from(this.state.data.getElementsByTagName("title"))[0].innerHTML;
 	        var entries = Array.from(this.state.data.getElementsByTagName("entry"));
 	        var items = Array.from(this.state.data.getElementsByTagName("item"));
 	
@@ -21699,7 +21710,7 @@
 	            _react2.default.createElement(
 	              'li',
 	              { className: 'outerLink', style: styles.item },
-	              _react2.default.createElement('img', { src: img, style: styles.image }),
+	              _react2.default.createElement('img', { src: img ? img : '../../assets/img/no_img.png', style: styles.image }),
 	              title
 	            )
 	          ));
@@ -21707,15 +21718,20 @@
 	      }
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'list' },
 	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.delete },
-	          'Delete'
+	          'div',
+	          { className: 'list-header' },
+	          this.listImg ? _react2.default.createElement('img', { src: this.listImg }) : _react2.default.createElement(
+	            'div',
+	            null,
+	            this.listTitle
+	          ),
+	          _react2.default.createElement('img', { className: 'delete', src: '../../assets/img/ic_close_black_24dp_1x.png', onClick: this.delete })
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'list' },
+	          { className: 'list-content' },
 	          this.state.data ? fpLis : null
 	        )
 	      );
@@ -21733,7 +21749,6 @@
 	    minHeight: 75,
 	    marginRight: 10
 	  },
-	
 	  item: {
 	    display: 'flex',
 	    flexDirection: 'row'

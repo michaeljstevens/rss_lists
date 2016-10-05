@@ -39,6 +39,17 @@ class List extends Component {
   render() {
     let fpLis = [];
     if(this.state.data) {
+      this.listImg = Array.from(this.state.data.getElementsByTagName("img"));
+      if (this.listImg.length < 1) {
+        let image = Array.from(this.state.data.getElementsByTagName("image"));
+        let imgRegex = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
+        if(image.length > 0) {
+          this.listImg = imgRegex.exec(image[0].innerHTML)[0];
+        } else {
+          this.listImg = null;
+        }
+      }
+      this.listTitle = Array.from(this.state.data.getElementsByTagName("title"))[0].innerHTML;
       let entries = Array.from(this.state.data.getElementsByTagName("entry"));
       let items = Array.from(this.state.data.getElementsByTagName("item"));
 
@@ -61,14 +72,16 @@ class List extends Component {
           }
         }
         link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
-        fpLis.push(<a href={link}><li className="outerLink" style={styles.item}><img src={img} style={styles.image}></img>{title}</li></a>);
+        fpLis.push(<a href={link}><li className="outerLink" style={styles.item}><img src={img ? img : '../../assets/img/no_img.png'} style={styles.image}></img>{title}</li></a>);
       });
-
     }
     return (
-      <div>
-        <button onClick={this.delete}>Delete</button>
-        <div className="list">
+      <div className="list">
+        <div className="list-header">
+          {this.listImg ? <img src={this.listImg} /> : <div>{this.listTitle}</div>}
+          <img className="delete" src='../../assets/img/ic_close_black_24dp_1x.png' onClick={this.delete} />
+        </div>
+        <div className="list-content">
           {this.state.data ? fpLis : null}
         </div>
       </div>
@@ -84,7 +97,6 @@ const styles = {
     minHeight: 75,
     marginRight: 10,
   },
-
   item: {
     display: 'flex',
     flexDirection: 'row',
