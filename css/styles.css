@@ -25,7 +25,9 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1;
+	background-image: url('../assets/img/mountain-texture.jpeg');
+	background-attachment: fixed;
+	background-size: 100%
 }
 ol, ul, li {
 	list-style: none;
@@ -48,38 +50,42 @@ li {
 }
 
 
+
 .list {
   position: relative;
   border: 1px solid black;
-  margin-left: 20px;
-  padding: 10px;
+  margin-left: 30px;
+	margin-top: 30px;
   min-width: 300px;
   width: 300px;
   height: 90vh;
   background: white;
   box-shadow: 1px 1px 15px black;
   border-radius: 5px;
+	overflow: hidden;
 }
 
 .list-header {
   height: 54px;
-  border-bottom: 2px solid black;
-  margin-bottom: 20px;
+  padding: 10px;
+	background: #f0f0f0;
 }
 
 .list-content {
   overflow: auto;
-  height: 81vh;
+  height: 89%;
+	background: white;
 }
 
 .outerLink {
   border-bottom: 1px solid lightgrey;
+	font-family: arial;
+	color: black;
+	background: white;
 }
 
 .outerLink:hover {
-  background: black;
-  color: white;
-
+  background: #f0f0f0;
 }
 
 .delete {
@@ -92,7 +98,7 @@ li {
 
 .delete:hover {
   cursor: pointer;
-  width: 25px;
+  width: 22px;
 }
 
 .title-text {
@@ -101,4 +107,8 @@ li {
   max-width: 90%;
   font-family: arial;
   text-align: center;
+}
+
+.header-img {
+	max-height: 100%;
 }

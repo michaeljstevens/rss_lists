@@ -61,7 +61,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	document.addEventListener('DOMContentLoaded', function () {
-	    var root = document.getElementById('root');
+	    var root = document.getElementById('popup');
 	    _reactDom2.default.render(_react2.default.createElement(_root2.default, null), root);
 	});
 
@@ -21587,7 +21587,6 @@
 	  button: {},
 	  container: {
 	    display: 'flex',
-	    alignItems: 'center',
 	    height: "100%"
 	  },
 	  outerContainer: {
@@ -21673,6 +21672,7 @@
 	    value: function render() {
 	      var fpLis = [];
 	      if (this.state.data) {
+	        debugger;
 	        this.listImg = Array.from(this.state.data.getElementsByTagName("img"));
 	        if (this.listImg.length < 1) {
 	          var image = Array.from(this.state.data.getElementsByTagName("image"));
@@ -21694,8 +21694,8 @@
 	          title = title.replace("<![CDATA[", "");
 	          title = title.replace("]]>", "");
 	          var link = item.getElementsByTagName("link");
-	          var img = null;
 	          var content = item.getElementsByTagName("content");
+	          var img = null;
 	          if (content[0]) {
 	            img = content[0].getAttribute("url");
 	            if (!img && content[0]) {
@@ -21703,15 +21703,7 @@
 	              var match = regex.exec(content[0].innerHTML);
 	              if (match) img = match[0];
 	            }
-	          } else {
-	            var description = item.getElementsByTagName("description");
-	            if (description[0] && !img) {
-	              var _regex = /(https?:\/\/.*\.(?:png|jpg))/g;
-	              var _match = _regex.exec(description[0].innerHTML);
-	              if (_match) img = _match[0];
-	            }
 	          }
-	
 	          link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
 	          fpLis.push(_react2.default.createElement(
 	            'a',
@@ -33956,4 +33948,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=popupbundle.js.map

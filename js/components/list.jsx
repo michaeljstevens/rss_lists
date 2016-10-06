@@ -61,8 +61,8 @@ class List extends Component {
         title = title.replace("<![CDATA[","");
         title = title.replace("]]>","");
         let link = item.getElementsByTagName("link");
-        let content = item.getElementsByTagName("content");
         let img = null;
+        let content = item.getElementsByTagName("content");
         if(content[0]) {
           img = content[0].getAttribute("url");
           if(!img && content[0]) {
@@ -70,7 +70,15 @@ class List extends Component {
             let match = regex.exec(content[0].innerHTML);
             if(match) img = match[0];
           }
+        } else {
+          let description = item.getElementsByTagName("description");
+          if(description[0] && !img) {
+            let regex = /(https?:\/\/.*\.(?:png|jpg))/g;
+            let match = regex.exec(description[0].innerHTML);
+            if(match) img = match[0];
+          }
         }
+
         link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
         fpLis.push(<a href={link}><li className="outerLink" style={styles.item}><img src={img ? img : '../../assets/img/no_img.png'} style={styles.image}></img>{title}</li></a>);
       });
@@ -78,7 +86,7 @@ class List extends Component {
     return (
       <div className="list">
         <div className="list-header">
-          {this.listImg ? <img src={this.listImg} /> : <div className="title-text">{this.listTitle}</div>}
+          {this.listImg ? <img className="header-img" src={this.listImg} /> : <div className="title-text">{this.listTitle}</div>}
           <img className="delete" src='../../assets/img/ic_close_black_24dp_1x.png' onClick={this.delete} />
         </div>
         <div className="list-content">
