@@ -5,14 +5,11 @@ class Root extends Component {
 
   constructor(props) {
     super(props);
-    this.addFeed = this.addFeed.bind(this);
     this.state = {
       feedUrl: null,
       feedList: [],
     };
     this.updateState = this.updateState.bind(this);
-    this.addReddit = this.addReddit.bind(this);
-    this.addnytimes = this.addnytimes.bind(this);
     this.delete = this.delete.bind(this);
     this.key = 0;
     this.feeds = [];
@@ -20,8 +17,8 @@ class Root extends Component {
 
   componentDidMount() {
     setInterval(() => {
-      let feeds = [];
       chrome.storage.sync.get('feeds', (feedsObj) => {
+        let feeds = [];
         let feedsArr = feedsObj.feeds;
         if (this.feeds.length !== feedsArr.length) {
           this.feeds = feedsArr;
@@ -33,26 +30,18 @@ class Root extends Component {
           this.setState({feedList: feeds});
         }
       });
-    }, 500);
+    }, 50);
   }
 
-  delete(key) {
-    let feeds = this.state.feedList;
-    feeds = feeds.filter(feed => {
-      return(parseInt(feed.key) !== key);
+  delete(list) {
+    let newFeeds = [];
+    this.feeds.forEach(feed => {
+      newFeeds.push(feed);
     });
-    this.key --;
-    chrome.storage.sync.set({'feeds': feeds});
+    newFeeds.splice(list.id, 1);
+    chrome.storage.sync.set({'feeds': newFeeds});
   }
 
-  addFeed(e) {
-    e.preventDefault();
-    const feeds = this.state.feedList;
-    feeds.push(<List url={this.state.feedUrl} id={this.key} key={this.key} delete={this.delete} />);
-    this.key ++;
-    chrome.storage.sync.set({'feeds': feeds});
-    this.setState({feedList: feeds});
-  }
 
   updateState (field) {
     return e => {
@@ -60,32 +49,10 @@ class Root extends Component {
     };
   }
 
-  addReddit(e) {
-    e.preventDefault();
-    const feeds = this.state.feedList;
-    feeds.push(<List url='https://www.reddit.com/.rss' id={this.key} key={this.key} delete={this.delete} />);
-    this.key ++;
-    chrome.storage.sync.set({'feeds': feeds});
-    this.setState({feedList: feeds});
-  }
-
-  addnytimes(e) {
-    e.preventDefault();
-    const feeds = this.state.feedList;
-    feeds.push(<List url='http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml' id={this.key} key={this.key} delete={this.delete} />);
-    this.key ++;
-    chrome.storage.sync.set({'feeds': feeds});
-    this.setState({feedList: feeds});
-  }
-
   render() {
-
+    debugger
     return(
       <div className="outer-container">
-        <input type="text" value={this.state.feedUrl} onChange={this.updateState("feedUrl")} />
-        <button style={styles.button} onClick={this.addFeed}>Add Feed</button>
-        <button style={styles.button} onClick={this.addReddit}>Add Reddit</button>
-        <button style={styles.button} onClick={this.addnytimes}>Add NYTIMES</button>
         <div style={styles.container}>
           {this.state.feedList}
         </div>

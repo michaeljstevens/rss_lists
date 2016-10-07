@@ -33,7 +33,7 @@ class List extends Component {
 
   delete(e) {
     e.preventDefault();
-    this.props.delete(this.props.id);
+    this.props.delete(this.props);
   }
 
   render() {

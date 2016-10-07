@@ -21512,8 +21512,8 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'popup-icon-container' },
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/reddit.jpg', onClick: this.addFeed.bind(this, "reddit") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/nytimes.jpg', onClick: this.addFeed.bind(this, "nytimes") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/reddit.png', onClick: this.addFeed.bind(this, "reddit") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/nytimes.png', onClick: this.addFeed.bind(this, "nytimes") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/538.png', onClick: this.addFeed.bind(this, "538") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/bbc.png', onClick: this.addFeed.bind(this, "bbc") })
 	        ),

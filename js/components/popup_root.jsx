@@ -38,8 +38,8 @@ class PopupRoot extends Component {
     return(
       <div className="popup-container">
         <div className="popup-icon-container">
-          <img className="popup-icon" src='../../assets/img/reddit.jpg' onClick={this.addFeed.bind(this, "reddit")} />
-          <img className="popup-icon" src='../../assets/img/nytimes.jpg' onClick={this.addFeed.bind(this, "nytimes")} />
+          <img className="popup-icon" src='../../assets/img/reddit.png' onClick={this.addFeed.bind(this, "reddit")} />
+          <img className="popup-icon" src='../../assets/img/nytimes.png' onClick={this.addFeed.bind(this, "nytimes")} />
           <img className="popup-icon" src='../../assets/img/538.png' onClick={this.addFeed.bind(this, "538")} />
           <img className="popup-icon" src='../../assets/img/bbc.png' onClick={this.addFeed.bind(this, "bbc")} />
         </div>
