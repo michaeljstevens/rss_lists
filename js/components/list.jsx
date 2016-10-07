@@ -73,7 +73,7 @@ class List extends Component {
         } else {
           let description = item.getElementsByTagName("description");
           if(description[0] && !img) {
-            let regex = /(https?:\/\/.*\.(?:png|jpg))/g;
+            let regex = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*.(jpg|jpeg|png|gif))/gi;
             let match = regex.exec(description[0].innerHTML);
             if(match) img = match[0];
           }

@@ -8,25 +8,32 @@ class Root extends Component {
     this.addFeed = this.addFeed.bind(this);
     this.state = {
       feedUrl: null,
-      feedList: []
+      feedList: [],
     };
     this.updateState = this.updateState.bind(this);
     this.addReddit = this.addReddit.bind(this);
     this.addnytimes = this.addnytimes.bind(this);
     this.delete = this.delete.bind(this);
     this.key = 0;
+    this.feeds = [];
   }
 
   componentDidMount() {
-    let feeds = [];
-    chrome.storage.sync.get('feeds', (feedsObj) => {
-      let feedsArr = feedsObj.feeds;
-      feedsArr.forEach(feed => {
-        feeds.push(<List key={this.key} id={this.key} delete={this.delete} url={feed.props.url} />);
-        this.key ++;
+    setInterval(() => {
+      let feeds = [];
+      chrome.storage.sync.get('feeds', (feedsObj) => {
+        let feedsArr = feedsObj.feeds;
+        if (this.feeds.length !== feedsArr.length) {
+          this.feeds = feedsArr;
+          this.key = 0;
+          feedsArr.forEach(feed => {
+            feeds.push(<List key={this.key} id={this.key} delete={this.delete} url={feed} />);
+            this.key++;
+          });
+          this.setState({feedList: feeds});
+        }
       });
-      this.setState({feedList: feeds});
-    });
+    }, 500);
   }
 
   delete(key) {
@@ -36,7 +43,6 @@ class Root extends Component {
     });
     this.key --;
     chrome.storage.sync.set({'feeds': feeds});
-    this.setState({feedList: feeds});
   }
 
   addFeed(e) {
@@ -44,7 +50,7 @@ class Root extends Component {
     const feeds = this.state.feedList;
     feeds.push(<List url={this.state.feedUrl} id={this.key} key={this.key} delete={this.delete} />);
     this.key ++;
-    chrome.storage.sync.set({'feeds': feeds})
+    chrome.storage.sync.set({'feeds': feeds});
     this.setState({feedList: feeds});
   }
 
@@ -75,7 +81,7 @@ class Root extends Component {
   render() {
 
     return(
-      <div style={styles.outerContainer}>
+      <div className="outer-container">
         <input type="text" value={this.state.feedUrl} onChange={this.updateState("feedUrl")} />
         <button style={styles.button} onClick={this.addFeed}>Add Feed</button>
         <button style={styles.button} onClick={this.addReddit}>Add Reddit</button>
@@ -97,9 +103,6 @@ const styles = {
     alignItems: 'center',
     height: "100%",
   },
-  outerContainer: {
-    height: '100%',
-  }
 };
 
 
