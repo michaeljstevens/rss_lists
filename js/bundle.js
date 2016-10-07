@@ -21477,6 +21477,7 @@
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.delete = _this.delete.bind(_this);
 	    _this.key = 0;
+	    _this.totalRendered = 0;
 	    _this.feeds = [];
 	    return _this;
 	  }
@@ -21486,31 +21487,39 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	
-	      setInterval(function () {
-	        chrome.storage.sync.get('feeds', function (feedsObj) {
-	          var feeds = [];
-	          var feedsArr = feedsObj.feeds;
-	          if (_this2.feeds.length !== feedsArr.length) {
-	            _this2.feeds = feedsArr;
-	            _this2.key = 0;
-	            feedsArr.forEach(function (feed) {
-	              feeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: feed }));
-	              _this2.key++;
-	            });
-	            _this2.setState({ feedList: feeds });
-	          }
+	      chrome.storage.sync.get('feeds', function (initFeedsObj) {
+	        var initFeedsArr = initFeedsObj.feeds;
+	        var initFeeds = [];
+	        initFeedsArr.forEach(function (feed) {
+	          _this2.feeds.push(feed);
+	          initFeeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: feed }));
+	          _this2.key++;
+	          _this2.setState({ feedList: initFeeds });
 	        });
-	      }, 50);
+	
+	        setInterval(function () {
+	          chrome.storage.sync.get('feeds', function (feedsObj) {
+	            var feeds = _this2.state.feedList;
+	            var feedsArr = feedsObj.feeds;
+	            if (feedsArr.length > _this2.feeds.length) {
+	              var toAdd = feedsArr[feedsArr.length - 1];
+	              _this2.feeds.push(toAdd);
+	              feeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: toAdd }));
+	              _this2.key++;
+	            }
+	            _this2.setState({ feedList: feeds });
+	          });
+	        }, 50);
+	      });
 	    }
 	  }, {
 	    key: 'delete',
 	    value: function _delete(list) {
-	      var newFeeds = [];
-	      this.feeds.forEach(function (feed) {
-	        newFeeds.push(feed);
-	      });
-	      newFeeds.splice(list.id, 1);
-	      chrome.storage.sync.set({ 'feeds': newFeeds });
+	      this.state.feedList.splice(list.id, 1);
+	      this.feeds.splice(list.id, 1);
+	      this.key--;
+	      chrome.storage.sync.set({ 'feeds': this.feeds });
+	      this.forceUpdate();
 	    }
 	  }, {
 	    key: 'updateState',
@@ -21524,7 +21533,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      debugger;
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'outer-container' },

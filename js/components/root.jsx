@@ -12,34 +12,45 @@ class Root extends Component {
     this.updateState = this.updateState.bind(this);
     this.delete = this.delete.bind(this);
     this.key = 0;
+    this.totalRendered = 0;
     this.feeds = [];
   }
 
   componentDidMount() {
-    setInterval(() => {
-      chrome.storage.sync.get('feeds', (feedsObj) => {
-        let feeds = [];
-        let feedsArr = feedsObj.feeds;
-        if (this.feeds.length !== feedsArr.length) {
-          this.feeds = feedsArr;
-          this.key = 0;
-          feedsArr.forEach(feed => {
-            feeds.push(<List key={this.key} id={this.key} delete={this.delete} url={feed} />);
-            this.key++;
-          });
-          this.setState({feedList: feeds});
-        }
+    chrome.storage.sync.get('feeds', (initFeedsObj) => {
+      let initFeedsArr = initFeedsObj.feeds;
+      let initFeeds = [];
+      initFeedsArr.forEach(feed => {
+        this.feeds.push(feed);
+        initFeeds.push(<List key={this.key} id={this.key} delete={this.delete} url={feed} />);
+        this.key++;
+        this.setState({feedList: initFeeds});
       });
-    }, 50);
+      
+      setInterval(() => {
+        chrome.storage.sync.get('feeds', (feedsObj) => {
+          let feeds = this.state.feedList;
+          let feedsArr = feedsObj.feeds;
+          if (feedsArr.length > this.feeds.length) {
+            let toAdd = feedsArr[feedsArr.length - 1];
+            this.feeds.push(toAdd);
+            feeds.push(<List key={this.key} id={this.key} delete={this.delete} url={toAdd} />);
+            this.key++;
+          }
+          this.setState({feedList: feeds});
+        });
+      }, 50);
+    });
+
+    
   }
 
   delete(list) {
-    let newFeeds = [];
-    this.feeds.forEach(feed => {
-      newFeeds.push(feed);
-    });
-    newFeeds.splice(list.id, 1);
-    chrome.storage.sync.set({'feeds': newFeeds});
+    this.state.feedList.splice(list.id, 1);
+    this.feeds.splice(list.id, 1);
+    this.key--;
+    chrome.storage.sync.set({'feeds': this.feeds});
+    this.forceUpdate();
   }
 
 
@@ -50,7 +61,6 @@ class Root extends Component {
   }
 
   render() {
-    debugger
     return(
       <div className="outer-container">
         <div style={styles.container}>
