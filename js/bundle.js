@@ -21491,7 +21491,7 @@
 	        var initFeedsArr = initFeedsObj.feeds;
 	        var initFeeds = [];
 	        initFeedsArr.forEach(function (feed) {
-	          _this2.feeds.push(feed);
+	          _this2.feeds.push({ 'url': feed, 'id': _this2.key });
 	          initFeeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: feed }));
 	          _this2.key++;
 	          _this2.setState({ feedList: initFeeds });
@@ -21503,7 +21503,7 @@
 	            var feedsArr = feedsObj.feeds;
 	            if (feedsArr.length > _this2.feeds.length) {
 	              var toAdd = feedsArr[feedsArr.length - 1];
-	              _this2.feeds.push(toAdd);
+	              _this2.feeds.push({ 'url': toAdd, 'id': _this2.key });
 	              feeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: toAdd }));
 	              _this2.key++;
 	            }
@@ -21515,10 +21515,17 @@
 	  }, {
 	    key: 'delete',
 	    value: function _delete(list) {
-	      this.state.feedList.splice(list.id, 1);
-	      this.feeds.splice(list.id, 1);
+	      this.state.feedList = this.state.feedList.filter(function (feed) {
+	        return feed.props.id !== list.id;
+	      });
+	      this.feeds = this.feeds.filter(function (feed) {
+	        return feed.id !== list.id;
+	      });
+	      var urls = this.feeds.map(function (feed) {
+	        return feed.url;
+	      });
 	      this.key--;
-	      chrome.storage.sync.set({ 'feeds': this.feeds });
+	      chrome.storage.sync.set({ 'feeds': urls });
 	      this.forceUpdate();
 	    }
 	  }, {

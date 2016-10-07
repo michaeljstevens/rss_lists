@@ -21,7 +21,7 @@ class Root extends Component {
       let initFeedsArr = initFeedsObj.feeds;
       let initFeeds = [];
       initFeedsArr.forEach(feed => {
-        this.feeds.push(feed);
+        this.feeds.push({'url': feed, 'id': this.key});
         initFeeds.push(<List key={this.key} id={this.key} delete={this.delete} url={feed} />);
         this.key++;
         this.setState({feedList: initFeeds});
@@ -33,7 +33,7 @@ class Root extends Component {
           let feedsArr = feedsObj.feeds;
           if (feedsArr.length > this.feeds.length) {
             let toAdd = feedsArr[feedsArr.length - 1];
-            this.feeds.push(toAdd);
+            this.feeds.push({'url': toAdd, 'id': this.key});
             feeds.push(<List key={this.key} id={this.key} delete={this.delete} url={toAdd} />);
             this.key++;
           }
@@ -46,10 +46,17 @@ class Root extends Component {
   }
 
   delete(list) {
-    this.state.feedList.splice(list.id, 1);
-    this.feeds.splice(list.id, 1);
+    this.state.feedList = this.state.feedList.filter(feed => {
+      return feed.props.id !== list.id;
+    });
+    this.feeds = this.feeds.filter(feed => {
+      return feed.id !== list.id;
+    });
+    let urls = this.feeds.map(feed => {
+      return feed.url;
+    });
     this.key--;
-    chrome.storage.sync.set({'feeds': this.feeds});
+    chrome.storage.sync.set({'feeds': urls});
     this.forceUpdate();
   }
 
