@@ -52,7 +52,8 @@ li {
 	overflow: auto;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 
@@ -142,4 +143,53 @@ li {
 
 .popup-icon:hover {
   cursor: pointer;
+}
+
+.new-feed {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.new-feed-input {
+  height: 20px;
+  width: 200px;
+}
+
+.new-feed-img {
+
+}
+
+.new-feed-img:hover {
+  cursor: pointer;
+}
+
+.background-button {
+  width: 100px;
+  position: absolute;
+  z-index: 1000;
+  top: 5px;
+  left: 5px;
+}
+
+.modal-outer-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container {
+  z-index: 1000;
+  background: white;
+  position: fixed;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.modal-img {
+  height: 75px;
+  margin: 20px;
 }

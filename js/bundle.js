@@ -21472,13 +21472,27 @@
 	
 	    _this.state = {
 	      feedUrl: null,
-	      feedList: []
+	      feedList: [],
+	      modalOpen: false,
+	      background: "url('../../assets/img/backgrounds/trees.jpeg')"
 	    };
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.delete = _this.delete.bind(_this);
 	    _this.key = 0;
 	    _this.totalRendered = 0;
 	    _this.feeds = [];
+	    _this.showModal = _this.showModal.bind(_this);
+	
+	    _this.modal = _react2.default.createElement(
+	      'div',
+	      { className: 'modal-container' },
+	      _react2.default.createElement('img', { onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/coffee.jpeg')"),
+	        className: 'modal-img', src: '../../assets/img/backgrounds/coffee.jpeg' }),
+	      _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/rocks.jpeg')"),
+	        src: '../../assets/img/backgrounds/rocks.jpeg' }),
+	      _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/trees.jpeg')"),
+	        src: '../../assets/img/backgrounds/trees.jpeg' })
+	    );
 	    return _this;
 	  }
 	
@@ -21513,6 +21527,12 @@
 	      });
 	    }
 	  }, {
+	    key: 'changeBackground',
+	    value: function changeBackground(source, e) {
+	      e.preventDefault();
+	      this.setState({ background: source });
+	    }
+	  }, {
 	    key: 'delete',
 	    value: function _delete(list) {
 	      this.state.feedList = this.state.feedList.filter(function (feed) {
@@ -21538,11 +21558,30 @@
 	      };
 	    }
 	  }, {
+	    key: 'showModal',
+	    value: function showModal() {
+	      if (this.state.modalOpen) {
+	        this.setState({ modalOpen: false });
+	      } else {
+	        this.setState({ modalOpen: true });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'outer-container', style: { backgroundImage: "url('../assets/img/trees.jpeg')" } },
+	        { className: 'outer-container', style: { backgroundImage: this.state.background } },
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.showModal, className: 'background-button' },
+	          'Change Background Image'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-outer-container' },
+	          this.state.modalOpen ? this.modal : null
+	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { style: styles.container },
@@ -21560,7 +21599,8 @@
 	  container: {
 	    display: 'flex',
 	    alignItems: 'center',
-	    height: "100%"
+	    height: "100%",
+	    marginTop: 100
 	  }
 	};
 	
@@ -21659,7 +21699,6 @@
 	        var toAdd = entries.length > 0 ? entries : items;
 	
 	        toAdd.forEach(function (item) {
-	          debugger;
 	          var title = item.getElementsByTagName("title")[0].innerHTML;
 	          title = title.replace("<![CDATA[", "");
 	          title = title.replace("]]>", "");

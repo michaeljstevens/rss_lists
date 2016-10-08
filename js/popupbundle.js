@@ -21528,33 +21528,33 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'popup-icon-container' },
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/reddit.png', onClick: this.addFeed.bind(this, "reddit") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/nytimes.png', onClick: this.addFeed.bind(this, "nytimes") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/538.png', onClick: this.addFeed.bind(this, "538") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/npr.png', onClick: this.addFeed.bind(this, "npr") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/bbc.png', onClick: this.addFeed.bind(this, "bbc") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/ap.png', onClick: this.addFeed.bind(this, "ap") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/npr.png', onClick: this.addFeed.bind(this, "npr") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/espn.png', onClick: this.addFeed.bind(this, "espn") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/538.png', onClick: this.addFeed.bind(this, "538") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/economist.png', onClick: this.addFeed.bind(this, "economist") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/newyorker.png', onClick: this.addFeed.bind(this, "newyorker") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/hackernews.png', onClick: this.addFeed.bind(this, "hackernews") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/atlantic.png', onClick: this.addFeed.bind(this, "atlantic") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/onion.png', onClick: this.addFeed.bind(this, "onion") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/pcmag.png', onClick: this.addFeed.bind(this, "pcmag") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/lifehack.png', onClick: this.addFeed.bind(this, "lifehack") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/psychologytoday.png', onClick: this.addFeed.bind(this, "psychologytoday") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/mashable.png', onClick: this.addFeed.bind(this, "mashable") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/newyorker.png', onClick: this.addFeed.bind(this, "newyorker") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/forbes.png', onClick: this.addFeed.bind(this, "forbes") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/wsj.png', onClick: this.addFeed.bind(this, "wsj") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/pcmag.png', onClick: this.addFeed.bind(this, "pcmag") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/reddit.png', onClick: this.addFeed.bind(this, "reddit") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/hackernews.png', onClick: this.addFeed.bind(this, "hackernews") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/onion.png', onClick: this.addFeed.bind(this, "onion") }),
 	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/wired.png', onClick: this.addFeed.bind(this, "wired") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/cnet.png', onClick: this.addFeed.bind(this, "cnet") })
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/espn.png', onClick: this.addFeed.bind(this, "espn") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/cnet.png', onClick: this.addFeed.bind(this, "cnet") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/mashable.png', onClick: this.addFeed.bind(this, "mashable") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/lifehack.png', onClick: this.addFeed.bind(this, "lifehack") }),
+	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/psychologytoday.png', onClick: this.addFeed.bind(this, "psychologytoday") })
 	        ),
 	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.addFeed.bind(this, null) },
-	          'Add Feed'
-	        ),
-	        _react2.default.createElement('input', { type: 'text', onChange: this.updateState("url") })
+	          'div',
+	          { className: 'new-feed' },
+	          _react2.default.createElement('img', { className: 'new-feed-img', src: '../../assets/img/add.png', onClick: this.addFeed.bind(this, null) }),
+	          _react2.default.createElement('input', { placeholder: 'Add Custom Feed Url', className: 'new-feed-input', type: 'text', onChange: this.updateState("url") })
+	        )
 	      );
 	    }
 	  }]);

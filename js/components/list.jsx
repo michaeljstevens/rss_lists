@@ -57,7 +57,6 @@ class List extends Component {
       let toAdd = entries.length > 0 ? entries : items;
 
       toAdd.forEach(item => {
-        debugger
         let title = item.getElementsByTagName("title")[0].innerHTML;
         title = title.replace("<![CDATA[","");
         title = title.replace("]]>","");

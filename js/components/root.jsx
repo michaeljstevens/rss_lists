@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import List from './list.jsx';
 
+
+
 class Root extends Component {
 
   constructor(props) {
@@ -8,12 +10,26 @@ class Root extends Component {
     this.state = {
       feedUrl: null,
       feedList: [],
+      modalOpen: false,
+      background: "url('../../assets/img/backgrounds/trees.jpeg')",
     };
     this.updateState = this.updateState.bind(this);
     this.delete = this.delete.bind(this);
     this.key = 0;
     this.totalRendered = 0;
     this.feeds = [];
+    this.showModal = this.showModal.bind(this);
+
+    this.modal = (
+        <div className="modal-container">
+          <img onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/coffee.jpeg')")}
+          className="modal-img" src="../../assets/img/backgrounds/coffee.jpeg" />
+          <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/rocks.jpeg')")}
+          src="../../assets/img/backgrounds/rocks.jpeg" />
+          <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/trees.jpeg')")}
+          src="../../assets/img/backgrounds/trees.jpeg" />
+        </div>
+      );
   }
 
   componentDidMount() {
@@ -45,6 +61,11 @@ class Root extends Component {
     
   }
 
+  changeBackground(source, e) {
+    e.preventDefault();
+    this.setState({background: source});
+  }
+
   delete(list) {
     this.state.feedList = this.state.feedList.filter(feed => {
       return feed.props.id !== list.id;
@@ -67,9 +88,21 @@ class Root extends Component {
     };
   }
 
+  showModal() {
+    if(this.state.modalOpen) {
+      this.setState({modalOpen: false});
+    } else {
+      this.setState({modalOpen: true});
+    }
+  }
+
   render() {
     return(
-      <div className="outer-container" style={{backgroundImage: "url('../assets/img/trees.jpeg')"}}>
+      <div className="outer-container" style={{backgroundImage: this.state.background}}>
+        <button onClick={this.showModal} className="background-button">Change Background Image</button>
+        <div className="modal-outer-container">
+          {this.state.modalOpen ? this.modal : null}
+        </div>
         <div style={styles.container}>
           {this.state.feedList}
         </div>
@@ -86,6 +119,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     height: "100%",
+    marginTop: 100,
   },
 };
 
