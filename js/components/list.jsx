@@ -79,6 +79,13 @@ class List extends Component {
           }
         }
 
+        if(!img) {
+          let thumbnail = Array.from(item.getElementsByTagName("thumbnail"));
+          if(thumbnail[0]) {
+            img = thumbnail[0].getAttribute("url");
+          }
+        }
+
         link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
         fpLis.push(<a href={link}><li className="outerLink" style={styles.item}><img src={img ? img : '../../assets/img/no_img.png'} style={styles.image}></img>{title}</li></a>);
       });

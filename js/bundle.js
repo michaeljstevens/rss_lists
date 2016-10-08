@@ -21681,6 +21681,13 @@
 	            }
 	          }
 	
+	          if (!img) {
+	            var thumbnail = Array.from(item.getElementsByTagName("thumbnail"));
+	            if (thumbnail[0]) {
+	              img = thumbnail[0].getAttribute("url");
+	            }
+	          }
+	
 	          link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
 	          fpLis.push(_react2.default.createElement(
 	            'a',
