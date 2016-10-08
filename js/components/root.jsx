@@ -69,7 +69,7 @@ class Root extends Component {
 
   render() {
     return(
-      <div className="outer-container">
+      <div className="outer-container" style={{backgroundImage: "url('../assets/img/trees.jpeg')"}}>
         <div style={styles.container}>
           {this.state.feedList}
         </div>

@@ -21542,7 +21542,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'outer-container' },
+	        { className: 'outer-container', style: { backgroundImage: "url('../assets/img/trees.jpeg')" } },
 	        _react2.default.createElement(
 	          'div',
 	          { style: styles.container },
@@ -21645,8 +21645,8 @@
 	        this.listImg = Array.from(this.state.data.getElementsByTagName("img"));
 	        if (this.listImg.length < 1) {
 	          var image = Array.from(this.state.data.getElementsByTagName("image"));
-	          var imgRegex = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
 	          if (image.length > 0) {
+	            var imgRegex = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*.(jpg|jpeg|png|gif))/gi;
 	            this.listImg = imgRegex.exec(image[0].innerHTML)[0];
 	          } else {
 	            this.listImg = null;
@@ -21659,6 +21659,7 @@
 	        var toAdd = entries.length > 0 ? entries : items;
 	
 	        toAdd.forEach(function (item) {
+	          debugger;
 	          var title = item.getElementsByTagName("title")[0].innerHTML;
 	          title = title.replace("<![CDATA[", "");
 	          title = title.replace("]]>", "");

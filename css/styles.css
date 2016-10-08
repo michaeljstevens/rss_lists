@@ -47,7 +47,6 @@ li {
 }
 
 .outer-container {
-	background-image: url('../assets/img/mountain-texture.jpeg');
 	background-attachment: fixed;
   background-size: 100%;
 	overflow: auto;
@@ -129,13 +128,16 @@ li {
 }
 
 .popup-icon-container {
-  margin: 20px;
+  margin: 10px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
 .popup-icon {
   height: 40px;
+  margin-bottom: 25px;
+  padding: 10px;
 }
 
 .popup-icon:hover {

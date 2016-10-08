@@ -42,12 +42,12 @@ class List extends Component {
       this.listImg = Array.from(this.state.data.getElementsByTagName("img"));
       if (this.listImg.length < 1) {
         let image = Array.from(this.state.data.getElementsByTagName("image"));
-        let imgRegex = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
-        if(image.length > 0) {
-          this.listImg = imgRegex.exec(image[0].innerHTML)[0];
-        } else {
-          this.listImg = null;
-        }
+          if(image.length > 0) {
+            let imgRegex = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*.(jpg|jpeg|png|gif))/gi;
+            this.listImg = imgRegex.exec(image[0].innerHTML)[0];
+          } else {
+            this.listImg = null;
+          }
       }
       this.listTitle = Array.from(this.state.data.getElementsByTagName("title"))[0].innerHTML;
       let entries = Array.from(this.state.data.getElementsByTagName("entry"));
@@ -57,6 +57,7 @@ class List extends Component {
       let toAdd = entries.length > 0 ? entries : items;
 
       toAdd.forEach(item => {
+        debugger
         let title = item.getElementsByTagName("title")[0].innerHTML;
         title = title.replace("<![CDATA[","");
         title = title.replace("]]>","");
