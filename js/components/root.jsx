@@ -13,6 +13,8 @@ class Root extends Component {
       modalOpen: false,
       background: "",
       customBackground: "",
+      modalBackground: "",
+      modalZIndex: 0,
     };
     this.updateState = this.updateState.bind(this);
     this.delete = this.delete.bind(this);
@@ -34,16 +36,18 @@ class Root extends Component {
     this.modal = (
         <div className="modal-container">
           <div className="modal-image-container">
-            <img onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/coffee.jpeg')")}
-            className="modal-img" src="../../assets/img/backgrounds/coffee.jpeg" />
-            <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/rocks.jpeg')")}
-            src="../../assets/img/backgrounds/rocks.jpeg" />
             <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/trees.jpeg')")}
             src="../../assets/img/backgrounds/trees.jpeg" />
+            <img onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/coffee.jpeg')")}
+            className="modal-img" src="../../assets/img/backgrounds/coffee.jpeg" />
+            <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/wall.jpeg')")}
+            src="../../assets/img/backgrounds/wall.jpeg" />
+            <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/mountain.jpeg')")}
+            src="../../assets/img/backgrounds/mountain.jpeg" />
           </div>
           <div className="background-input">
-            <input type="text" onChange={this.updateState("customBackground")} placeholder="Image Url" />
-            <button onClick={this.customBackground} className="custom-image-button">Add</button>
+            <img className="custom-image-button" src={'../../assets/img/add.png'} onClick={this.customBackground} />
+            <input className="custom-image-input" type="text" onChange={this.updateState("customBackground")} placeholder="Custom Image Url" />
           </div>
         </div>
       );
@@ -117,9 +121,9 @@ class Root extends Component {
 
   showModal() {
     if(this.state.modalOpen) {
-      this.setState({modalOpen: false});
+      this.setState({modalOpen: false, modalBackground: '', modalZIndex: 0});
     } else {
-      this.setState({modalOpen: true});
+      this.setState({modalOpen: true, modalBackground: 'rgba(0,0,0,0.8)', modalZIndex:100});
     }
   }
 
@@ -127,7 +131,7 @@ class Root extends Component {
     return(
       <div className="outer-container" style={{backgroundImage: this.state.background}}>
         <button onClick={this.showModal} className="background-button">Change Background Image</button>
-        <div className="modal-outer-container">
+        <div className="modal-outer-container" style={{background: this.state.modalBackground, zIndex: this.state.modalZIndex}}>
           {this.state.modalOpen ? this.modal : null}
         </div>
         <div style={styles.container}>

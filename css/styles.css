@@ -187,9 +187,41 @@ li {
   position: fixed;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 1px 1px 15px black;
+}
+
+.modal-image-container {
+  width: 750px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .modal-img {
-  height: 75px;
-  margin: 20px;
+  height: 150px;
+  width: 270px;
+  margin: 50px;
+}
+
+.modal-img:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 15px black;
+}
+
+.custom-image-input {
+  height: 30px;
+  width: 300px;
+  margin-left: 9px;
+  border: 1px solid black;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+.background-input {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 44px;
+  padding-bottom: 20px;
+  align-items: center;
 }

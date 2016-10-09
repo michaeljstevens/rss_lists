@@ -21475,7 +21475,9 @@
 	      feedList: [],
 	      modalOpen: false,
 	      background: "",
-	      customBackground: ""
+	      customBackground: "",
+	      modalBackground: "",
+	      modalZIndex: 0
 	    };
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.delete = _this.delete.bind(_this);
@@ -21500,22 +21502,20 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'modal-image-container' },
+	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/trees.jpeg')"),
+	          src: '../../assets/img/backgrounds/trees.jpeg' }),
 	        _react2.default.createElement('img', { onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/coffee.jpeg')"),
 	          className: 'modal-img', src: '../../assets/img/backgrounds/coffee.jpeg' }),
-	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/rocks.jpeg')"),
-	          src: '../../assets/img/backgrounds/rocks.jpeg' }),
-	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/trees.jpeg')"),
-	          src: '../../assets/img/backgrounds/trees.jpeg' })
+	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/wall.jpeg')"),
+	          src: '../../assets/img/backgrounds/wall.jpeg' }),
+	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/mountain.jpeg')"),
+	          src: '../../assets/img/backgrounds/mountain.jpeg' })
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'background-input' },
-	        _react2.default.createElement('input', { type: 'text', onChange: _this.updateState("customBackground"), placeholder: 'Image Url' }),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: _this.customBackground, className: 'custom-image-button' },
-	          'Add'
-	        )
+	        _react2.default.createElement('img', { className: 'custom-image-button', src: '../../assets/img/add.png', onClick: _this.customBackground }),
+	        _react2.default.createElement('input', { className: 'custom-image-input', type: 'text', onChange: _this.updateState("customBackground"), placeholder: 'Custom Image Url' })
 	      )
 	    );
 	    return _this;
@@ -21597,9 +21597,9 @@
 	    key: 'showModal',
 	    value: function showModal() {
 	      if (this.state.modalOpen) {
-	        this.setState({ modalOpen: false });
+	        this.setState({ modalOpen: false, modalBackground: '', modalZIndex: 0 });
 	      } else {
-	        this.setState({ modalOpen: true });
+	        this.setState({ modalOpen: true, modalBackground: 'rgba(0,0,0,0.8)', modalZIndex: 100 });
 	      }
 	    }
 	  }, {
@@ -21615,7 +21615,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'modal-outer-container' },
+	          { className: 'modal-outer-container', style: { background: this.state.modalBackground, zIndex: this.state.modalZIndex } },
 	          this.state.modalOpen ? this.modal : null
 	        ),
 	        _react2.default.createElement(
