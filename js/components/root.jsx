@@ -166,7 +166,8 @@ class Root extends Component {
           <div className="info-container" style={{background: this.state.infoColor}}>
             <Weather />
             <Notepad />
-            <button onClick={ this.displayColorPicker }>Pick Color</button>
+            <img src={'../../assets/img/color_picker.png'} onClick={this.displayColorPicker} 
+            className="color-picker-icon"/>
             {this.state.displayColorPicker ? <div style={ styles.popover }>
               <div style={ styles.cover } onClick={ this.handleClose }/>
               <ChromePicker color={this.state.infoColor} onChange={this.changeInfoColor} />
@@ -194,6 +195,8 @@ const styles = {
   popover: {
     position: 'absolute',
     zIndex: '2000',
+    bottom: 63,
+    right: 60,
   },
   cover: {
     position: 'fixed',

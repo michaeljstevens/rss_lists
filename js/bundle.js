@@ -21660,11 +21660,8 @@
 	            { className: 'info-container', style: { background: this.state.infoColor } },
 	            _react2.default.createElement(_weather2.default, null),
 	            _react2.default.createElement(_notepad2.default, null),
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: this.displayColorPicker },
-	              'Pick Color'
-	            ),
+	            _react2.default.createElement('img', { src: '../../assets/img/color_picker.png', onClick: this.displayColorPicker,
+	              className: 'color-picker-icon' }),
 	            this.state.displayColorPicker ? _react2.default.createElement(
 	              'div',
 	              { style: styles.popover },
@@ -21695,7 +21692,9 @@
 	  },
 	  popover: {
 	    position: 'absolute',
-	    zIndex: '2000'
+	    zIndex: '2000',
+	    bottom: 63,
+	    right: 60
 	  },
 	  cover: {
 	    position: 'fixed',
