@@ -166,10 +166,7 @@ li {
 
 .background-button {
   width: 100px;
-  position: absolute;
   z-index: 1000;
-  top: 5px;
-  left: 5px;
 }
 
 .modal-outer-container {
@@ -218,10 +215,20 @@ li {
   font-size: 18px;
 }
 
+.custom-image-button:hover {
+  cursor: pointer;
+}
+
 .background-input {
   display: flex;
   justify-content: flex-start;
   margin-left: 44px;
   padding-bottom: 20px;
   align-items: center;
+}
+
+.info-container {
+  z-index: 1000;
+  margin-right: 20px;
+  background: white;
 }

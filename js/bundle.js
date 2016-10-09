@@ -21452,6 +21452,10 @@
 	
 	var _list2 = _interopRequireDefault(_list);
 	
+	var _weather = __webpack_require__(180);
+	
+	var _weather2 = _interopRequireDefault(_weather);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -21475,9 +21479,7 @@
 	      feedList: [],
 	      modalOpen: false,
 	      background: "",
-	      customBackground: "",
-	      modalBackground: "",
-	      modalZIndex: 0
+	      customBackground: ""
 	    };
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.delete = _this.delete.bind(_this);
@@ -21498,24 +21500,28 @@
 	
 	    _this.modal = _react2.default.createElement(
 	      'div',
-	      { className: 'modal-container' },
+	      { className: 'modal-outer-container', style: { background: 'rgba(0,0,0,0.8)', zIndex: 100 } },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'modal-image-container' },
-	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/trees.jpeg')"),
-	          src: '../../assets/img/backgrounds/trees.jpeg' }),
-	        _react2.default.createElement('img', { onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/coffee.jpeg')"),
-	          className: 'modal-img', src: '../../assets/img/backgrounds/coffee.jpeg' }),
-	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/wall.jpeg')"),
-	          src: '../../assets/img/backgrounds/wall.jpeg' }),
-	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/mountain.jpeg')"),
-	          src: '../../assets/img/backgrounds/mountain.jpeg' })
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'background-input' },
-	        _react2.default.createElement('img', { className: 'custom-image-button', src: '../../assets/img/add.png', onClick: _this.customBackground }),
-	        _react2.default.createElement('input', { className: 'custom-image-input', type: 'text', onChange: _this.updateState("customBackground"), placeholder: 'Custom Image Url' })
+	        { className: 'modal-container' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'modal-image-container' },
+	          _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/trees.jpeg')"),
+	            src: '../../assets/img/backgrounds/trees.jpeg' }),
+	          _react2.default.createElement('img', { onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/coffee.jpeg')"),
+	            className: 'modal-img', src: '../../assets/img/backgrounds/coffee.jpeg' }),
+	          _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/wall.jpeg')"),
+	            src: '../../assets/img/backgrounds/wall.jpeg' }),
+	          _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/mountain.jpeg')"),
+	            src: '../../assets/img/backgrounds/mountain.jpeg' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'background-input' },
+	          _react2.default.createElement('img', { className: 'custom-image-button', src: '../../assets/img/add.png', onClick: _this.customBackground }),
+	          _react2.default.createElement('input', { className: 'custom-image-input', type: 'text', onChange: _this.updateState("customBackground"), placeholder: 'Custom Background Url' })
+	        )
 	      )
 	    );
 	    return _this;
@@ -21597,9 +21603,9 @@
 	    key: 'showModal',
 	    value: function showModal() {
 	      if (this.state.modalOpen) {
-	        this.setState({ modalOpen: false, modalBackground: '', modalZIndex: 0 });
+	        this.setState({ modalOpen: false });
 	      } else {
-	        this.setState({ modalOpen: true, modalBackground: 'rgba(0,0,0,0.8)', modalZIndex: 100 });
+	        this.setState({ modalOpen: true });
 	      }
 	    }
 	  }, {
@@ -21608,19 +21614,20 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'outer-container', style: { backgroundImage: this.state.background } },
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.showModal, className: 'background-button' },
-	          'Change Background Image'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'modal-outer-container', style: { background: this.state.modalBackground, zIndex: this.state.modalZIndex } },
-	          this.state.modalOpen ? this.modal : null
-	        ),
+	        this.state.modalOpen ? this.modal : null,
 	        _react2.default.createElement(
 	          'div',
 	          { style: styles.container },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'info-container' },
+	            _react2.default.createElement(_weather2.default, null),
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.showModal, className: 'background-button' },
+	              'Change Background Image'
+	            )
+	          ),
 	          this.state.feedList
 	        )
 	      );
@@ -21635,8 +21642,7 @@
 	  container: {
 	    display: 'flex',
 	    alignItems: 'center',
-	    height: "100%",
-	    marginTop: 100
+	    height: "100%"
 	  }
 	};
 	
@@ -34005,6 +34011,126 @@
 	return jQuery;
 	} );
 
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _jQuery = __webpack_require__(179);
+	
+	var _jQuery2 = _interopRequireDefault(_jQuery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Weather = function (_Component) {
+	  _inherits(Weather, _Component);
+	
+	  function Weather(props) {
+	    _classCallCheck(this, Weather);
+	
+	    var _this = _possibleConstructorReturn(this, (Weather.__proto__ || Object.getPrototypeOf(Weather)).call(this, props));
+	
+	    _this.state = {
+	      temp: null,
+	      humidity: null,
+	      pressure: null,
+	      weather: null,
+	      windSpeed: null
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(Weather, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      navigator.geolocation.getCurrentPosition(function (position) {
+	        var lat = position.coords.latitude;
+	        var lng = position.coords.longitude;
+	
+	        var success = function success(data) {
+	          _this2.state.temp = Math.round(data.main.temp * 9 / 5 - 459.67);
+	          _this2.state.humidity = Math.round(data.main.humidity);
+	          _this2.state.pressure = Math.round(data.main.pressure);
+	          _this2.state.weather = data.weather[0].main;
+	          _this2.state.windSpeed = Math.round(data.wind.speed);
+	          _this2.forceUpdate();
+	        };
+	
+	        var error = function error(e) {
+	          console.log(e);
+	        };
+	
+	        _jQuery2.default.ajax({
+	          type: 'GET',
+	          url: 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lng + '&APPID=8a6fa7e6e6313df3e65af4c4e986ada2',
+	          success: success,
+	          error: error
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'weather-container' },
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.temp
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.humidity
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.pressure
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.weather
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            this.state.windSpeed
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Weather;
+	}(_react.Component);
+	
+	exports.default = Weather;
 
 /***/ }
 /******/ ]);

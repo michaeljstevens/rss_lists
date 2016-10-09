@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import List from './list.jsx';
+import Weather from './weather.jsx';
 
 
 
@@ -13,8 +14,6 @@ class Root extends Component {
       modalOpen: false,
       background: "",
       customBackground: "",
-      modalBackground: "",
-      modalZIndex: 0,
     };
     this.updateState = this.updateState.bind(this);
     this.delete = this.delete.bind(this);
@@ -34,20 +33,22 @@ class Root extends Component {
     });
 
     this.modal = (
-        <div className="modal-container">
-          <div className="modal-image-container">
-            <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/trees.jpeg')")}
-            src="../../assets/img/backgrounds/trees.jpeg" />
-            <img onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/coffee.jpeg')")}
-            className="modal-img" src="../../assets/img/backgrounds/coffee.jpeg" />
-            <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/wall.jpeg')")}
-            src="../../assets/img/backgrounds/wall.jpeg" />
-            <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/mountain.jpeg')")}
-            src="../../assets/img/backgrounds/mountain.jpeg" />
-          </div>
-          <div className="background-input">
-            <img className="custom-image-button" src={'../../assets/img/add.png'} onClick={this.customBackground} />
-            <input className="custom-image-input" type="text" onChange={this.updateState("customBackground")} placeholder="Custom Image Url" />
+        <div className="modal-outer-container" style={{background: 'rgba(0,0,0,0.8)', zIndex: 100}}>
+          <div className="modal-container">
+            <div className="modal-image-container">
+              <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/trees.jpeg')")}
+              src="../../assets/img/backgrounds/trees.jpeg" />
+              <img onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/coffee.jpeg')")}
+              className="modal-img" src="../../assets/img/backgrounds/coffee.jpeg" />
+              <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/wall.jpeg')")}
+              src="../../assets/img/backgrounds/wall.jpeg" />
+              <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/mountain.jpeg')")}
+              src="../../assets/img/backgrounds/mountain.jpeg" />
+            </div>
+            <div className="background-input">
+              <img className="custom-image-button" src={'../../assets/img/add.png'} onClick={this.customBackground} />
+              <input className="custom-image-input" type="text" onChange={this.updateState("customBackground")} placeholder="Custom Background Url" />
+            </div>
           </div>
         </div>
       );
@@ -121,20 +122,21 @@ class Root extends Component {
 
   showModal() {
     if(this.state.modalOpen) {
-      this.setState({modalOpen: false, modalBackground: '', modalZIndex: 0});
+      this.setState({modalOpen: false});
     } else {
-      this.setState({modalOpen: true, modalBackground: 'rgba(0,0,0,0.8)', modalZIndex:100});
+      this.setState({modalOpen: true});
     }
   }
 
   render() {
     return(
       <div className="outer-container" style={{backgroundImage: this.state.background}}>
-        <button onClick={this.showModal} className="background-button">Change Background Image</button>
-        <div className="modal-outer-container" style={{background: this.state.modalBackground, zIndex: this.state.modalZIndex}}>
-          {this.state.modalOpen ? this.modal : null}
-        </div>
+        {this.state.modalOpen ? this.modal : null}
         <div style={styles.container}>
+          <div className="info-container">
+            <Weather />
+            <button onClick={this.showModal} className="background-button">Change Background Image</button>
+          </div>
           {this.state.feedList}
         </div>
       </div>
@@ -150,7 +152,6 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     height: "100%",
-    marginTop: 100,
   },
 };
 

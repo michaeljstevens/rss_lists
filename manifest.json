@@ -15,6 +15,7 @@
   "permissions": [
     "activeTab",
     "storage",
+    "geolocation",
     "https://ajax.googleapis.com/",
     "<all_urls>",
     "*://*/*"
