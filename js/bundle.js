@@ -34063,29 +34063,50 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	
-	      navigator.geolocation.getCurrentPosition(function (position) {
-	        var lat = position.coords.latitude;
-	        var lng = position.coords.longitude;
+	      chrome.storage.sync.get('weatherTime', function (time) {
+	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 600000) {
+	          navigator.geolocation.getCurrentPosition(function (position) {
+	            var lat = position.coords.latitude;
+	            var lng = position.coords.longitude;
 	
-	        var success = function success(data) {
-	          _this2.state.temp = Math.round(data.main.temp * 9 / 5 - 459.67);
-	          _this2.state.humidity = Math.round(data.main.humidity);
-	          _this2.state.pressure = Math.round(data.main.pressure);
-	          _this2.state.weather = data.weather[0].main;
-	          _this2.state.windSpeed = Math.round(data.wind.speed);
-	          _this2.forceUpdate();
-	        };
+	            var success = function success(data) {
+	              _this2.state.temp = Math.round(data.main.temp * 9 / 5 - 459.67);
+	              _this2.state.humidity = Math.round(data.main.humidity);
+	              _this2.state.pressure = Math.round(data.main.pressure);
+	              _this2.state.weather = data.weather[0].main;
+	              _this2.state.windSpeed = Math.round(data.wind.speed);
+	              var date = new Date().getTime();
+	              chrome.storage.sync.set({ 'weatherTime': date, 'weather': {
+	                  'temp': Math.round(data.main.temp * 9 / 5 - 459.67),
+	                  'humidity': Math.round(data.main.humidity),
+	                  'pressure': Math.round(data.main.pressure),
+	                  'weather': data.weather[0].main,
+	                  'windSpeed': Math.round(data.wind.speed)
+	                } });
+	              _this2.forceUpdate();
+	            };
 	
-	        var error = function error(e) {
-	          console.log(e);
-	        };
+	            var error = function error(e) {
+	              console.log(e);
+	            };
 	
-	        _jQuery2.default.ajax({
-	          type: 'GET',
-	          url: 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lng + '&APPID=8a6fa7e6e6313df3e65af4c4e986ada2',
-	          success: success,
-	          error: error
-	        });
+	            _jQuery2.default.ajax({
+	              type: 'GET',
+	              url: 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lng + '&APPID=8a6fa7e6e6313df3e65af4c4e986ada2',
+	              success: success,
+	              error: error
+	            });
+	          });
+	        } else {
+	          chrome.storage.sync.get('weather', function (weatherObj) {
+	            _this2.state.temp = weatherObj.weather.temp;
+	            _this2.state.humidity = weatherObj.weather.humidity;
+	            _this2.state.pressure = weatherObj.weather.pressure;
+	            _this2.state.weather = weatherObj.weather.weather;
+	            _this2.state.windSpeed = weatherObj.weather.windSpeed;
+	            _this2.forceUpdate();
+	          });
+	        }
 	      });
 	    }
 	  }, {
