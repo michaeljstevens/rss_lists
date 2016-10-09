@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import List from './list.jsx';
 import Weather from './weather.jsx';
 import Notepad from './notepad.jsx';
+import {ChromePicker} from 'react-color';
 
 
 
@@ -15,6 +16,8 @@ class Root extends Component {
       modalOpen: false,
       background: "",
       customBackground: "",
+      displayColorPicker: false,
+      infoColor: "",
     };
     this.updateState = this.updateState.bind(this);
     this.delete = this.delete.bind(this);
@@ -23,6 +26,9 @@ class Root extends Component {
     this.feeds = [];
     this.showModal = this.showModal.bind(this);
     this.customBackground = this.customBackground.bind(this);
+    this.displayColorPicker = this.displayColorPicker.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.changeInfoColor = this.changeInfoColor.bind(this);
 
     chrome.storage.sync.get('background', (backgroundObj) => {
       if(Object.keys(backgroundObj).length < 1) {
@@ -32,6 +38,15 @@ class Root extends Component {
         this.setState({background: backgroundObj.background});
       }
     });
+
+    chrome.storage.sync.get('infoColor', (color) => {
+      if (Object.keys(color).length < 1) {
+        chrome.storage.sync.set({infoColor: '#99935F'});
+        this.setState({infoColor: '#99935F'});
+      } else {
+        this.setState({infoColor: color.infoColor});
+      }
+    })
 
     this.modal = (
         <div className="modal-outer-container" style={{background: 'rgba(0,0,0,0.8)', zIndex: 100}}>
@@ -76,8 +91,8 @@ class Root extends Component {
             this.feeds.push({'url': toAdd, 'id': this.key});
             feeds.push(<List key={this.key} id={this.key} delete={this.delete} url={toAdd} />);
             this.key++;
+            this.setState({feedList: feeds});
           }
-          this.setState({feedList: feeds});
         });
       }, 50);
     });
@@ -130,15 +145,35 @@ class Root extends Component {
     }
   }
 
+  displayColorPicker() {
+    this.setState({displayColorPicker: true});
+  }
+
+  handleClose() {
+    this.setState({displayColorPicker: false});
+  }
+
+  changeInfoColor(color) {
+    chrome.storage.sync.set({'infoColor': color.hex});
+    this.setState({infoColor: color.hex});
+  }
+
   render() {
     return(
       <div className="outer-container" style={{backgroundImage: this.state.background}}>
         {this.state.modalOpen ? this.modal : null}
         <div style={styles.container}>
-          <div className="info-container">
+          <div className="info-container" style={{background: this.state.infoColor}}>
             <Weather />
             <Notepad />
-            <img src="../../assets/img/background_icon.png" className="background-button" onClick={this.showModal} />
+            <button onClick={ this.displayColorPicker }>Pick Color</button>
+            {this.state.displayColorPicker ? <div style={ styles.popover }>
+              <div style={ styles.cover } onClick={ this.handleClose }/>
+              <ChromePicker color={this.state.infoColor} onChange={this.changeInfoColor} />
+            </div> : null }
+            <div>
+              <img src="../../assets/img/background_icon.png" className="background-button" onClick={this.showModal} />
+            </div>
           </div>
           {this.state.feedList}
         </div>
@@ -155,6 +190,17 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     height: "100%",
+  },
+  popover: {
+    position: 'absolute',
+    zIndex: '2000',
+  },
+  cover: {
+    position: 'fixed',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    left: '0px',
   },
 };
 
