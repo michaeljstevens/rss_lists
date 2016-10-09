@@ -21474,7 +21474,8 @@
 	      feedUrl: null,
 	      feedList: [],
 	      modalOpen: false,
-	      background: ""
+	      background: "",
+	      customBackground: ""
 	    };
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.delete = _this.delete.bind(_this);
@@ -21482,6 +21483,7 @@
 	    _this.totalRendered = 0;
 	    _this.feeds = [];
 	    _this.showModal = _this.showModal.bind(_this);
+	    _this.customBackground = _this.customBackground.bind(_this);
 	
 	    chrome.storage.sync.get('background', function (backgroundObj) {
 	      if (Object.keys(backgroundObj).length < 1) {
@@ -21495,12 +21497,26 @@
 	    _this.modal = _react2.default.createElement(
 	      'div',
 	      { className: 'modal-container' },
-	      _react2.default.createElement('img', { onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/coffee.jpeg')"),
-	        className: 'modal-img', src: '../../assets/img/backgrounds/coffee.jpeg' }),
-	      _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/rocks.jpeg')"),
-	        src: '../../assets/img/backgrounds/rocks.jpeg' }),
-	      _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/trees.jpeg')"),
-	        src: '../../assets/img/backgrounds/trees.jpeg' })
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'modal-image-container' },
+	        _react2.default.createElement('img', { onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/coffee.jpeg')"),
+	          className: 'modal-img', src: '../../assets/img/backgrounds/coffee.jpeg' }),
+	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/rocks.jpeg')"),
+	          src: '../../assets/img/backgrounds/rocks.jpeg' }),
+	        _react2.default.createElement('img', { className: 'modal-img', onClick: _this.changeBackground.bind(_this, "url('../../assets/img/backgrounds/trees.jpeg')"),
+	          src: '../../assets/img/backgrounds/trees.jpeg' })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'background-input' },
+	        _react2.default.createElement('input', { type: 'text', onChange: _this.updateState("customBackground"), placeholder: 'Image Url' }),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: _this.customBackground, className: 'custom-image-button' },
+	          'Add'
+	        )
+	      )
 	    );
 	    return _this;
 	  }
@@ -21536,10 +21552,21 @@
 	      });
 	    }
 	  }, {
+	    key: 'customBackground',
+	    value: function customBackground(e) {
+	      e.preventDefault();
+	      var customUrl = 'url(\'' + this.state.customBackground + '\')';
+	      chrome.storage.sync.set({ 'background': customUrl });
+	      this.setState({ background: customUrl });
+	      this.showModal();
+	    }
+	  }, {
 	    key: 'changeBackground',
 	    value: function changeBackground(source, e) {
 	      e.preventDefault();
+	      chrome.storage.sync.set({ 'background': source });
 	      this.setState({ background: source });
+	      this.showModal();
 	    }
 	  }, {
 	    key: 'delete',

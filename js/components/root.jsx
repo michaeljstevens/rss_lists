@@ -12,6 +12,7 @@ class Root extends Component {
       feedList: [],
       modalOpen: false,
       background: "",
+      customBackground: "",
     };
     this.updateState = this.updateState.bind(this);
     this.delete = this.delete.bind(this);
@@ -19,6 +20,7 @@ class Root extends Component {
     this.totalRendered = 0;
     this.feeds = [];
     this.showModal = this.showModal.bind(this);
+    this.customBackground = this.customBackground.bind(this);
 
     chrome.storage.sync.get('background', (backgroundObj) => {
       if(Object.keys(backgroundObj).length < 1) {
@@ -31,12 +33,18 @@ class Root extends Component {
 
     this.modal = (
         <div className="modal-container">
-          <img onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/coffee.jpeg')")}
-          className="modal-img" src="../../assets/img/backgrounds/coffee.jpeg" />
-          <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/rocks.jpeg')")}
-          src="../../assets/img/backgrounds/rocks.jpeg" />
-          <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/trees.jpeg')")}
-          src="../../assets/img/backgrounds/trees.jpeg" />
+          <div className="modal-image-container">
+            <img onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/coffee.jpeg')")}
+            className="modal-img" src="../../assets/img/backgrounds/coffee.jpeg" />
+            <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/rocks.jpeg')")}
+            src="../../assets/img/backgrounds/rocks.jpeg" />
+            <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/trees.jpeg')")}
+            src="../../assets/img/backgrounds/trees.jpeg" />
+          </div>
+          <div className="background-input">
+            <input type="text" onChange={this.updateState("customBackground")} placeholder="Image Url" />
+            <button onClick={this.customBackground} className="custom-image-button">Add</button>
+          </div>
         </div>
       );
   }
@@ -70,9 +78,19 @@ class Root extends Component {
     
   }
 
+  customBackground(e) {
+    e.preventDefault();
+    let customUrl = `url('${this.state.customBackground}')`;
+    chrome.storage.sync.set({'background': customUrl});
+    this.setState({background: customUrl});
+    this.showModal();
+  }
+
   changeBackground(source, e) {
     e.preventDefault();
+    chrome.storage.sync.set({'background': source});
     this.setState({background: source});
+    this.showModal();
   }
 
   delete(list) {
