@@ -21456,6 +21456,10 @@
 	
 	var _weather2 = _interopRequireDefault(_weather);
 	
+	var _notepad = __webpack_require__(181);
+	
+	var _notepad2 = _interopRequireDefault(_notepad);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -21504,6 +21508,7 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'modal-container' },
+	        _react2.default.createElement('img', { src: '../../assets/img/ic_close_black_24dp_1x.png', onClick: _this.showModal, className: 'exit-modal' }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'modal-image-container' },
@@ -21622,11 +21627,8 @@
 	            'div',
 	            { className: 'info-container' },
 	            _react2.default.createElement(_weather2.default, null),
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: this.showModal, className: 'background-button' },
-	              'Change Background Image'
-	            )
+	            _react2.default.createElement(_notepad2.default, null),
+	            _react2.default.createElement('img', { src: '../../assets/img/background_icon.png', className: 'background-button', onClick: this.showModal })
 	          ),
 	          this.state.feedList
 	        )
@@ -34129,26 +34131,30 @@
 	        _react2.default.createElement('img', { className: 'weather-icon', src: weatherIcons[this.state.weather] }),
 	        _react2.default.createElement(
 	          'ul',
-	          null,
+	          { className: 'weather-info-list' },
 	          _react2.default.createElement(
 	            'li',
 	            null,
-	            this.state.temp
+	            this.state.temp,
+	            ' F'
 	          ),
 	          _react2.default.createElement(
 	            'li',
 	            null,
-	            this.state.humidity
+	            this.state.humidity,
+	            '% Hum'
 	          ),
 	          _react2.default.createElement(
 	            'li',
 	            null,
-	            this.state.pressure
+	            this.state.pressure,
+	            ' hPa'
 	          ),
 	          _react2.default.createElement(
 	            'li',
 	            null,
-	            this.state.windSpeed
+	            this.state.windSpeed,
+	            ' m/s Wind'
 	          )
 	        )
 	      );
@@ -34159,6 +34165,85 @@
 	}(_react.Component);
 	
 	exports.default = Weather;
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Notepad = function (_Component) {
+	  _inherits(Notepad, _Component);
+	
+	  function Notepad(props) {
+	    _classCallCheck(this, Notepad);
+	
+	    var _this = _possibleConstructorReturn(this, (Notepad.__proto__ || Object.getPrototypeOf(Notepad)).call(this, props));
+	
+	    _this.state = {
+	      notes: ""
+	    };
+	    _this.updateState = _this.updateState.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Notepad, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      chrome.storage.sync.get('notes', function (data) {
+	        _this2.setState({ notes: data.notes });
+	      });
+	    }
+	  }, {
+	    key: 'updateState',
+	    value: function updateState(field) {
+	      var _this3 = this;
+	
+	      return function (e) {
+	        if (field === "notes") {
+	          chrome.storage.sync.set({ 'notes': e.currentTarget.value });
+	        }
+	        _this3.setState(_defineProperty({}, field, e.currentTarget.value));
+	      };
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('textarea', { className: 'note-input', value: this.state.notes,
+	          onChange: this.updateState("notes"), placeholder: 'Jot down notes and reminders' })
+	      );
+	    }
+	  }]);
+	
+	  return Notepad;
+	}(_react.Component);
+	
+	exports.default = Notepad;
 
 /***/ }
 /******/ ]);

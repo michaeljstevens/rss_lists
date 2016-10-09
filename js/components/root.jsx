@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import List from './list.jsx';
 import Weather from './weather.jsx';
+import Notepad from './notepad.jsx';
 
 
 
@@ -35,6 +36,7 @@ class Root extends Component {
     this.modal = (
         <div className="modal-outer-container" style={{background: 'rgba(0,0,0,0.8)', zIndex: 100}}>
           <div className="modal-container">
+            <img src='../../assets/img/ic_close_black_24dp_1x.png' onClick={this.showModal} className="exit-modal" />
             <div className="modal-image-container">
               <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/trees.jpeg')")}
               src="../../assets/img/backgrounds/trees.jpeg" />
@@ -135,7 +137,8 @@ class Root extends Component {
         <div style={styles.container}>
           <div className="info-container">
             <Weather />
-            <button onClick={this.showModal} className="background-button">Change Background Image</button>
+            <Notepad />
+            <img src="../../assets/img/background_icon.png" className="background-button" onClick={this.showModal} />
           </div>
           {this.state.feedList}
         </div>

@@ -165,8 +165,17 @@ li {
 }
 
 .background-button {
-  width: 100px;
-  z-index: 1000;
+  font-size: 20px;
+  position: absolute;
+  bottom: 5px;
+  right: 9px;
+  border-radius: 5px;
+  height: 53px;
+}
+
+.background-button:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 15px black;
 }
 
 .modal-outer-container {
@@ -206,6 +215,19 @@ li {
   box-shadow: 1px 1px 15px black;
 }
 
+.exit-modal {
+  position: absolute;
+  right: 5;
+  right: 5px;
+  top: 5px;
+  height: 30px;
+}
+
+.exit-modal:hover {
+  cursor: pointer;
+  height: 32px;
+}
+
 .custom-image-input {
   height: 30px;
   width: 300px;
@@ -228,10 +250,56 @@ li {
 }
 
 .info-container {
-  margin-right: 20px;
-  background: white;
+  position: relative;
+  border: 1px solid black;
+  margin-right: 30px;
+  margin-left: 30px;
+  min-width: 300px;
+  width: 300px;
+  height: 90vh;
+  background: #99935F;
+  box-shadow: 1px 1px 15px black;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .weather-icon {
-  height: 150px;
+  max-height: 150px;
+  margin: 20px;
+  margin-left: 58px;
+}
+
+.weather-info-list {
+  display: flex;
+  font-size: 15px;
+  border: 1px solid black;
+  width: 267px;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  background: #f0f0f0;
+}
+
+.weather-info-list li {
+  align-items: center;
+  text-align: center;
+  border-right: 1px solid black;
+  width: 45px;
+  display: flex;
+  font-family: arial;
+}
+
+.weather-info-list li:last-child {
+  border-right: none;
+}
+
+.note-input {
+  width: 267px;
+  height: 257px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 20px;
+  background: #f0f0f0;
 }
