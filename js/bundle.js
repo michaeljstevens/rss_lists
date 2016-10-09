@@ -34040,6 +34040,17 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	var weatherIcons = {
+	  'Clear': '../../assets/img/weather/clear.png',
+	  'Atmosphere': '../../assets/img/weather/atmosphere.png',
+	  'Thunderstorm': '../../assets/img/weather/thunderstorm.png',
+	  'Drizzle': '../../assets/img/weather/drizzle.png',
+	  'Rain': '../../assets/img/weather/rain.png',
+	  'Snow': '../../assets/img/weather/snow.png',
+	  'Clouds': '../../assets/img/weather/clouds.png',
+	  'Extreme': '../../assets/img/weather/extreme.png'
+	};
+	
 	var Weather = function (_Component) {
 	  _inherits(Weather, _Component);
 	
@@ -34115,6 +34126,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'weather-container' },
+	        _react2.default.createElement('img', { className: 'weather-icon', src: weatherIcons[this.state.weather] }),
 	        _react2.default.createElement(
 	          'ul',
 	          null,
@@ -34132,11 +34144,6 @@
 	            'li',
 	            null,
 	            this.state.pressure
-	          ),
-	          _react2.default.createElement(
-	            'li',
-	            null,
-	            this.state.weather
 	          ),
 	          _react2.default.createElement(
 	            'li',

@@ -1,7 +1,19 @@
 import React, {Component} from 'react';
 import $ from 'jQuery';
 
+  const weatherIcons = {
+    'Clear': '../../assets/img/weather/clear.png',
+    'Atmosphere': '../../assets/img/weather/atmosphere.png',
+    'Thunderstorm': '../../assets/img/weather/thunderstorm.png',
+    'Drizzle': '../../assets/img/weather/drizzle.png',
+    'Rain': '../../assets/img/weather/rain.png',
+    'Snow': '../../assets/img/weather/snow.png',
+    'Clouds': '../../assets/img/weather/clouds.png',
+    'Extreme': '../../assets/img/weather/extreme.png',
+  };
+
 class Weather extends Component {
+
 
   constructor(props) {
     super(props);
@@ -66,11 +78,11 @@ class Weather extends Component {
   render() {
     return(
       <div className='weather-container'>
+        <img className='weather-icon' src={weatherIcons[this.state.weather]} />
         <ul>
           <li>{this.state.temp}</li>
           <li>{this.state.humidity}</li>
           <li>{this.state.pressure}</li>
-          <li>{this.state.weather}</li>
           <li>{this.state.windSpeed}</li>
         </ul>
       </div>

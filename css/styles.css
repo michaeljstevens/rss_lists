@@ -228,7 +228,10 @@ li {
 }
 
 .info-container {
-  z-index: 1000;
   margin-right: 20px;
   background: white;
+}
+
+.weather-icon {
+  height: 150px;
 }
