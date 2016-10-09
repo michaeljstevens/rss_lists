@@ -21474,7 +21474,7 @@
 	      feedUrl: null,
 	      feedList: [],
 	      modalOpen: false,
-	      background: "url('../../assets/img/backgrounds/trees.jpeg')"
+	      background: ""
 	    };
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.delete = _this.delete.bind(_this);
@@ -21482,6 +21482,15 @@
 	    _this.totalRendered = 0;
 	    _this.feeds = [];
 	    _this.showModal = _this.showModal.bind(_this);
+	
+	    chrome.storage.sync.get('background', function (backgroundObj) {
+	      if (Object.keys(backgroundObj).length < 1) {
+	        chrome.storage.sync.set({ 'background': "url('../../assets/img/backgrounds/trees.jpeg')" });
+	        _this.setState({ background: "url('../../assets/img/backgrounds/trees.jpeg')" });
+	      } else {
+	        _this.setState({ background: backgroundObj.background });
+	      }
+	    });
 	
 	    _this.modal = _react2.default.createElement(
 	      'div',

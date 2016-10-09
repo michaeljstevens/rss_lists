@@ -11,7 +11,7 @@ class Root extends Component {
       feedUrl: null,
       feedList: [],
       modalOpen: false,
-      background: "url('../../assets/img/backgrounds/trees.jpeg')",
+      background: "",
     };
     this.updateState = this.updateState.bind(this);
     this.delete = this.delete.bind(this);
@@ -19,6 +19,15 @@ class Root extends Component {
     this.totalRendered = 0;
     this.feeds = [];
     this.showModal = this.showModal.bind(this);
+
+    chrome.storage.sync.get('background', (backgroundObj) => {
+      if(Object.keys(backgroundObj).length < 1) {
+        chrome.storage.sync.set({'background': "url('../../assets/img/backgrounds/trees.jpeg')"});
+        this.setState({background: "url('../../assets/img/backgrounds/trees.jpeg')"});
+      } else {
+        this.setState({background: backgroundObj.background});
+      }
+    });
 
     this.modal = (
         <div className="modal-container">
