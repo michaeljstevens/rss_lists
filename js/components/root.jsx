@@ -76,25 +76,29 @@ class Root extends Component {
 
   componentDidMount() {
     chrome.storage.sync.get('feeds', (initFeedsObj) => {
-      let initFeedsArr = initFeedsObj.feeds;
-      let initFeeds = [];
-      initFeedsArr.forEach(feed => {
-        this.feeds.push({'url': feed, 'id': this.key});
-        initFeeds.push(<List key={this.key} id={this.key} delete={this.delete} url={feed} />);
-        this.key++;
-        this.setState({feedList: initFeeds});
-      });
+      if (Object.keys(initFeedsObj).length > 0) {
+        let initFeedsArr = initFeedsObj.feeds;
+        let initFeeds = [];
+        initFeedsArr.forEach(feed => {
+          this.feeds.push({'url': feed, 'id': this.key});
+          initFeeds.push(<List key={this.key} id={this.key} delete={this.delete} url={feed} />);
+          this.key++;
+          this.setState({feedList: initFeeds});
+        });
+      }
       
       setInterval(() => {
         chrome.storage.sync.get('feeds', (feedsObj) => {
-          let feeds = this.state.feedList;
-          let feedsArr = feedsObj.feeds;
-          if (feedsArr.length > this.feeds.length) {
-            let toAdd = feedsArr[feedsArr.length - 1];
-            this.feeds.push({'url': toAdd, 'id': this.key});
-            feeds.push(<List key={this.key} id={this.key} delete={this.delete} url={toAdd} />);
-            this.key++;
-            this.setState({feedList: feeds});
+          if(Object.keys(feedsObj).length > 0) {
+            let feeds = this.state.feedList;
+            let feedsArr = feedsObj.feeds;
+            if (feedsArr.length > this.feeds.length) {
+              let toAdd = feedsArr[feedsArr.length - 1];
+              this.feeds.push({'url': toAdd, 'id': this.key});
+              feeds.push(<List key={this.key} id={this.key} delete={this.delete} url={toAdd} />);
+              this.key++;
+              this.setState({feedList: feeds});
+            }
           }
         });
       }, 50);

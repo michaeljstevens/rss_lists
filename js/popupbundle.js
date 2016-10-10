@@ -21513,9 +21513,14 @@
 	
 	      e.preventDefault();
 	      if (source) this.state.url = URLs[source];
+	      var feedsArr = [];
 	      chrome.storage.sync.get('feeds', function (feedsObj) {
-	        var feedsArr = feedsObj.feeds;
-	        feedsArr.push(_this3.state.url);
+	        if (Object.keys(feedsObj).length > 0) {
+	          feedsArr = feedsObj.feeds;
+	          feedsArr.push(_this3.state.url);
+	        } else {
+	          feedsArr = [_this3.state.url];
+	        }
 	        chrome.storage.sync.set({ 'feeds': feedsArr });
 	      });
 	    }

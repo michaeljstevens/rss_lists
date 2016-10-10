@@ -21560,25 +21560,31 @@
 	      var _this2 = this;
 	
 	      chrome.storage.sync.get('feeds', function (initFeedsObj) {
-	        var initFeedsArr = initFeedsObj.feeds;
-	        var initFeeds = [];
-	        initFeedsArr.forEach(function (feed) {
-	          _this2.feeds.push({ 'url': feed, 'id': _this2.key });
-	          initFeeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: feed }));
-	          _this2.key++;
-	          _this2.setState({ feedList: initFeeds });
-	        });
+	        if (Object.keys(initFeedsObj).length > 0) {
+	          (function () {
+	            var initFeedsArr = initFeedsObj.feeds;
+	            var initFeeds = [];
+	            initFeedsArr.forEach(function (feed) {
+	              _this2.feeds.push({ 'url': feed, 'id': _this2.key });
+	              initFeeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: feed }));
+	              _this2.key++;
+	              _this2.setState({ feedList: initFeeds });
+	            });
+	          })();
+	        }
 	
 	        setInterval(function () {
 	          chrome.storage.sync.get('feeds', function (feedsObj) {
-	            var feeds = _this2.state.feedList;
-	            var feedsArr = feedsObj.feeds;
-	            if (feedsArr.length > _this2.feeds.length) {
-	              var toAdd = feedsArr[feedsArr.length - 1];
-	              _this2.feeds.push({ 'url': toAdd, 'id': _this2.key });
-	              feeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: toAdd }));
-	              _this2.key++;
-	              _this2.setState({ feedList: feeds });
+	            if (Object.keys(feedsObj).length > 0) {
+	              var feeds = _this2.state.feedList;
+	              var feedsArr = feedsObj.feeds;
+	              if (feedsArr.length > _this2.feeds.length) {
+	                var toAdd = feedsArr[feedsArr.length - 1];
+	                _this2.feeds.push({ 'url': toAdd, 'id': _this2.key });
+	                feeds.push(_react2.default.createElement(_list2.default, { key: _this2.key, id: _this2.key, 'delete': _this2.delete, url: toAdd }));
+	                _this2.key++;
+	                _this2.setState({ feedList: feeds });
+	              }
 	            }
 	          });
 	        }, 50);
@@ -34227,7 +34233,7 @@
 	            'li',
 	            null,
 	            this.state.temp,
-	            ' F'
+	            '\xB0 F'
 	          ),
 	          _react2.default.createElement(
 	            'li',

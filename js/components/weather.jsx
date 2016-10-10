@@ -80,7 +80,7 @@ class Weather extends Component {
       <div className='weather-container'>
         <img className='weather-icon' src={weatherIcons[this.state.weather]} />
         <ul className='weather-info-list'>
-          <li>{this.state.temp} F</li>
+          <li>{this.state.temp}° F</li>
           <li>{this.state.humidity}% Hum</li>
           <li>{this.state.pressure} hPa</li>
           <li>{this.state.windSpeed} m/s Wind</li>

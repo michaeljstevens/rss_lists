@@ -43,9 +43,14 @@ class PopupRoot extends Component {
    addFeed(source, e) {
     e.preventDefault();
     if(source) this.state.url = URLs[source];
+    let feedsArr = []
     chrome.storage.sync.get('feeds', feedsObj => {
-      let feedsArr = feedsObj.feeds;
-      feedsArr.push(this.state.url);
+      if(Object.keys(feedsObj).length > 0) {
+        feedsArr = feedsObj.feeds;
+        feedsArr.push(this.state.url);
+      } else {
+        feedsArr = [this.state.url];
+      }
       chrome.storage.sync.set({'feeds': feedsArr});
     });
   }

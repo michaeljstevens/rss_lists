@@ -277,7 +277,7 @@ li {
   border: 1px solid black;
   width: 267px;
   border-radius: 5px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   background: #f0f0f0;
 }
 
@@ -317,7 +317,7 @@ li {
 }
 
 .date {
-  margin-top: 20px;
+  margin-top: 15px;
   font-size: 31px;
   font-family: arial;
   background: #f0f0f0;
