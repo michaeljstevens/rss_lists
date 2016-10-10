@@ -26,19 +26,19 @@ I created this extension because most RSS readers seem to either combine all fee
 
 To use, download from the [Chrome Web Store][RSSurl]. Once installed, visit a new tab to begin adding lists. If you encounter any problems, ensure that you don't already have a Chrome extension installed that uses the new tab page.
 
-<img src="../docs/screenshots/main.png" width="70%" />
+<img src="docs/screenshots/main.png" width="70%" />
 
 To add feeds, click the list icon in the chrome extensions top bar. You'll see a list of preloaded feeds, as well as the option to add your own feeds via url. When you click a feed or the add buttom (for add feed by url), it will be appended to the right of your existing lists.
 
-<img src="../docs/screenshots/add.png" width="70%" />
+<img src="docs/screenshots/add.png" width="70%" />
 
 To change the background image, click the image icon in the bottom right corner of the date/weather/note list. I've included 4 high resolution images, but you can also add your own background from any image url.
 
-<img src="../docs/screenshots/background.png" width="70%" />
+<img src="docs/screenshots/background.png" width="70%" />
 
 To change the color of the date/weather/note list, click the color wheel in the bottom right corner. From here you can change the color and transparency.
 
-<img src="../docs/screenshots/color.png" width="70%" />
+<img src="docs/screenshots/color.png" width="70%" />
 
 
 ### Code Snippets
