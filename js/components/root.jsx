@@ -43,7 +43,7 @@ class Root extends Component {
 
     chrome.storage.sync.get('infoColor', (color) => {
       if (Object.keys(color).length < 1) {
-        let newColor = 'rgba(73,93,125,0.9)';
+        let newColor = 'rgba(17,39,93,0.94)';
         chrome.storage.sync.set({infoColor: newColor});
         this.setState({infoColor: newColor});
       } else {
@@ -202,6 +202,9 @@ class Root extends Component {
             <div>
               <img src="../../assets/img/background_icon.png" className="background-button" onClick={this.showModal} />
             </div>
+            <a href="https://github.com/michaeljstevens/rss_lists">
+              <img src="../../assets/img/github-icon.png" className="github-icon" />
+            </a>
           </div>
           {this.state.feedList}
         </div>

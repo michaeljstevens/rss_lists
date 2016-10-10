@@ -21516,7 +21516,7 @@
 	
 	    chrome.storage.sync.get('infoColor', function (color) {
 	      if (Object.keys(color).length < 1) {
-	        var newColor = 'rgba(73,93,125,0.9)';
+	        var newColor = 'rgba(17,39,93,0.94)';
 	        chrome.storage.sync.set({ infoColor: newColor });
 	        _this.setState({ infoColor: newColor });
 	      } else {
@@ -21712,6 +21712,11 @@
 	              'div',
 	              null,
 	              _react2.default.createElement('img', { src: '../../assets/img/background_icon.png', className: 'background-button', onClick: this.showModal })
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'https://github.com/michaeljstevens/rss_lists' },
+	              _react2.default.createElement('img', { src: '../../assets/img/github-icon.png', className: 'github-icon' })
 	            )
 	          ),
 	          this.state.feedList
