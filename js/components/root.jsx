@@ -3,6 +3,7 @@ import List from './list.jsx';
 import Weather from './weather.jsx';
 import Notepad from './notepad.jsx';
 import {ChromePicker} from 'react-color';
+import $ from 'jQuery';
 
 
 
@@ -29,6 +30,7 @@ class Root extends Component {
     this.displayColorPicker = this.displayColorPicker.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.changeInfoColor = this.changeInfoColor.bind(this);
+    this.formatDate = this.formatDate.bind(this);
 
     chrome.storage.sync.get('background', (backgroundObj) => {
       if(Object.keys(backgroundObj).length < 1) {
@@ -41,16 +43,17 @@ class Root extends Component {
 
     chrome.storage.sync.get('infoColor', (color) => {
       if (Object.keys(color).length < 1) {
-        chrome.storage.sync.set({infoColor: '#99935F'});
-        this.setState({infoColor: '#99935F'});
+        let newColor = 'rgba(73,93,125,0.9)';
+        chrome.storage.sync.set({infoColor: newColor});
+        this.setState({infoColor: newColor});
       } else {
         this.setState({infoColor: color.infoColor});
       }
-    })
+    });
 
     this.modal = (
-        <div className="modal-outer-container" style={{background: 'rgba(0,0,0,0.8)', zIndex: 100}}>
-          <div className="modal-container">
+        <div id="modal-outer-container" className="modal-outer-container" style={{background: 'rgba(0,0,0,0.8)', zIndex: 100}}>
+          <div id="modal-container" className="modal-container">
             <img src='../../assets/img/ic_close_black_24dp_1x.png' onClick={this.showModal} className="exit-modal" />
             <div className="modal-image-container">
               <img className="modal-img" onClick={this.changeBackground.bind(this, "url('../../assets/img/backgrounds/trees.jpeg')")}
@@ -96,8 +99,18 @@ class Root extends Component {
         });
       }, 50);
     });
+  }
 
+  componentDidUpdate() {
     
+    let action = (event) => {
+      if(!$(event.target).closest('#modal-container').length) {
+          this.showModal();
+      }
+    } 
+    if(this.state.modalOpen) {
+      document.getElementById('modal-outer-container').addEventListener('click', action.bind(this));
+    }
   }
 
   customBackground(e) {
@@ -154,8 +167,17 @@ class Root extends Component {
   }
 
   changeInfoColor(color) {
-    chrome.storage.sync.set({'infoColor': color.hex});
-    this.setState({infoColor: color.hex});
+    let newColor = `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
+    chrome.storage.sync.set({'infoColor': newColor});
+    this.setState({infoColor: newColor});
+  }
+
+  formatDate() {
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['January','February','March','April','May','June','July','August',
+    'September','October','November','December'];
+    let date = new Date();
+    return(`${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`);
   }
 
   render() {
@@ -164,6 +186,7 @@ class Root extends Component {
         {this.state.modalOpen ? this.modal : null}
         <div style={styles.container}>
           <div className="info-container" style={{background: this.state.infoColor}}>
+            <h1 className="date">{this.formatDate()}</h1>
             <Weather />
             <Notepad />
             <img src={'../../assets/img/color_picker.png'} onClick={this.displayColorPicker} 
@@ -196,7 +219,7 @@ const styles = {
     position: 'absolute',
     zIndex: '2000',
     bottom: 63,
-    right: 60,
+    left: 6,
   },
   cover: {
     position: 'fixed',

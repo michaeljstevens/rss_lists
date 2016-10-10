@@ -315,3 +315,14 @@ li {
   cursor: pointer;
   box-shadow: 1px 1px 15px black;
 }
+
+.date {
+  margin-top: 20px;
+  font-size: 31px;
+  font-family: arial;
+  background: #f0f0f0;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 257px;
+}

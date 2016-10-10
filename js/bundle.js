@@ -21462,6 +21462,10 @@
 	
 	var _reactColor = __webpack_require__(182);
 	
+	var _jQuery = __webpack_require__(179);
+	
+	var _jQuery2 = _interopRequireDefault(_jQuery);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -21499,6 +21503,7 @@
 	    _this.displayColorPicker = _this.displayColorPicker.bind(_this);
 	    _this.handleClose = _this.handleClose.bind(_this);
 	    _this.changeInfoColor = _this.changeInfoColor.bind(_this);
+	    _this.formatDate = _this.formatDate.bind(_this);
 	
 	    chrome.storage.sync.get('background', function (backgroundObj) {
 	      if (Object.keys(backgroundObj).length < 1) {
@@ -21511,8 +21516,9 @@
 	
 	    chrome.storage.sync.get('infoColor', function (color) {
 	      if (Object.keys(color).length < 1) {
-	        chrome.storage.sync.set({ infoColor: '#99935F' });
-	        _this.setState({ infoColor: '#99935F' });
+	        var newColor = 'rgba(73,93,125,0.9)';
+	        chrome.storage.sync.set({ infoColor: newColor });
+	        _this.setState({ infoColor: newColor });
 	      } else {
 	        _this.setState({ infoColor: color.infoColor });
 	      }
@@ -21520,10 +21526,10 @@
 	
 	    _this.modal = _react2.default.createElement(
 	      'div',
-	      { className: 'modal-outer-container', style: { background: 'rgba(0,0,0,0.8)', zIndex: 100 } },
+	      { id: 'modal-outer-container', className: 'modal-outer-container', style: { background: 'rgba(0,0,0,0.8)', zIndex: 100 } },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'modal-container' },
+	        { id: 'modal-container', className: 'modal-container' },
 	        _react2.default.createElement('img', { src: '../../assets/img/ic_close_black_24dp_1x.png', onClick: _this.showModal, className: 'exit-modal' }),
 	        _react2.default.createElement(
 	          'div',
@@ -21579,6 +21585,20 @@
 	      });
 	    }
 	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      var _this3 = this;
+	
+	      var action = function action(event) {
+	        if (!(0, _jQuery2.default)(event.target).closest('#modal-container').length) {
+	          _this3.showModal();
+	        }
+	      };
+	      if (this.state.modalOpen) {
+	        document.getElementById('modal-outer-container').addEventListener('click', action.bind(this));
+	      }
+	    }
+	  }, {
 	    key: 'customBackground',
 	    value: function customBackground(e) {
 	      e.preventDefault();
@@ -21614,10 +21634,10 @@
 	  }, {
 	    key: 'updateState',
 	    value: function updateState(field) {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      return function (e) {
-	        _this3.setState(_defineProperty({}, field, e.currentTarget.value));
+	        _this4.setState(_defineProperty({}, field, e.currentTarget.value));
 	      };
 	    }
 	  }, {
@@ -21642,8 +21662,17 @@
 	  }, {
 	    key: 'changeInfoColor',
 	    value: function changeInfoColor(color) {
-	      chrome.storage.sync.set({ 'infoColor': color.hex });
-	      this.setState({ infoColor: color.hex });
+	      var newColor = 'rgba(' + color.rgb.r + ',' + color.rgb.g + ',' + color.rgb.b + ',' + color.rgb.a + ')';
+	      chrome.storage.sync.set({ 'infoColor': newColor });
+	      this.setState({ infoColor: newColor });
+	    }
+	  }, {
+	    key: 'formatDate',
+	    value: function formatDate() {
+	      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+	      var date = new Date();
+	      return days[date.getDay()] + ', ' + months[date.getMonth()] + ' ' + date.getDate();
 	    }
 	  }, {
 	    key: 'render',
@@ -21658,6 +21687,11 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'info-container', style: { background: this.state.infoColor } },
+	            _react2.default.createElement(
+	              'h1',
+	              { className: 'date' },
+	              this.formatDate()
+	            ),
 	            _react2.default.createElement(_weather2.default, null),
 	            _react2.default.createElement(_notepad2.default, null),
 	            _react2.default.createElement('img', { src: '../../assets/img/color_picker.png', onClick: this.displayColorPicker,
@@ -21694,7 +21728,7 @@
 	    position: 'absolute',
 	    zIndex: '2000',
 	    bottom: 63,
-	    right: 60
+	    left: 6
 	  },
 	  cover: {
 	    position: 'fixed',
