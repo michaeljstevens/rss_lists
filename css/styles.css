@@ -255,6 +255,7 @@ li {
   margin-right: 30px;
   margin-left: 30px;
   min-width: 300px;
+	min-height: 540px;
   width: 300px;
   height: 90vh;
   box-shadow: 1px 1px 15px black;
@@ -296,11 +297,12 @@ li {
 
 .note-input {
   width: 267px;
-  height: 257px;
+  height: 26vh;
   border: 1px solid black;
   border-radius: 5px;
   font-size: 20px;
   background: #f0f0f0;
+	outline: none;
 }
 
 .color-picker-icon {
