@@ -86,7 +86,7 @@ class Root extends Component {
           this.setState({feedList: initFeeds});
         });
       }
-      
+
       setInterval(() => {
         chrome.storage.sync.get('feeds', (feedsObj) => {
           if(Object.keys(feedsObj).length > 0) {
@@ -106,12 +106,12 @@ class Root extends Component {
   }
 
   componentDidUpdate() {
-    
+
     let action = (event) => {
       if(!$(event.target).closest('#modal-container').length) {
           this.showModal();
       }
-    } 
+    }
     if(this.state.modalOpen) {
       document.getElementById('modal-outer-container').addEventListener('click', action.bind(this));
     }
@@ -193,18 +193,20 @@ class Root extends Component {
             <h1 className="date">{this.formatDate()}</h1>
             <Weather />
             <Notepad />
-            <img src={'../../assets/img/color_picker.png'} onClick={this.displayColorPicker} 
-            className="color-picker-icon"/>
-            {this.state.displayColorPicker ? <div style={ styles.popover }>
-              <div style={ styles.cover } onClick={ this.handleClose }/>
-              <ChromePicker color={this.state.infoColor} onChange={this.changeInfoColor} />
-            </div> : null }
-            <div>
-              <img src="../../assets/img/background_icon.png" className="background-button" onClick={this.showModal} />
+            <div className="bottom-icons">
+              <img src={'../../assets/img/color_picker.png'} onClick={this.displayColorPicker}
+              className="color-picker-icon"/>
+              {this.state.displayColorPicker ? <div style={ styles.popover }>
+                <div style={ styles.cover } onClick={ this.handleClose }/>
+                <ChromePicker color={this.state.infoColor} onChange={this.changeInfoColor} />
+              </div> : null }
+              <div>
+                <img src="../../assets/img/background_icon.png" className="background-button" onClick={this.showModal} />
+              </div>
+              <a href="https://github.com/michaeljstevens/rss_lists">
+                <img src="../../assets/img/github-icon.png" className="github-icon" />
+              </a>
             </div>
-            <a href="https://github.com/michaeljstevens/rss_lists">
-              <img src="../../assets/img/github-icon.png" className="github-icon" />
-            </a>
           </div>
           {this.state.feedList}
         </div>

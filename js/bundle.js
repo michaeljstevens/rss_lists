@@ -21700,23 +21700,27 @@
 	            ),
 	            _react2.default.createElement(_weather2.default, null),
 	            _react2.default.createElement(_notepad2.default, null),
-	            _react2.default.createElement('img', { src: '../../assets/img/color_picker.png', onClick: this.displayColorPicker,
-	              className: 'color-picker-icon' }),
-	            this.state.displayColorPicker ? _react2.default.createElement(
-	              'div',
-	              { style: styles.popover },
-	              _react2.default.createElement('div', { style: styles.cover, onClick: this.handleClose }),
-	              _react2.default.createElement(_reactColor.ChromePicker, { color: this.state.infoColor, onChange: this.changeInfoColor })
-	            ) : null,
 	            _react2.default.createElement(
 	              'div',
-	              null,
-	              _react2.default.createElement('img', { src: '../../assets/img/background_icon.png', className: 'background-button', onClick: this.showModal })
-	            ),
-	            _react2.default.createElement(
-	              'a',
-	              { href: 'https://github.com/michaeljstevens/rss_lists' },
-	              _react2.default.createElement('img', { src: '../../assets/img/github-icon.png', className: 'github-icon' })
+	              { className: 'bottom-icons' },
+	              _react2.default.createElement('img', { src: '../../assets/img/color_picker.png', onClick: this.displayColorPicker,
+	                className: 'color-picker-icon' }),
+	              this.state.displayColorPicker ? _react2.default.createElement(
+	                'div',
+	                { style: styles.popover },
+	                _react2.default.createElement('div', { style: styles.cover, onClick: this.handleClose }),
+	                _react2.default.createElement(_reactColor.ChromePicker, { color: this.state.infoColor, onChange: this.changeInfoColor })
+	              ) : null,
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement('img', { src: '../../assets/img/background_icon.png', className: 'background-button', onClick: this.showModal })
+	              ),
+	              _react2.default.createElement(
+	                'a',
+	                { href: 'https://github.com/michaeljstevens/rss_lists' },
+	                _react2.default.createElement('img', { src: '../../assets/img/github-icon.png', className: 'github-icon' })
+	              )
 	            )
 	          ),
 	          this.state.feedList
