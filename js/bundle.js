@@ -21491,7 +21491,8 @@
 	      background: "",
 	      customBackground: "",
 	      displayColorPicker: false,
-	      infoColor: ""
+	      infoColor: "",
+	      loader: false
 	    };
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.delete = _this.delete.bind(_this);
@@ -21504,6 +21505,7 @@
 	    _this.handleClose = _this.handleClose.bind(_this);
 	    _this.changeInfoColor = _this.changeInfoColor.bind(_this);
 	    _this.formatDate = _this.formatDate.bind(_this);
+	    _this.displayLoader = _this.displayLoader.bind(_this);
 	
 	    chrome.storage.sync.get('background', function (backgroundObj) {
 	      if (Object.keys(backgroundObj).length < 1) {
@@ -21681,6 +21683,11 @@
 	      return days[date.getDay()] + ', ' + months[date.getMonth()] + ' ' + date.getDate();
 	    }
 	  }, {
+	    key: 'displayLoader',
+	    value: function displayLoader(val) {
+	      this.setState({ loader: val });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -21698,7 +21705,8 @@
 	              { className: 'date' },
 	              this.formatDate()
 	            ),
-	            _react2.default.createElement(_weather2.default, null),
+	            this.state.loader ? loader : null,
+	            _react2.default.createElement(_weather2.default, { displayLoader: this.displayLoader }),
 	            _react2.default.createElement(_notepad2.default, null),
 	            _react2.default.createElement(
 	              'div',
@@ -21753,6 +21761,13 @@
 	    left: '0px'
 	  }
 	};
+	
+	var loader = _react2.default.createElement(
+	  'div',
+	  { className: 'sk-double-bounce' },
+	  _react2.default.createElement('div', { className: 'sk-child sk-double-bounce1' }),
+	  _react2.default.createElement('div', { className: 'sk-child sk-double-bounce2' })
+	);
 	
 	exports.default = Root;
 
@@ -34182,6 +34197,8 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	
+	      this.props.displayLoader(true);
+	      var that = this;
 	      chrome.storage.sync.get('weatherTime', function (time) {
 	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 600000) {
 	          navigator.geolocation.getCurrentPosition(function (position) {
@@ -34202,6 +34219,7 @@
 	                  'weather': data.weather[0].main,
 	                  'windSpeed': Math.round(data.wind.speed)
 	                } });
+	              that.props.displayLoader(false);
 	              _this2.forceUpdate();
 	            };
 	
@@ -34223,6 +34241,7 @@
 	            _this2.state.pressure = weatherObj.weather.pressure;
 	            _this2.state.weather = weatherObj.weather.weather;
 	            _this2.state.windSpeed = weatherObj.weather.windSpeed;
+	            _this2.props.displayLoader(false);
 	            _this2.forceUpdate();
 	          });
 	        }

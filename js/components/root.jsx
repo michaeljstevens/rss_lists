@@ -7,6 +7,7 @@ import $ from 'jQuery';
 
 
 
+
 class Root extends Component {
 
   constructor(props) {
@@ -19,6 +20,7 @@ class Root extends Component {
       customBackground: "",
       displayColorPicker: false,
       infoColor: "",
+      loader: false,
     };
     this.updateState = this.updateState.bind(this);
     this.delete = this.delete.bind(this);
@@ -31,6 +33,7 @@ class Root extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.changeInfoColor = this.changeInfoColor.bind(this);
     this.formatDate = this.formatDate.bind(this);
+    this.displayLoader = this.displayLoader.bind(this);
 
     chrome.storage.sync.get('background', (backgroundObj) => {
       if(Object.keys(backgroundObj).length < 1) {
@@ -184,6 +187,10 @@ class Root extends Component {
     return(`${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`);
   }
 
+  displayLoader(val) {
+    this.setState({loader: val});
+  }
+
   render() {
     return(
       <div className="outer-container" style={{backgroundImage: this.state.background}}>
@@ -191,7 +198,8 @@ class Root extends Component {
         <div style={styles.container}>
           <div className="info-container" style={{background: this.state.infoColor}}>
             <h1 className="date">{this.formatDate()}</h1>
-            <Weather />
+            {this.state.loader ? loader : null}
+            <Weather displayLoader = {this.displayLoader}/>
             <Notepad />
             <div className="bottom-icons">
               <img src={'../../assets/img/color_picker.png'} onClick={this.displayColorPicker}
@@ -238,6 +246,11 @@ const styles = {
     left: '0px',
   },
 };
+
+const loader = (<div className="sk-double-bounce">
+  <div className="sk-child sk-double-bounce1"></div>
+  <div className="sk-child sk-double-bounce2"></div>
+</div>);
 
 
 export default Root;

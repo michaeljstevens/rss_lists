@@ -27,17 +27,19 @@ class Weather extends Component {
   }
 
   componentDidMount() {
+    this.props.displayLoader(true);
+    let that = this;
     chrome.storage.sync.get('weatherTime', (time) => {
       if(Object.keys(time).length < 1 || (new Date().getTime() - time.weatherTime) > 600000) {
         navigator.geolocation.getCurrentPosition(position => {
           let lat = position.coords.latitude;
           let lng = position.coords.longitude;
-          
+
           const success = (data) => {
             this.state.temp = Math.round(data.main.temp * 9/5 - 459.67);
             this.state.humidity = Math.round(data.main.humidity);
             this.state.pressure = Math.round(data.main.pressure);
-            this.state.weather = data.weather[0].main; 
+            this.state.weather = data.weather[0].main;
             this.state.windSpeed = Math.round(data.wind.speed);
             let date = new Date().getTime();
             chrome.storage.sync.set({'weatherTime': date, 'weather': {
@@ -47,6 +49,7 @@ class Weather extends Component {
               'weather': data.weather[0].main,
               'windSpeed': Math.round(data.wind.speed),
             }});
+            that.props.displayLoader(false);
             this.forceUpdate();
           };
 
@@ -68,6 +71,7 @@ class Weather extends Component {
           this.state.pressure = weatherObj.weather.pressure;
           this.state.weather = weatherObj.weather.weather;
           this.state.windSpeed = weatherObj.weather.windSpeed;
+          this.props.displayLoader(false);
           this.forceUpdate();
         });
       }
@@ -92,4 +96,3 @@ class Weather extends Component {
 }
 
 export default Weather;
-
