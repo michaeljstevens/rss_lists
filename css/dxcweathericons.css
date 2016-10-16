@@ -1,0 +1,41 @@
+
+
+
+
+
+.bigIcons{
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	color:#FFFFFF;
+	text-align: center;
+}
+
+.bigIcons .weathericon{
+	width: 200px;
+	height: 200px;
+	float:left;
+}
+
+
+.bigIcons .weathericon svg{
+	width: 150px;
+	height: 150px;
+	margin: 10px;
+}
+
+
+.weathericon{
+	visibility: hidden;
+}
+
+.weathericon svg{
+	width: 100%;
+	height:100%;
+	overflow: visible;
+}
+
+
+
+
+/*Colored backgrounds for each one*/

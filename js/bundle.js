@@ -34164,13 +34164,15 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var weatherIcons = {
-	  'Clear': '../../assets/img/weather/clear.png',
-	  'Atmosphere': '../../assets/img/weather/atmosphere.png',
-	  'Thunderstorm': '../../assets/img/weather/thunderstorm.png',
-	  'Drizzle': '../../assets/img/weather/drizzle.png',
-	  'Rain': '../../assets/img/weather/rain.png',
-	  'Snow': '../../assets/img/weather/snow.png',
-	  'Clouds': '../../assets/img/weather/clouds.png',
+	  'ClearDay': _react2.default.createElement('div', { className: 'weathericon sunnyIcon' }),
+	  'ClearNight': _react2.default.createElement('div', { className: 'weathericon clearNightIcon' }),
+	  'Atmosphere': _react2.default.createElement('div', { className: 'weathericon windySunnyIcon' }),
+	  'Thunderstorm': _react2.default.createElement('div', { className: 'weathericon thundershowersIcon' }),
+	  'Drizzle': _react2.default.createElement('div', { className: 'weathericon showersIcon' }),
+	  'Rain': _react2.default.createElement('div', { className: 'weathericon rainyIcon' }),
+	  'Snow': _react2.default.createElement('div', { className: 'weathericon snowyIcon' }),
+	  'CloudsDay': _react2.default.createElement('div', { className: 'weathericon partlyCloudyIcon' }),
+	  'Clouds': _react2.default.createElement('div', { className: 'weathericon partlyCloudyNightIcon' }),
 	  'Extreme': '../../assets/img/weather/extreme.png'
 	};
 	
@@ -34200,16 +34202,25 @@
 	      this.props.displayLoader(true);
 	      var that = this;
 	      chrome.storage.sync.get('weatherTime', function (time) {
-	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 600000) {
+	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 6) {
 	          navigator.geolocation.getCurrentPosition(function (position) {
 	            var lat = position.coords.latitude;
 	            var lng = position.coords.longitude;
 	
 	            var success = function success(data) {
+	              var sunset = new Date() > data.sys.sunset;
 	              _this2.state.temp = Math.round(data.main.temp * 9 / 5 - 459.67);
 	              _this2.state.humidity = Math.round(data.main.humidity);
 	              _this2.state.pressure = Math.round(data.main.pressure);
+	              // if(data.weather[0].main === "Clouds") {
+	              //   this.state.weather = sunset ? "CloudsNight" : "CloudsDay";
+	              // } else if(data.weather[0].main === "Clear") {
+	              //   this.state.weather = sunset ? "ClearNight" : "ClearDay";
+	              // } else {
+	              //   this.state.weather = data.weather[0].main;
+	              // }
 	              _this2.state.weather = data.weather[0].main;
+	              console.log(data.weather[0].main);
 	              _this2.state.windSpeed = Math.round(data.wind.speed);
 	              var date = new Date().getTime();
 	              chrome.storage.sync.set({ 'weatherTime': date, 'weather': {
@@ -34239,6 +34250,7 @@
 	            _this2.state.temp = weatherObj.weather.temp;
 	            _this2.state.humidity = weatherObj.weather.humidity;
 	            _this2.state.pressure = weatherObj.weather.pressure;
+	            debugger;
 	            _this2.state.weather = weatherObj.weather.weather;
 	            _this2.state.windSpeed = weatherObj.weather.windSpeed;
 	            _this2.props.displayLoader(false);
@@ -34250,10 +34262,15 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      if (this.state.weather) {
+	        debugger;
+	      }
+	      var weatherIcon = weatherIcons[this.state.weather];
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'weather-container' },
-	        _react2.default.createElement('img', { className: 'weather-icon', src: weatherIcons[this.state.weather] }),
+	        weatherIcon,
 	        _react2.default.createElement(
 	          'ul',
 	          { className: 'weather-info-list' },
