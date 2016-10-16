@@ -92,12 +92,12 @@ class List extends Component {
       });
     }
     return (
-      <div className="list">
-        <div className="list-header" style={{background: this.state.showSpinner ? 'rgba(0,0,0,0.8)' : '#f0f0f0'}}>
+      <div className="list" style={{background: this.state.showSpinner ? 'rgba(0,0,0,0.5)' : 'white'}}>
+        <div className="list-header" style={{background: this.state.showSpinner ? 'rgba(0,0,0,0.0)' : '#f0f0f0'}}>
           {this.listImg ? <img className="header-img" src={this.listImg} /> : <div className="title-text">{this.listTitle}</div>}
           <img className="delete" src='../../assets/img/ic_close_black_24dp_1x.png' onClick={this.delete} />
         </div>
-        <div className="list-content" style={{background: this.state.showSpinner ? 'rgba(0,0,0,0.8)' : 'white'}}>
+        <div className="list-content" style={{background: this.state.showSpinner ? 'rgba(0,0,0,0)' : 'white'}}>
           {this.state.showSpinner ? loader : null}
           {this.state.data ? fpLis : null}
         </div>

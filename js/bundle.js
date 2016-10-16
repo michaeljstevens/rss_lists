@@ -21909,10 +21909,10 @@
 	      }
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'list' },
+	        { className: 'list', style: { background: this.state.showSpinner ? 'rgba(0,0,0,0.5)' : 'white' } },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'list-header', style: { background: this.state.showSpinner ? 'rgba(0,0,0,0.8)' : '#f0f0f0' } },
+	          { className: 'list-header', style: { background: this.state.showSpinner ? 'rgba(0,0,0,0.0)' : '#f0f0f0' } },
 	          this.listImg ? _react2.default.createElement('img', { className: 'header-img', src: this.listImg }) : _react2.default.createElement(
 	            'div',
 	            { className: 'title-text' },
@@ -21922,7 +21922,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'list-content', style: { background: this.state.showSpinner ? 'rgba(0,0,0,0.8)' : 'white' } },
+	          { className: 'list-content', style: { background: this.state.showSpinner ? 'rgba(0,0,0,0)' : 'white' } },
 	          this.state.showSpinner ? loader : null,
 	          this.state.data ? fpLis : null
 	        )
@@ -34210,7 +34210,7 @@
 	      this.props.displayLoader(true);
 	      var that = this;
 	      chrome.storage.sync.get('weatherTime', function (time) {
-	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 60000) {
+	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 600000) {
 	          navigator.geolocation.getCurrentPosition(function (position) {
 	            var lat = position.coords.latitude;
 	            var lng = position.coords.longitude;
