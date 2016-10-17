@@ -47,7 +47,6 @@ window.addEventListener('load', function(){
 	// }
 
 	$(".weathericon").each(function(index, elem){
-
 		//var elem = elems[index];
 		var thisS = Snap(elem);
 		//determine which svg to load

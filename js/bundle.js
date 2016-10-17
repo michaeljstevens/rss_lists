@@ -34203,8 +34203,8 @@
 	  }
 	
 	  _createClass(Weather, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      var _this2 = this;
 	
 	      this.props.displayLoader(true);
@@ -34216,7 +34216,8 @@
 	            var lng = position.coords.longitude;
 	
 	            var success = function success(data) {
-	              var sunset = new Date() > data.sys.sunset;
+	              var now = new Date().getTime() / 1000;
+	              var sunset = now > data.sys.sunset;
 	              _this2.state.temp = Math.round(data.main.temp * 9 / 5 - 459.67);
 	              _this2.state.humidity = Math.round(data.main.humidity);
 	              _this2.state.pressure = Math.round(data.main.pressure);
@@ -34274,7 +34275,7 @@
 	        { className: 'weather-container' },
 	        Object.keys(weatherIcons).map(function (el) {
 	          return _react2.default.createElement('div', { className: 'weathericon ' + weatherIcons[el], key: '' + el,
-	            style: { display: _this3.state.weather === el ? "block" : "none" } });
+	            style: { position: _this3.state.weather === el ? "inherit" : "absolute", left: "-999em" } });
 	        }),
 	        _react2.default.createElement('img', { className: 'weather-icon', src: '../../assets/img/weather/extreme.png',
 	          style: { display: this.state.weather === 'Extreme' ? "block" : "none" } }),

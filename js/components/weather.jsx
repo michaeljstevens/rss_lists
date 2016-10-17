@@ -26,7 +26,7 @@ class Weather extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.displayLoader(true);
     let that = this;
     chrome.storage.sync.get('weatherTime', (time) => {
@@ -36,7 +36,8 @@ class Weather extends Component {
           let lng = position.coords.longitude;
 
           const success = (data) => {
-            const sunset = new Date() > data.sys.sunset;
+            let now = new Date().getTime()/1000; 
+            const sunset = now > data.sys.sunset;
             this.state.temp = Math.round(data.main.temp * 9/5 - 459.67);
             this.state.humidity = Math.round(data.main.humidity);
             this.state.pressure = Math.round(data.main.pressure);
@@ -91,7 +92,7 @@ class Weather extends Component {
       <div className='weather-container'>
         {Object.keys(weatherIcons).map(el => (
           <div className={`weathericon ${weatherIcons[el]}`} key={`${el}`}
-            style={{display: this.state.weather === el ? "block" : "none"}}></div>
+            style={{position: this.state.weather === el ? "inherit" : "absolute", left: "-999em"}}></div>
         ))}
         <img className='weather-icon' src='../../assets/img/weather/extreme.png'
           style={{display: this.state.weather === 'Extreme' ? "block" : "none"}} />
