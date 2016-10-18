@@ -90,11 +90,11 @@ class Root extends Component {
         });
       }
 
-      setInterval(() => {
-        chrome.storage.sync.get('feeds', (feedsObj) => {
-          if(Object.keys(feedsObj).length > 0) {
+      chrome.storage.onChanged.addListener(changes => {
+        if(changes.feeds) {
+          if(Object.keys(changes.feeds.newValue).length > Object.keys(changes.feeds.oldValue).length) {
             let feeds = this.state.feedList;
-            let feedsArr = feedsObj.feeds;
+            let feedsArr = changes.feeds.newValue;
             if (feedsArr.length > this.feeds.length) {
               let toAdd = feedsArr[feedsArr.length - 1];
               this.feeds.push({'url': toAdd, 'id': this.key});
@@ -103,8 +103,8 @@ class Root extends Component {
               this.setState({feedList: feeds});
             }
           }
-        });
-      }, 50);
+        }
+      });
     });
   }
 

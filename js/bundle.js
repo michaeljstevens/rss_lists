@@ -21575,11 +21575,11 @@
 	          })();
 	        }
 	
-	        setInterval(function () {
-	          chrome.storage.sync.get('feeds', function (feedsObj) {
-	            if (Object.keys(feedsObj).length > 0) {
+	        chrome.storage.onChanged.addListener(function (changes) {
+	          if (changes.feeds) {
+	            if (Object.keys(changes.feeds.newValue).length > Object.keys(changes.feeds.oldValue).length) {
 	              var feeds = _this2.state.feedList;
-	              var feedsArr = feedsObj.feeds;
+	              var feedsArr = changes.feeds.newValue;
 	              if (feedsArr.length > _this2.feeds.length) {
 	                var toAdd = feedsArr[feedsArr.length - 1];
 	                _this2.feeds.push({ 'url': toAdd, 'id': _this2.key });
@@ -21588,8 +21588,8 @@
 	                _this2.setState({ feedList: feeds });
 	              }
 	            }
-	          });
-	        }, 50);
+	          }
+	        });
 	      });
 	    }
 	  }, {

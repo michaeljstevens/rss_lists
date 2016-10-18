@@ -3,7 +3,7 @@
 
   "name": "RSSLists",
   "description": "This extension displays the current date, weather, and rss feeds in the new tab page",
-  "version": "1.21",
+  "version": "1.22",
   "content_security_policy": "script-src 'self' https://code.jquery.com https://cdnjs.cloudflare.com; object-src 'self'",
   "browser_action": {
     "default_icon": "icon.png",
