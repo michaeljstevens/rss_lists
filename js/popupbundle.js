@@ -21527,32 +21527,22 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this4 = this;
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'popup-container' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'popup-icon-container' },
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/nytimes.png', onClick: this.addFeed.bind(this, "nytimes") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/npr.png', onClick: this.addFeed.bind(this, "npr") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/bbc.png', onClick: this.addFeed.bind(this, "bbc") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/ap.png', onClick: this.addFeed.bind(this, "ap") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/538.png', onClick: this.addFeed.bind(this, "538") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/economist.png', onClick: this.addFeed.bind(this, "economist") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/atlantic.png', onClick: this.addFeed.bind(this, "atlantic") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/newyorker.png', onClick: this.addFeed.bind(this, "newyorker") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/forbes.png', onClick: this.addFeed.bind(this, "forbes") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/wsj.png', onClick: this.addFeed.bind(this, "wsj") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/pcmag.png', onClick: this.addFeed.bind(this, "pcmag") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/reddit.png', onClick: this.addFeed.bind(this, "reddit") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/hackernews.png', onClick: this.addFeed.bind(this, "hackernews") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/onion.png', onClick: this.addFeed.bind(this, "onion") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/wired.png', onClick: this.addFeed.bind(this, "wired") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/espn.png', onClick: this.addFeed.bind(this, "espn") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/cnet.png', onClick: this.addFeed.bind(this, "cnet") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/mashable.png', onClick: this.addFeed.bind(this, "mashable") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/lifehack.png', onClick: this.addFeed.bind(this, "lifehack") }),
-	          _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/psychologytoday.png', onClick: this.addFeed.bind(this, "psychologytoday") })
+	          Object.keys(URLs).map(function (source) {
+	            return _react2.default.createElement(
+	              'div',
+	              { className: 'popup-icon-item-container' },
+	              _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/' + source + '.png',
+	                onClick: _this4.addFeed.bind(_this4, source) })
+	            );
+	          })
 	        ),
 	        _react2.default.createElement(
 	          'div',

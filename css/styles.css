@@ -136,9 +136,20 @@ li {
   justify-content: space-between;
 }
 
+.popup-icon-item-container {
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.popup-icon-item-container:hover {
+  box-shadow: 1px 1px 15px grey;
+  border-radius: 10px;
+}
+
 .popup-icon {
   height: 40px;
-  margin-bottom: 25px;
   padding: 10px;
 }
 
@@ -148,7 +159,7 @@ li {
 
 .new-feed {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
@@ -158,7 +169,7 @@ li {
 }
 
 .new-feed-img {
-
+  margin-right: 6px;
 }
 
 .new-feed-img:hover {

@@ -1,7 +1,7 @@
 //variables
 var imagesPath = "../assets/img/weather/";//path to the images
 var delayBetweenIcons = .1;//stagger the animation of each iccon (in seconds)
-var useRollover = true;//have an animation on rollover
+var useRollover = false;//have an animation on rollover
 var hoverScale = 1.05;//how much does the icon grow on rollover
 var speed = 1;//speed up or slow down the animations (1 being normal speed)
 var playOnStart = true;//play animations on page load
