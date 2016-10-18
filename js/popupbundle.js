@@ -21490,10 +21490,18 @@
 	    var _this = _possibleConstructorReturn(this, (PopupRoot.__proto__ || Object.getPrototypeOf(PopupRoot)).call(this, props));
 	
 	    _this.state = {
-	      url: null
+	      url: null,
+	      low_power_mode: false
 	    };
+	    _this.key = 0;
 	    _this.addFeed = _this.addFeed.bind(_this);
 	    _this.updateState = _this.updateState.bind(_this);
+	    _this.togglePowerSave = _this.togglePowerSave.bind(_this);
+	    chrome.storage.sync.get('low_power_mode', function (obj) {
+	      if (obj) {
+	        _this.setState({ low_power_mode: obj.low_power_mode });
+	      }
+	    });
 	    return _this;
 	  }
 	
@@ -21505,6 +21513,12 @@
 	      return function (e) {
 	        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
 	      };
+	    }
+	  }, {
+	    key: 'togglePowerSave',
+	    value: function togglePowerSave() {
+	      chrome.storage.sync.set({ low_power_mode: !this.state.low_power_mode });
+	      this.setState({ low_power_mode: !this.state.low_power_mode });
 	    }
 	  }, {
 	    key: 'addFeed',
@@ -21536,9 +21550,10 @@
 	          'div',
 	          { className: 'popup-icon-container' },
 	          Object.keys(URLs).map(function (source) {
+	            _this4.key++;
 	            return _react2.default.createElement(
 	              'div',
-	              { className: 'popup-icon-item-container' },
+	              { className: 'popup-icon-item-container', key: _this4.key },
 	              _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/' + source + '.png',
 	                onClick: _this4.addFeed.bind(_this4, source) })
 	            );
@@ -21549,6 +21564,12 @@
 	          { className: 'new-feed' },
 	          _react2.default.createElement('img', { className: 'new-feed-img', src: '../../assets/img/add.png', onClick: this.addFeed.bind(this, null) }),
 	          _react2.default.createElement('input', { placeholder: 'Add Custom Feed Url', className: 'new-feed-input', type: 'text', onChange: this.updateState("url") })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          'Disable Animations (Better Performance)',
+	          _react2.default.createElement('input', { type: 'radio', checked: this.state.low_power_mode, onClick: this.togglePowerSave })
 	        )
 	      );
 	    }

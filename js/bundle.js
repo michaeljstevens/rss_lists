@@ -21588,6 +21588,8 @@
 	                _this2.setState({ feedList: feeds });
 	              }
 	            }
+	          } else if (changes.low_power_mode) {
+	            location.reload();
 	          }
 	        });
 	      });
@@ -34188,6 +34190,18 @@
 	  'CloudsNight': "partlyCloudyNightIcon"
 	};
 	
+	var efficientWeatherIcons = {
+	  'ClearDay': "../../assets/img/weather/sunnyIcon.svg",
+	  'ClearNight': "../../assets/img/weather/clearNightIcon.svg",
+	  'Atmosphere': "../../assets/img/weather/windySunnyIcon.svg",
+	  'Thunderstorm': "../../assets/img/weather/thundershowersIcon.svg",
+	  'Drizzle': "../../assets/img/weather/showersIcon.svg",
+	  'Rain': "../../assets/img/weather/rainyIcon.svg",
+	  'Snow': "../../assets/img/weather/snowyIcon.svg",
+	  'CloudsDay': "../../assets/img/weather/partlyCloudyIcon.svg",
+	  'CloudsNight': "../../assets/img/weather/partlyCloudyNightIcon.svg"
+	};
+	
 	var Weather = function (_Component) {
 	  _inherits(Weather, _Component);
 	
@@ -34201,7 +34215,8 @@
 	      humidity: null,
 	      pressure: null,
 	      weather: null,
-	      windSpeed: null
+	      windSpeed: null,
+	      low_power_mode: false
 	    };
 	    return _this;
 	  }
@@ -34213,6 +34228,14 @@
 	
 	      this.props.displayLoader(true);
 	      var that = this;
+	      chrome.storage.sync.get('low_power_mode', function (mode) {
+	        if (mode.low_power_mode) {
+	          _this2.setState({ low_power_mode: true });
+	        } else {
+	          _this2.setState({ low_power_mode: false });
+	        }
+	      });
+	
 	      chrome.storage.sync.get('weatherTime', function (time) {
 	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 600000) {
 	          navigator.geolocation.getCurrentPosition(function (position) {
@@ -34277,10 +34300,6 @@
 	        }
 	      });
 	    }
-	
-	    // <object type="image/svg+xml" style={{width: '100%', height: '100%'}}data="../../assets/img/weather/lightningIcon.svg">
-	    //     </object>
-	
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -34291,9 +34310,14 @@
 	        { className: 'weather-container' },
 	        _react2.default.createElement('img', { className: 'weather-icon', src: '../../assets/img/weather/extreme.png',
 	          style: { display: this.state.weather === 'Extreme' ? "block" : "none" } }),
-	        Object.keys(weatherIcons).map(function (el) {
+	        !this.state.low_power_mode ? Object.keys(weatherIcons).map(function (el) {
 	          return _react2.default.createElement('div', { className: 'weathericon ' + weatherIcons[el], key: '' + el,
 	            style: { position: _this3.state.weather === el ? "inherit" : "absolute", left: "-999em" } });
+	        }) : Object.keys(efficientWeatherIcons).map(function (el) {
+	          return _react2.default.createElement('object', { type: 'image/svg+xml', style: { width: '100%',
+	              visibility: _this3.state.weather === el ? "visible" : "hidden",
+	              position: _this3.state.weather === el ? "inherit" : "absolute", left: "-999em" },
+	            data: efficientWeatherIcons[el] });
 	        }),
 	        _react2.default.createElement(
 	          'ul',

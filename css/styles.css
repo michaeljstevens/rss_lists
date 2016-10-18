@@ -278,6 +278,11 @@ li {
   align-items: center;
 }
 
+.weather-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .weather-icon {
   max-height: 150px;
   margin: 20px;

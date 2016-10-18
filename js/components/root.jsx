@@ -103,6 +103,8 @@ class Root extends Component {
               this.setState({feedList: feeds});
             }
           }
+        } else if(changes.low_power_mode) {
+          location.reload();
         }
       });
     });

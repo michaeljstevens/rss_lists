@@ -12,6 +12,18 @@ import $ from 'jQuery';
     'CloudsDay': "partlyCloudyIcon",
     'CloudsNight': "partlyCloudyNightIcon",
   };
+  
+  const efficientWeatherIcons = {
+    'ClearDay': "../../assets/img/weather/sunnyIcon.svg",
+    'ClearNight': "../../assets/img/weather/clearNightIcon.svg",
+    'Atmosphere': "../../assets/img/weather/windySunnyIcon.svg",
+    'Thunderstorm': "../../assets/img/weather/thundershowersIcon.svg",
+    'Drizzle': "../../assets/img/weather/showersIcon.svg",
+    'Rain': "../../assets/img/weather/rainyIcon.svg",
+    'Snow': "../../assets/img/weather/snowyIcon.svg",
+    'CloudsDay': "../../assets/img/weather/partlyCloudyIcon.svg",
+    'CloudsNight': "../../assets/img/weather/partlyCloudyNightIcon.svg",
+  };
 
 class Weather extends Component {
 
@@ -23,12 +35,21 @@ class Weather extends Component {
       pressure: null,
       weather: null,
       windSpeed: null,
+      low_power_mode: false,
     };
   }
 
   componentWillMount() {
     this.props.displayLoader(true);
     let that = this;
+    chrome.storage.sync.get('low_power_mode', (mode) => {
+      if (mode.low_power_mode) {
+        this.setState({low_power_mode: true});
+      } else {
+        this.setState({low_power_mode: false});
+      }
+    });
+
     chrome.storage.sync.get('weatherTime', (time) => {
       if(Object.keys(time).length < 1 || (new Date().getTime() - time.weatherTime) > 600000) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -94,19 +115,22 @@ class Weather extends Component {
     });
   } 
 
-    // <object type="image/svg+xml" style={{width: '100%', height: '100%'}}data="../../assets/img/weather/lightningIcon.svg">
-    //     </object>
-
   render() {
     return(
       <div className='weather-container'>
         
         <img className='weather-icon' src='../../assets/img/weather/extreme.png'
           style={{display: this.state.weather === 'Extreme' ? "block" : "none"}} />
-        {Object.keys(weatherIcons).map(el => (
+        {!this.state.low_power_mode ? Object.keys(weatherIcons).map(el => (
         <div className={`weathericon ${weatherIcons[el]}`} key={`${el}`}
           style={{position: this.state.weather === el ? "inherit" : "absolute", left: "-999em"}}></div>
-        ))}
+        )) : Object.keys(efficientWeatherIcons).map(el => (
+            <object type="image/svg+xml" style={{width: '100%',
+            visibility: this.state.weather === el ? "visible" : "hidden", 
+            position: this.state.weather === el ? "inherit" : "absolute", left: "-999em"}}
+            data={efficientWeatherIcons[el]}></object>
+          ))
+        }
         <ul className='weather-info-list'>
           <li>{this.state.temp}° F</li>
           <li>{this.state.humidity}% Hum</li>

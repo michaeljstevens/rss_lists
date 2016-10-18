@@ -28,16 +28,29 @@ class PopupRoot extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: null
+      url: null,
+      low_power_mode: false
     };
+    this.key = 0;
     this.addFeed = this.addFeed.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.togglePowerSave = this.togglePowerSave.bind(this);
+    chrome.storage.sync.get('low_power_mode', obj => {
+      if(obj) {
+        this.setState({low_power_mode: obj.low_power_mode});
+      }
+    });
   }
 
   updateState (field) {
     return e => {
       this.setState({[field]: e.currentTarget.value});
     };
+  }
+
+  togglePowerSave() {
+    chrome.storage.sync.set({low_power_mode: !this.state.low_power_mode});
+    this.setState({low_power_mode: !this.state.low_power_mode});
   }
 
    addFeed(source, e) {
@@ -59,20 +72,29 @@ class PopupRoot extends Component {
     return(
       <div className="popup-container">
         <div className="popup-icon-container">
-          {Object.keys(URLs).map(source => (
-            <div className="popup-icon-item-container">
+          {Object.keys(URLs).map(source => {
+            this.key ++;
+            return (
+            <div className="popup-icon-item-container" key={this.key}>
               <img className="popup-icon" src={`../../assets/img/${source}.png`}
               onClick={this.addFeed.bind(this, source)} />
             </div>
-          ))}
+            );
+           }
+          )
+        }
         </div>
         <div className="new-feed">
           <img className="new-feed-img" src={'../../assets/img/add.png'} onClick={this.addFeed.bind(this, null)} />
           <input placeholder="Add Custom Feed Url" className="new-feed-input" type="text" onChange={this.updateState("url")} />
+        </div>
+        <div>
+          Disable Animations (Better Performance)
+          <input type="radio" checked={this.state.low_power_mode} onClick={this.togglePowerSave} />
         </div>
       </div>
     );
   }
 }
 
-export default PopupRoot
+export default PopupRoot;
