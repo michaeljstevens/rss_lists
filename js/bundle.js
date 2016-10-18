@@ -21813,6 +21813,7 @@
 	      data: null,
 	      showSpinner: true
 	    };
+	    _this.key = 0;
 	    _this.delete = _this.delete.bind(_this);
 	    return _this;
 	  }
@@ -21846,6 +21847,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
 	      var fpLis = [];
 	      if (this.state.data) {
 	        this.listImg = Array.from(this.state.data.getElementsByTagName("img"));
@@ -21897,7 +21900,7 @@
 	          link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
 	          fpLis.push(_react2.default.createElement(
 	            'a',
-	            { href: link },
+	            { key: _this3.key, href: link },
 	            _react2.default.createElement(
 	              'li',
 	              { className: 'outerLink', style: styles.item },
@@ -21905,6 +21908,7 @@
 	              title
 	            )
 	          ));
+	          _this3.key++;
 	        });
 	      }
 	      return _react2.default.createElement(
@@ -34210,7 +34214,7 @@
 	      this.props.displayLoader(true);
 	      var that = this;
 	      chrome.storage.sync.get('weatherTime', function (time) {
-	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 6) {
+	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 60000) {
 	          navigator.geolocation.getCurrentPosition(function (position) {
 	            var lat = position.coords.latitude;
 	            var lng = position.coords.longitude;
@@ -34219,7 +34223,7 @@
 	              var now = new Date().getDate();
 	              var nextSunrise = new Date(data.sys.sunrise * 1000).getDate();
 	              var nextSunset = new Date(data.sys.sunset * 1000).getDate();
-	              debugger;
+	
 	              var sunset = now === nextSunset ? false : true;
 	              _this2.state.temp = Math.round(data.main.temp * 9 / 5 - 459.67);
 	              _this2.state.humidity = Math.round(data.main.humidity);
@@ -34276,12 +34280,12 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'weather-container' },
+	        _react2.default.createElement('img', { className: 'weather-icon', src: '../../assets/img/weather/extreme.png',
+	          style: { display: this.state.weather === 'Extreme' ? "block" : "none" } }),
 	        Object.keys(weatherIcons).map(function (el) {
 	          return _react2.default.createElement('div', { className: 'weathericon ' + weatherIcons[el], key: '' + el,
 	            style: { position: _this3.state.weather === el ? "inherit" : "absolute", left: "-999em" } });
 	        }),
-	        _react2.default.createElement('img', { className: 'weather-icon', src: '../../assets/img/weather/extreme.png',
-	          style: { display: this.state.weather === 'Extreme' ? "block" : "none" } }),
 	        _react2.default.createElement(
 	          'ul',
 	          { className: 'weather-info-list' },

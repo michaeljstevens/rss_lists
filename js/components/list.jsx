@@ -10,6 +10,7 @@ class List extends Component {
       data: null,
       showSpinner: true
     };
+    this.key = 0;
     this.delete = this.delete.bind(this);
   }
 
@@ -88,7 +89,9 @@ class List extends Component {
         }
 
         link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
-        fpLis.push(<a href={link}><li className="outerLink" style={styles.item}><img src={img ? img : '../../assets/img/no_img.png'} style={styles.image}></img>{title}</li></a>);
+        fpLis.push(<a key={this.key} href={link}><li className="outerLink" style={styles.item}>
+        <img src={img ? img : '../../assets/img/no_img.png'} style={styles.image}></img>{title}</li></a>);
+        this.key++;
       });
     }
     return (

@@ -30,7 +30,7 @@ class Weather extends Component {
     this.props.displayLoader(true);
     let that = this;
     chrome.storage.sync.get('weatherTime', (time) => {
-      if(Object.keys(time).length < 1 || (new Date().getTime() - time.weatherTime) > 6) {
+      if(Object.keys(time).length < 1 || (new Date().getTime() - time.weatherTime) > 60000) {
         navigator.geolocation.getCurrentPosition(position => {
           let lat = position.coords.latitude;
           let lng = position.coords.longitude;
@@ -39,7 +39,7 @@ class Weather extends Component {
             let now = new Date().getDate();
             let nextSunrise = new Date(data.sys.sunrise * 1000).getDate();
             let nextSunset = new Date(data.sys.sunset * 1000).getDate();
-            debugger
+    
             const sunset = now === nextSunset ? false : true;
             this.state.temp = Math.round(data.main.temp * 9/5 - 459.67);
             this.state.humidity = Math.round(data.main.humidity);
@@ -87,19 +87,18 @@ class Weather extends Component {
         });
       }
     });
-  }
-
-        
+  } 
 
   render() {
     return(
       <div className='weather-container'>
-        {Object.keys(weatherIcons).map(el => (
-          <div className={`weathericon ${weatherIcons[el]}`} key={`${el}`}
-            style={{position: this.state.weather === el ? "inherit" : "absolute", left: "-999em"}}></div>
-        ))}
+        
         <img className='weather-icon' src='../../assets/img/weather/extreme.png'
           style={{display: this.state.weather === 'Extreme' ? "block" : "none"}} />
+        {Object.keys(weatherIcons).map(el => (
+        <div className={`weathericon ${weatherIcons[el]}`} key={`${el}`}
+          style={{position: this.state.weather === el ? "inherit" : "absolute", left: "-999em"}}></div>
+        ))}
         <ul className='weather-info-list'>
           <li>{this.state.temp}° F</li>
           <li>{this.state.humidity}% Hum</li>
