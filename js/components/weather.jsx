@@ -30,14 +30,17 @@ class Weather extends Component {
     this.props.displayLoader(true);
     let that = this;
     chrome.storage.sync.get('weatherTime', (time) => {
-      if(Object.keys(time).length < 1 || (new Date().getTime() - time.weatherTime) > 600000) {
+      if(Object.keys(time).length < 1 || (new Date().getTime() - time.weatherTime) > 6) {
         navigator.geolocation.getCurrentPosition(position => {
           let lat = position.coords.latitude;
           let lng = position.coords.longitude;
 
           const success = (data) => {
-            let now = new Date().getTime()/1000; 
-            const sunset = now > data.sys.sunset;
+            let now = new Date().getDate();
+            let nextSunrise = new Date(data.sys.sunrise * 1000).getDate();
+            let nextSunset = new Date(data.sys.sunset * 1000).getDate();
+            debugger
+            const sunset = now === nextSunset ? false : true;
             this.state.temp = Math.round(data.main.temp * 9/5 - 459.67);
             this.state.humidity = Math.round(data.main.humidity);
             this.state.pressure = Math.round(data.main.pressure);

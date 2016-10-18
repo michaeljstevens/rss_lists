@@ -34210,14 +34210,17 @@
 	      this.props.displayLoader(true);
 	      var that = this;
 	      chrome.storage.sync.get('weatherTime', function (time) {
-	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 600000) {
+	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 6) {
 	          navigator.geolocation.getCurrentPosition(function (position) {
 	            var lat = position.coords.latitude;
 	            var lng = position.coords.longitude;
 	
 	            var success = function success(data) {
-	              var now = new Date().getTime() / 1000;
-	              var sunset = now > data.sys.sunset;
+	              var now = new Date().getDate();
+	              var nextSunrise = new Date(data.sys.sunrise * 1000).getDate();
+	              var nextSunset = new Date(data.sys.sunset * 1000).getDate();
+	              debugger;
+	              var sunset = now === nextSunset ? false : true;
 	              _this2.state.temp = Math.round(data.main.temp * 9 / 5 - 459.67);
 	              _this2.state.humidity = Math.round(data.main.humidity);
 	              _this2.state.pressure = Math.round(data.main.pressure);
