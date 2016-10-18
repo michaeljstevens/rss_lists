@@ -36,17 +36,23 @@ class Weather extends Component {
           let lng = position.coords.longitude;
 
           const success = (data) => {
-            let now = new Date().getDate();
-            let nextSunrise = new Date(data.sys.sunrise * 1000).getDate();
-            let nextSunset = new Date(data.sys.sunset * 1000).getDate();
-            const sunset = now === nextSunset && now !== nextSunrise ? false : true;
+            let now = new Date();
+            let sunrise = new Date(data.sys.sunrise * 1000);
+            let sunset = new Date(data.sys.sunset * 1000);
+            let night;
+            if (now > sunrise && now < sunset) {
+              night = false;
+            } else {
+              night = true;
+            }
+
             this.state.temp = Math.round(data.main.temp * 9/5 - 459.67);
             this.state.humidity = Math.round(data.main.humidity);
             this.state.pressure = Math.round(data.main.pressure);
             if(data.weather[0].main === "Clouds") {
-              this.state.weather = sunset ? "CloudsNight" : "CloudsDay";
+              this.state.weather = night ? "CloudsNight" : "CloudsDay";
             } else if(data.weather[0].main === "Clear") {
-              this.state.weather = sunset ? "ClearNight" : "ClearDay";
+              this.state.weather = night ? "ClearNight" : "ClearDay";
             } else {
               this.state.weather = data.weather[0].main;
             }
@@ -87,6 +93,9 @@ class Weather extends Component {
       }
     });
   } 
+
+    // <object type="image/svg+xml" style={{width: '100%', height: '100%'}}data="../../assets/img/weather/lightningIcon.svg">
+    //     </object>
 
   render() {
     return(
