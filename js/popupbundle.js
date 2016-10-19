@@ -21574,7 +21574,8 @@
 	          { className: 'animation-switch' },
 	          _react2.default.createElement(
 	            'p',
-	            { className: 'animation-text' },
+	            { className: 'animation-text',
+	              style: { color: this.state.low_power_mode ? 'darkgrey' : '#2F4F4F' } },
 	            'Weather Animations'
 	          ),
 	          _react2.default.createElement(_reactToggleSwitch2.default, { onClick: this.togglePowerSave, on: !this.state.low_power_mode })

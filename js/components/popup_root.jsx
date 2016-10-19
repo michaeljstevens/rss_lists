@@ -90,7 +90,8 @@ class PopupRoot extends Component {
           <input placeholder="Add Custom Feed Url" className="new-feed-input" type="text" onChange={this.updateState("url")} />
         </div>
         <div className="animation-switch">
-          <p className="animation-text">Weather Animations</p>
+          <p className="animation-text" 
+            style={{color: this.state.low_power_mode ? 'darkgrey' : '#2F4F4F'}}>Weather Animations</p>
           <Switch onClick={this.togglePowerSave} on={!this.state.low_power_mode}/>
         </div>
       </div>

@@ -130,9 +130,12 @@ class Weather extends Component {
         <div className={`weathericon ${weatherIcons[el]}`} key={`${el}`}
           style={{position: this.state.weather === el ? "inherit" : "absolute", left: "-999em"}}></div>
         )) : Object.keys(efficientWeatherIcons).map(el => (
-            <object type="image/svg+xml" style={{width: '100%',
-            visibility: this.state.weather === el ? "visible" : "hidden", 
-            position: this.state.weather === el ? "inherit" : "absolute", left: "-999em"}}
+            <object type="image/svg+xml" style={{
+              width: "100%",
+              visibility: this.state.weather === el ? "visible" : "hidden", 
+              position: this.state.weather === el ? "inherit" : "absolute",
+              left: "-999em",
+            }}
             data={efficientWeatherIcons[el]}></object>
           ))
         }

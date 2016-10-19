@@ -34319,9 +34319,12 @@
 	          return _react2.default.createElement('div', { className: 'weathericon ' + weatherIcons[el], key: '' + el,
 	            style: { position: _this3.state.weather === el ? "inherit" : "absolute", left: "-999em" } });
 	        }) : Object.keys(efficientWeatherIcons).map(function (el) {
-	          return _react2.default.createElement('object', { type: 'image/svg+xml', style: { width: '100%',
+	          return _react2.default.createElement('object', { type: 'image/svg+xml', style: {
+	              width: "100%",
 	              visibility: _this3.state.weather === el ? "visible" : "hidden",
-	              position: _this3.state.weather === el ? "inherit" : "absolute", left: "-999em" },
+	              position: _this3.state.weather === el ? "inherit" : "absolute",
+	              left: "-999em"
+	            },
 	            data: efficientWeatherIcons[el] });
 	        }),
 	        _react2.default.createElement(

@@ -281,6 +281,7 @@ li {
 .weather-container {
   display: flex;
   flex-direction: column;
+  width: 269px;
 }
 
 .weather-icon {
@@ -408,7 +409,6 @@ li {
   font-family: arial;
   padding: 8px;
   margin-right: 12px;
-  color: darkgrey;
   font-size: 20px;
 }
 
@@ -435,7 +435,7 @@ li {
 }
 
 .switch.on{
-  background:lightgrey
+  background:#2F4F4F
 }
   
 .switch.on .switch-toggle{
