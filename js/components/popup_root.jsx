@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Switch from 'react-toggle-switch';
 
 const URLs = {
   'reddit': 'https://www.reddit.com/.rss',
@@ -88,9 +89,9 @@ class PopupRoot extends Component {
           <img className="new-feed-img" src={'../../assets/img/add.png'} onClick={this.addFeed.bind(this, null)} />
           <input placeholder="Add Custom Feed Url" className="new-feed-input" type="text" onChange={this.updateState("url")} />
         </div>
-        <div>
-          Disable Animations (Better Performance)
-          <input type="radio" checked={this.state.low_power_mode} onClick={this.togglePowerSave} />
+        <div className="animation-switch">
+          <p className="animation-text">Weather Animations</p>
+          <Switch onClick={this.togglePowerSave} on={!this.state.low_power_mode}/>
         </div>
       </div>
     );

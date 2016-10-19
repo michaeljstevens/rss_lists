@@ -34247,6 +34247,11 @@
 	              var sunrise = new Date(data.sys.sunrise * 1000);
 	              var sunset = new Date(data.sys.sunset * 1000);
 	              var night = void 0;
+	
+	              now = parseFloat(now.getHours() + '.' + now.getMinutes());
+	              sunrise = parseFloat(sunrise.getHours() + '.' + sunrise.getMinutes());
+	              sunset = parseFloat(sunset.getHours() + '.' + sunset.getMinutes());
+	
 	              if (now > sunrise && now < sunset) {
 	                night = false;
 	              } else {

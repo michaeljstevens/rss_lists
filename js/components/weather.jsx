@@ -61,6 +61,11 @@ class Weather extends Component {
             let sunrise = new Date(data.sys.sunrise * 1000);
             let sunset = new Date(data.sys.sunset * 1000);
             let night;
+
+            now = parseFloat(`${now.getHours()}.${now.getMinutes()}`);
+            sunrise = parseFloat(`${sunrise.getHours()}.${sunrise.getMinutes()}`);
+            sunset = parseFloat(`${sunset.getHours()}.${sunset.getMinutes()}`);
+            
             if (now > sunrise && now < sunset) {
               night = false;
             } else {

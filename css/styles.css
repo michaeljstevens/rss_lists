@@ -393,3 +393,56 @@ li {
     -webkit-transform: scale(1);
             transform: scale(1); }
 }
+
+.animation-switch {
+  display: flex;
+  justify-content: left;
+  justify-content: center;
+  align-items: center;
+  background: #f0f0f0;
+  width: 100%;
+  border-radius: 7px;
+}
+
+.animation-text {
+  font-family: arial;
+  padding: 8px;
+  margin-right: 12px;
+  color: darkgrey;
+  font-size: 20px;
+}
+
+.switch{
+  border:1px solid #ccc;
+  width:50px;
+  height:26px;
+  border-radius:13px;
+  cursor:pointer;
+  display:inline-block;
+  float:right
+}
+
+.switch-toggle{
+  border:1px solid #999;
+  box-shadow:1px 1px 1px #ccc;
+  width:25px;
+  height:24px;
+  left:0;
+  border-radius:12px;
+  background:#fff;
+  position:relative;
+  transition:left .2s ease-in-out
+}
+
+.switch.on{
+  background:lightgrey
+}
+  
+.switch.on .switch-toggle{
+  left:23px
+}
+
+.switch.disabled{
+  cursor:not-allowed
+}
+
