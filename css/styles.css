@@ -60,7 +60,6 @@ li {
 
 .list {
   position: relative;
-  border: 1px solid black;
   margin-right: 30px;
   min-width: 300px;
 	min-height: 540px;
@@ -263,7 +262,6 @@ li {
 
 .info-container {
   position: relative;
-  border: 1px solid black;
   margin-right: 30px;
   margin-left: 30px;
   min-width: 300px;
@@ -337,14 +335,20 @@ li {
 }
 
 .date {
-  margin-top: 15px;
-  font-size: 26px;
-  font-family: arial;
+  font-size: 22px;
+  font-family: 'Proza Libre', arial;
   background: #f0f0f0;
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 5px;
-  width: 257px;
+  padding: 10px;
+  width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  flex-direction: column;
+	height: 54px;
+}
+
+.time-of-day {
+  font-size: 30px;
 }
 
 .github-icon {
@@ -437,7 +441,7 @@ li {
 .switch.on{
   background:#2F4F4F
 }
-  
+
 .switch.on .switch-toggle{
   left:23px
 }
@@ -445,4 +449,3 @@ li {
 .switch.disabled{
   cursor:not-allowed
 }
-

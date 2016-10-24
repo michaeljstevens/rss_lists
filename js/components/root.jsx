@@ -21,6 +21,7 @@ class Root extends Component {
       displayColorPicker: false,
       infoColor: "",
       loader: false,
+      timeOfDay: this.getTimeOfDay()
     };
     this.updateState = this.updateState.bind(this);
     this.delete = this.delete.bind(this);
@@ -34,6 +35,7 @@ class Root extends Component {
     this.changeInfoColor = this.changeInfoColor.bind(this);
     this.formatDate = this.formatDate.bind(this);
     this.displayLoader = this.displayLoader.bind(this);
+    this.getTimeOfDay = this.getTimeOfDay.bind(this);
 
     chrome.storage.sync.get('background', (backgroundObj) => {
       if(Object.keys(backgroundObj).length < 1) {
@@ -181,6 +183,19 @@ class Root extends Component {
     this.setState({infoColor: newColor});
   }
 
+  getTimeOfDay() {
+    const now = new Date().getHours();
+    if(now >= 5 && now < 12) {
+      return "Morning";
+    } else if(now >= 12 && now < 18) {
+      return "Afternoon";
+    } else if(now >= 18 && now < 20) {
+      return "Evening";
+    } else {
+      return "Night";
+    }
+  }
+
   formatDate() {
     const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     const months = ['January','February','March','April','May','June','July','August',
@@ -194,12 +209,18 @@ class Root extends Component {
   }
 
   render() {
+   
+
+
     return(
       <div className="outer-container" style={{backgroundImage: this.state.background}}>
         {this.state.modalOpen ? this.modal : null}
         <div style={styles.container}>
           <div className="info-container" style={{background: this.state.infoColor}}>
-            <h1 className="date">{this.formatDate()}</h1>
+            <div className = "date">
+              <div className="time-of-day">Good {this.state.timeOfDay}</div> 
+              <div>{this.formatDate()}</div>
+            </div>
             {this.state.loader ? loader : null}
             <Weather displayLoader = {this.displayLoader}/>
             <Notepad />

@@ -21492,7 +21492,8 @@
 	      customBackground: "",
 	      displayColorPicker: false,
 	      infoColor: "",
-	      loader: false
+	      loader: false,
+	      timeOfDay: _this.getTimeOfDay()
 	    };
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.delete = _this.delete.bind(_this);
@@ -21506,6 +21507,7 @@
 	    _this.changeInfoColor = _this.changeInfoColor.bind(_this);
 	    _this.formatDate = _this.formatDate.bind(_this);
 	    _this.displayLoader = _this.displayLoader.bind(_this);
+	    _this.getTimeOfDay = _this.getTimeOfDay.bind(_this);
 	
 	    chrome.storage.sync.get('background', function (backgroundObj) {
 	      if (Object.keys(backgroundObj).length < 1) {
@@ -21677,6 +21679,20 @@
 	      this.setState({ infoColor: newColor });
 	    }
 	  }, {
+	    key: 'getTimeOfDay',
+	    value: function getTimeOfDay() {
+	      var now = new Date().getHours();
+	      if (now >= 5 && now < 12) {
+	        return "Morning";
+	      } else if (now >= 12 && now < 18) {
+	        return "Afternoon";
+	      } else if (now >= 18 && now < 20) {
+	        return "Evening";
+	      } else {
+	        return "Night";
+	      }
+	    }
+	  }, {
 	    key: 'formatDate',
 	    value: function formatDate() {
 	      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -21692,6 +21708,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'outer-container', style: { backgroundImage: this.state.background } },
@@ -21703,9 +21720,19 @@
 	            'div',
 	            { className: 'info-container', style: { background: this.state.infoColor } },
 	            _react2.default.createElement(
-	              'h1',
+	              'div',
 	              { className: 'date' },
-	              this.formatDate()
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'time-of-day' },
+	                'Good ',
+	                this.state.timeOfDay
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                this.formatDate()
+	              )
 	            ),
 	            this.state.loader ? loader : null,
 	            _react2.default.createElement(_weather2.default, { displayLoader: this.displayLoader }),
