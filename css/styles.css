@@ -290,7 +290,6 @@ li {
 
 .weather-info-list {
   display: flex;
-  font-size: 15px;
   border: 1px solid black;
   width: 267px;
   border-radius: 5px;
@@ -304,7 +303,7 @@ li {
   border-right: 1px solid black;
   width: 45px;
   display: flex;
-  font-family: arial;
+  font-family: 'Rubik', sans-serif;
 }
 
 .weather-info-list li:last-child {
