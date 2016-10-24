@@ -94,7 +94,7 @@ class Root extends Component {
 
       chrome.storage.onChanged.addListener(changes => {
         if(changes.feeds) {
-          if(Object.keys(changes.feeds.newValue).length > Object.keys(changes.feeds.oldValue).length) {
+          if(!changes.feeds.oldValue || Object.keys(changes.feeds.newValue).length > Object.keys(changes.feeds.oldValue).length) {
             let feeds = this.state.feedList;
             let feedsArr = changes.feeds.newValue;
             if (feedsArr.length > this.feeds.length) {

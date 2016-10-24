@@ -21579,7 +21579,7 @@
 	
 	        chrome.storage.onChanged.addListener(function (changes) {
 	          if (changes.feeds) {
-	            if (Object.keys(changes.feeds.newValue).length > Object.keys(changes.feeds.oldValue).length) {
+	            if (!changes.feeds.oldValue || Object.keys(changes.feeds.newValue).length > Object.keys(changes.feeds.oldValue).length) {
 	              var feeds = _this2.state.feedList;
 	              var feedsArr = changes.feeds.newValue;
 	              if (feedsArr.length > _this2.feeds.length) {
