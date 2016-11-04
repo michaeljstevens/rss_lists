@@ -34214,7 +34214,8 @@
 	  'Rain': "rainyIcon",
 	  'Snow': "snowyIcon",
 	  'CloudsDay': "partlyCloudyIcon",
-	  'CloudsNight': "partlyCloudyNightIcon"
+	  'CloudsNight': "partlyCloudyNightIcon",
+	  'Haze': "windySunnyIcon"
 	};
 	
 	var efficientWeatherIcons = {
@@ -34226,7 +34227,8 @@
 	  'Rain': "../../assets/img/weather/rainyIcon.svg",
 	  'Snow': "../../assets/img/weather/snowyIcon.svg",
 	  'CloudsDay': "../../assets/img/weather/partlyCloudyIcon.svg",
-	  'CloudsNight': "../../assets/img/weather/partlyCloudyNightIcon.svg"
+	  'CloudsNight': "../../assets/img/weather/partlyCloudyNightIcon.svg",
+	  'Haze': '../../assets/img/weather/windySunnyIcon.svg'
 	};
 	
 	var Weather = function (_Component) {

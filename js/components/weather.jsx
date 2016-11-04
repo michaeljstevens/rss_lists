@@ -11,8 +11,9 @@ import $ from 'jQuery';
     'Snow': "snowyIcon",
     'CloudsDay': "partlyCloudyIcon",
     'CloudsNight': "partlyCloudyNightIcon",
+    'Haze': "windySunnyIcon",
   };
-  
+
   const efficientWeatherIcons = {
     'ClearDay': "../../assets/img/weather/sunnyIcon.svg",
     'ClearNight': "../../assets/img/weather/clearNightIcon.svg",
@@ -23,6 +24,7 @@ import $ from 'jQuery';
     'Snow': "../../assets/img/weather/snowyIcon.svg",
     'CloudsDay': "../../assets/img/weather/partlyCloudyIcon.svg",
     'CloudsNight': "../../assets/img/weather/partlyCloudyNightIcon.svg",
+    'Haze': '../../assets/img/weather/windySunnyIcon.svg',
   };
 
 class Weather extends Component {
@@ -65,7 +67,7 @@ class Weather extends Component {
             now = parseFloat(`${now.getHours()}.${now.getMinutes()}`);
             sunrise = parseFloat(`${sunrise.getHours()}.${sunrise.getMinutes()}`);
             sunset = parseFloat(`${sunset.getHours()}.${sunset.getMinutes()}`);
-            
+
             if (now > sunrise && now < sunset) {
               night = false;
             } else {
@@ -118,12 +120,12 @@ class Weather extends Component {
         });
       }
     });
-  } 
+  }
 
   render() {
     return(
       <div className='weather-container'>
-        
+
         <img className='weather-icon' src='../../assets/img/weather/extreme.png'
           style={{display: this.state.weather === 'Extreme' ? "block" : "none"}} />
         {!this.state.low_power_mode ? Object.keys(weatherIcons).map(el => (
@@ -132,7 +134,7 @@ class Weather extends Component {
         )) : Object.keys(efficientWeatherIcons).map(el => (
             <object type="image/svg+xml" style={{
               width: "100%",
-              visibility: this.state.weather === el ? "visible" : "hidden", 
+              visibility: this.state.weather === el ? "visible" : "hidden",
               position: this.state.weather === el ? "inherit" : "absolute",
               left: "-999em",
             }}
