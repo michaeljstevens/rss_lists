@@ -322,9 +322,9 @@ window['windySunnyIcon'] = function(index, f, thisIcon)
 window['windyMoonIcon'] = function(index, f, thisIcon)
 {
 	var tl = new TimelineLite({onStart:animationComplete, onStartParams:[index, true], onReverseComplete:animationComplete, onReverseCompleteParams:[index, false]})
-		.from(f.select("#outer").node, .3, {scale:0,transformOrigin:"50% 50%", ease:Circ.easeOut})
-		.from(f.select("#middle").node, .3, {scale:0,transformOrigin:"50% 50%", ease:Circ.easeOut}, "-=.2")
-		.from(f.select("#inner").node, .5, {scale:0,transformOrigin:"50% 50%", ease:Circ.easeOut}, "-=.2")
+		// .from(f.select("#outer").node, .3, {scale:0,transformOrigin:"50% 50%", ease:Circ.easeOut})
+		// .from(f.select("#middle").node, .3, {scale:0,transformOrigin:"50% 50%", ease:Circ.easeOut}, "-=.2")
+		// .from(f.select("#inner").node, .5, {scale:0,transformOrigin:"50% 50%", ease:Circ.easeOut}, "-=.2")
 		.timeScale(speed);
 	tls[index] = tl;
 	var tlRollover = new TimelineLite();
@@ -336,10 +336,10 @@ window['windyMoonIcon'] = function(index, f, thisIcon)
 	//  	.to(f.select("#outerRepeat").node, 5, {scale:.8,transformOrigin:"50% 50%", ease:Circ.easeOut, repeat:-1, ease:Quad.easeInOut, yoyo:true})
 	//  	.to(f.select("#middleRepeat").node, 5, {scale:.8,transformOrigin:"50% 50%", ease:Circ.easeOut, repeat:-1, ease:Quad.easeInOut, yoyo:true}, "2");
 	//  tlIdle.pause();
-	// 	.from(f.select("#middle").node, .3, {scale:0,transformOrigin:"50% 50%", ease:Circ.easeOut}, "-=.2")};
-
-
-	tlsIdle[index] = tlIdle;
+	// 	// .from(f.select("#middle").node, .3, {scale:0,transformOrigin:"50% 50%", ease:Circ.easeOut}, "-=.2")};
+	//
+	//
+	// tlsIdle[index] = tlIdle;
 }
 
 function animateStars(f, starCount, thisTl, startingTime)

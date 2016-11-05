@@ -34206,35 +34206,17 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var weatherIcons = {
-	  'ClearDay': "sunnyIcon",
+	  // 'ClearDay': "sunnyIcon",
+	  'ClearDay': "windyMoonIcon",
 	  'ClearNight': "clearNightIcon",
 	  'Thunderstorm': "thundershowersIcon",
-	  // 'Drizzle': "showersIcon",
-	  'Drizzle': "windyMoonIcon",
+	  'Drizzle': "showersIcon",
 	  'Rain': "rainyIcon",
 	  'Snow': "snowyIcon",
 	  'CloudsDay': "partlyCloudyIcon",
 	  'CloudsNight': "partlyCloudyNightIcon",
-	  'HazeDay': "windySunnyIcon",
-	  'MistDay': "windySunnyIcon",
-	  'SmokeDay': "windySunnyIcon",
-	  'SandDay, dust whirls': "windySunnyIcon",
-	  'FogDay': "windySunnyIcon",
-	  'SandDay': "windySunnyIcon",
-	  'DustDay': "windySunnyIcon",
-	  'Volcanic ashDay': "windySunnyIcon",
-	  'SquallsDay': "windySunnyIcon",
-	  'TornadoDay': "windySunnyIcon",
-	  'HazeNight': "windyMoonIcon",
-	  'MistNight': "windyMoonIcon",
-	  'SmokeNight': "windyMoonIcon",
-	  'Sand, dust whirlsNight': "windyMoonIcon",
-	  'FogNight': "windyMoonIcon",
-	  'SandNight': "windyMoonIcon",
-	  'DustNight': "windyMoonIcon",
-	  'Volcanic ashNight': "windyMoonIcon",
-	  'SquallsNight': "windyMoonIcon",
-	  'TornadoNight': "windyMoonIcon"
+	  'AtmosphereDay': "windySunnyIcon",
+	  'AtmosphereNight': "windyMoonIcon"
 	};
 	
 	var efficientWeatherIcons = {
@@ -34247,26 +34229,8 @@
 	  'Snow': "../../assets/img/weather/snowyIcon.svg",
 	  'CloudsDay': "../../assets/img/weather/partlyCloudyIcon.svg",
 	  'CloudsNight': "../../assets/img/weather/partlyCloudyNightIcon.svg",
-	  'HazeDay': '../../assets/img/weather/windySunnyIcon.svg',
-	  'MistDay': "../../assets/img/weather/windySunnyIcon.svg",
-	  'SmokeDay': "../../assets/img/weather/windySunnyIcon.svg",
-	  'Sand, dust whirlsDay': "../../assets/img/weather/windySunnyIcon.svg",
-	  'FogDay': "../../assets/img/weather/windySunnyIcon.svg",
-	  'SandDay': "../../assets/img/weather/windySunnyIcon.svg",
-	  'DustDay': "../../assets/img/weather/windySunnyIcon.svg",
-	  'Volcanic ashDay': "../../assets/img/weather/windySunnyIcon.svg",
-	  'SquallsDay': "../../assets/img/weather/windySunnyIcon.svg",
-	  'TornadoDay': "../../assets/img/weather/windySunnyIcon.svg",
-	  'HazeNight': '../../assets/img/weather/windyMoonIcon.svg',
-	  'MistNight': "../../assets/img/weather/windyMoonIcon.svg",
-	  'SmokeNight': "../../assets/img/weather/windyMoonIcon.svg",
-	  'SandNight, dust whirls': "../../assets/img/weather/windyMoonIcon.svg",
-	  'FogNight': "../../assets/img/weather/windyMoonIcon.svg",
-	  'SandNight': "../../assets/img/weather/windyMoonIcon.svg",
-	  'DustNight': "../../assets/img/weather/windyMoonIcon.svg",
-	  'Volcanic ashNight': "../../assets/img/weather/windyMoonIcon.svg",
-	  'SquallsNight': "../../assets/img/weather/windyMoonIcon.svg",
-	  'TornadoNight': "../../assets/img/weather/windyMoonIcon.svg"
+	  'AtmosphereDay': "../../assets/img/weather/windySunnyIcon.svg",
+	  'AtmosphereNight': "../../assets/img/weather/windyMoonIcon.svg"
 	};
 	
 	var Weather = function (_Component) {
@@ -34332,26 +34296,8 @@
 	                _this2.state.weather = night ? "CloudsNight" : "CloudsDay";
 	              } else if (data.weather[0].main === "Clear") {
 	                _this2.state.weather = night ? "ClearNight" : "ClearDay";
-	              } else if (data.weather[0].main === "Haze") {
-	                _this2.state.weather = night ? "HazeNight" : "HazeDay";
-	              } else if (data.weather[0].main === "Mist") {
-	                _this2.state.weather = night ? "MistNight" : "MistDay";
-	              } else if (data.weather[0].main === "Smoke") {
-	                _this2.state.weather = night ? "SmokeNight" : "SmokeDay";
-	              } else if (data.weather[0].main === "Sand, dust whirls") {
-	                _this2.state.weather = night ? "Sand, dust whirlsNight" : "Sand, dust whirlsDay";
-	              } else if (data.weather[0].main === "Fog") {
-	                _this2.state.weather = night ? "FogNight" : "FogDay";
-	              } else if (data.weather[0].main === "Sand") {
-	                _this2.state.weather = night ? "SandNight" : "SandDay";
-	              } else if (data.weather[0].main === "Dust") {
-	                _this2.state.weather = night ? "DustNight" : "DustDay";
-	              } else if (data.weather[0].main === "Volcanic ash") {
-	                _this2.state.weather = night ? "Volcanic ashNight" : "Volcanic ashDay";
-	              } else if (data.weather[0].main === "Squalls") {
-	                _this2.state.weather = night ? "SquallsNight" : "SquallsDay";
-	              } else if (data.weather[0].main === "Tornado") {
-	                _this2.state.weather = night ? "TornadoNight" : "TornadoDay";
+	              } else if (['Mist', 'Smoke', 'Haze', 'Sand, Dust Whirls', 'Fog', 'Sand', 'Dust', 'Volcanic Ash', 'Squalls', 'Tornado'].includes(data.weather[0].main)) {
+	                _this2.state.weather = night ? "AtmosphereNight" : "AtmosphereDay";
 	              } else {
 	                _this2.state.weather = data.weather[0].main;
 	              }
