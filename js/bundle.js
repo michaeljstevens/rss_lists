@@ -21839,8 +21839,8 @@
 	    var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 	
 	    _this.state = {
-	      data: null,
-	      showSpinner: true
+	      showSpinner: true,
+	      fpLis: null
 	    };
 	    _this.key = 0;
 	    _this.delete = _this.delete.bind(_this);
@@ -21853,46 +21853,20 @@
 	      var _this2 = this;
 	
 	      var success = function success(data) {
-	        _this2.setState({ data: data, showSpinner: false });
-	      };
-	
-	      var error = function error(e) {
-	        console.log(e);
-	      };
-	
-	      _jQuery2.default.ajax({
-	        type: 'GET',
-	        url: '' + this.props.url,
-	        success: success,
-	        error: error
-	      });
-	    }
-	  }, {
-	    key: 'delete',
-	    value: function _delete(e) {
-	      e.preventDefault();
-	      this.props.delete(this.props);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-	
-	      var fpLis = [];
-	      if (this.state.data) {
-	        this.listImg = Array.from(this.state.data.getElementsByTagName("img"));
-	        if (this.listImg.length < 1) {
-	          var image = Array.from(this.state.data.getElementsByTagName("image"));
+	        var fpLis = [];
+	        _this2.listImg = Array.from(data.getElementsByTagName("img"));
+	        if (_this2.listImg.length < 1) {
+	          var image = Array.from(data.getElementsByTagName("image"));
 	          if (image.length > 0) {
 	            var imgRegex = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*.(jpg|jpeg|png|gif))/gi;
-	            this.listImg = imgRegex.exec(image[0].innerHTML)[0];
+	            _this2.listImg = imgRegex.exec(image[0].innerHTML)[0];
 	          } else {
-	            this.listImg = null;
+	            _this2.listImg = null;
 	          }
 	        }
-	        this.listTitle = Array.from(this.state.data.getElementsByTagName("title"))[0].innerHTML;
-	        var entries = Array.from(this.state.data.getElementsByTagName("entry"));
-	        var items = Array.from(this.state.data.getElementsByTagName("item"));
+	        _this2.listTitle = Array.from(data.getElementsByTagName("title"))[0].innerHTML;
+	        var entries = Array.from(data.getElementsByTagName("entry"));
+	        var items = Array.from(data.getElementsByTagName("item"));
 	
 	        var toAdd = entries.length > 0 ? entries : items;
 	
@@ -21929,7 +21903,7 @@
 	          link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
 	          fpLis.push(_react2.default.createElement(
 	            'a',
-	            { key: _this3.key, href: link },
+	            { key: _this2.key, href: link },
 	            _react2.default.createElement(
 	              'li',
 	              { className: 'outerLink', style: styles.item },
@@ -21937,9 +21911,31 @@
 	              title
 	            )
 	          ));
-	          _this3.key++;
+	          _this2.key++;
 	        });
-	      }
+	        _this2.setState({ showSpinner: false, fpLis: fpLis });
+	      };
+	
+	      var error = function error(e) {
+	        console.log(e);
+	      };
+	
+	      _jQuery2.default.ajax({
+	        type: 'GET',
+	        url: '' + this.props.url,
+	        success: success,
+	        error: error
+	      });
+	    }
+	  }, {
+	    key: 'delete',
+	    value: function _delete(e) {
+	      e.preventDefault();
+	      this.props.delete(this.props);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'list', style: { background: this.state.showSpinner ? 'rgba(0,0,0,0.5)' : 'white' } },
@@ -21957,7 +21953,7 @@
 	          'div',
 	          { className: 'list-content', style: { background: this.state.showSpinner ? 'rgba(0,0,0,0)' : 'white' } },
 	          this.state.showSpinner ? loader : null,
-	          this.state.data ? fpLis : null
+	          this.state.fpLis ? this.state.fpLis : null
 	        )
 	      );
 	    }
@@ -34206,8 +34202,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var weatherIcons = {
-	  // 'ClearDay': "sunnyIcon",
-	  'ClearDay': "windyMoonIcon",
+	  'ClearDay': "sunnyIcon",
 	  'ClearNight': "clearNightIcon",
 	  'Thunderstorm': "thundershowersIcon",
 	  'Drizzle': "showersIcon",
@@ -34223,8 +34218,7 @@
 	  'ClearDay': "../../assets/img/weather/sunnyIcon.svg",
 	  'ClearNight': "../../assets/img/weather/clearNightIcon.svg",
 	  'Thunderstorm': "../../assets/img/weather/thundershowersIcon.svg",
-	  // 'Drizzle': "../../assets/img/weather/showersIcon.svg",
-	  'Drizzle': "../../assets/img/weather/windyMoonIcon.svg",
+	  'Drizzle': "../../assets/img/weather/showersIcon.svg",
 	  'Rain': "../../assets/img/weather/rainyIcon.svg",
 	  'Snow': "../../assets/img/weather/snowyIcon.svg",
 	  'CloudsDay': "../../assets/img/weather/partlyCloudyIcon.svg",
@@ -34274,6 +34268,7 @@
 	            var lng = position.coords.longitude;
 	
 	            var success = function success(data) {
+	              console.log(data);
 	              var now = new Date();
 	              var sunrise = new Date(data.sys.sunrise * 1000);
 	              var sunset = new Date(data.sys.sunset * 1000);

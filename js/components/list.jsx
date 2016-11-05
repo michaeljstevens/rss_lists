@@ -7,8 +7,8 @@ class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
-      showSpinner: true
+      showSpinner: true,
+      fpLis: null
     };
     this.key = 0;
     this.delete = this.delete.bind(this);
@@ -17,33 +17,10 @@ class List extends Component {
   componentDidMount() {
 
     const success = (data) => {
-      this.setState({data: data, showSpinner: false});
-    };
-
-    const error = (e) => {
-      console.log(e);
-    };
-
-
-    $.ajax({
-      type: 'GET',
-      url: `${this.props.url}`,
-      success: success,
-      error
-    });
-  }
-
-  delete(e) {
-    e.preventDefault();
-    this.props.delete(this.props);
-  }
-
-  render() {
-    let fpLis = [];
-    if(this.state.data) {
-      this.listImg = Array.from(this.state.data.getElementsByTagName("img"));
+      let fpLis = [];
+      this.listImg = Array.from(data.getElementsByTagName("img"));
       if (this.listImg.length < 1) {
-        let image = Array.from(this.state.data.getElementsByTagName("image"));
+        let image = Array.from(data.getElementsByTagName("image"));
           if(image.length > 0) {
             let imgRegex = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*.(jpg|jpeg|png|gif))/gi;
             this.listImg = imgRegex.exec(image[0].innerHTML)[0];
@@ -51,9 +28,9 @@ class List extends Component {
             this.listImg = null;
           }
       }
-      this.listTitle = Array.from(this.state.data.getElementsByTagName("title"))[0].innerHTML;
-      let entries = Array.from(this.state.data.getElementsByTagName("entry"));
-      let items = Array.from(this.state.data.getElementsByTagName("item"));
+      this.listTitle = Array.from(data.getElementsByTagName("title"))[0].innerHTML;
+      let entries = Array.from(data.getElementsByTagName("entry"));
+      let items = Array.from(data.getElementsByTagName("item"));
 
 
       let toAdd = entries.length > 0 ? entries : items;
@@ -87,13 +64,34 @@ class List extends Component {
             img = thumbnail[0].getAttribute("url");
           }
         }
-        
+
         link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
         fpLis.push(<a key={this.key} href={link}><li className="outerLink" style={styles.item}>
         <img src={img ? img : '../../assets/img/no_img.png'} style={styles.image}></img>{title}</li></a>);
         this.key++;
       });
-    }
+      this.setState({showSpinner: false, fpLis: fpLis});
+    };
+
+    const error = (e) => {
+      console.log(e);
+    };
+
+
+    $.ajax({
+      type: 'GET',
+      url: `${this.props.url}`,
+      success: success,
+      error
+    });
+  }
+
+  delete(e) {
+    e.preventDefault();
+    this.props.delete(this.props);
+  }
+
+  render() {
     return (
       <div className="list" style={{background: this.state.showSpinner ? 'rgba(0,0,0,0.5)' : 'white'}}>
         <div className="list-header" style={{background: this.state.showSpinner ? 'rgba(0,0,0,0.0)' : '#f0f0f0'}}>
@@ -102,7 +100,7 @@ class List extends Component {
         </div>
         <div className="list-content" style={{background: this.state.showSpinner ? 'rgba(0,0,0,0)' : 'white'}}>
           {this.state.showSpinner ? loader : null}
-          {this.state.data ? fpLis : null}
+          {this.state.fpLis ? this.state.fpLis : null}
         </div>
       </div>
     );

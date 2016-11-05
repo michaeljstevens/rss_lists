@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import $ from 'jQuery';
 
   const weatherIcons = {
-    // 'ClearDay': "sunnyIcon",
-    'ClearDay': "windyMoonIcon",
+    'ClearDay': "sunnyIcon",
     'ClearNight': "clearNightIcon",
     'Thunderstorm': "thundershowersIcon",
     'Drizzle': "showersIcon",
@@ -19,8 +18,7 @@ import $ from 'jQuery';
     'ClearDay': "../../assets/img/weather/sunnyIcon.svg",
     'ClearNight': "../../assets/img/weather/clearNightIcon.svg",
     'Thunderstorm': "../../assets/img/weather/thundershowersIcon.svg",
-    // 'Drizzle': "../../assets/img/weather/showersIcon.svg",
-    'Drizzle': "../../assets/img/weather/windyMoonIcon.svg",
+    'Drizzle': "../../assets/img/weather/showersIcon.svg",
     'Rain': "../../assets/img/weather/rainyIcon.svg",
     'Snow': "../../assets/img/weather/snowyIcon.svg",
     'CloudsDay': "../../assets/img/weather/partlyCloudyIcon.svg",
@@ -61,6 +59,7 @@ class Weather extends Component {
           let lng = position.coords.longitude;
 
           const success = (data) => {
+            console.log(data);
             let now = new Date();
             let sunrise = new Date(data.sys.sunrise * 1000);
             let sunset = new Date(data.sys.sunset * 1000);

@@ -5,7 +5,7 @@ const URLs = {
   'reddit': 'https://www.reddit.com/.rss',
   'nytimes': 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
   '538': 'http://fivethirtyeight.com/all/feed',
-  'bbc': 'http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml?edition=int',
+  'bbc': 'http://feeds.bbci.co.uk/news/rss.xml?edition=int',
   'ap': 'http://hosted.ap.org/lineups/USHEADS-rss_2.0.xml?SITE=SCAND&SECTION=HOME',
   'npr': 'http://www.npr.org/rss/rss.php?id=1001',
   'espn': 'http://www.espn.com/espn/rss/news',
@@ -90,7 +90,7 @@ class PopupRoot extends Component {
           <input placeholder="Add Custom Feed Url" className="new-feed-input" type="text" onChange={this.updateState("url")} />
         </div>
         <div className="animation-switch">
-          <p className="animation-text" 
+          <p className="animation-text"
             style={{color: this.state.low_power_mode ? 'darkgrey' : '#2F4F4F'}}>Weather Animations</p>
           <Switch onClick={this.togglePowerSave} on={!this.state.low_power_mode}/>
         </div>
