@@ -4,7 +4,6 @@ import $ from 'jQuery';
   const weatherIcons = {
     'ClearDay': "sunnyIcon",
     'ClearNight': "clearNightIcon",
-    'Atmosphere': "windySunnyIcon",
     'Thunderstorm': "thundershowersIcon",
     'Drizzle': "showersIcon",
     'Rain': "rainyIcon",
@@ -12,12 +11,20 @@ import $ from 'jQuery';
     'CloudsDay': "partlyCloudyIcon",
     'CloudsNight': "partlyCloudyNightIcon",
     'Haze': "windySunnyIcon",
+    'Mist': "windySunnyIcon",
+    'Smoke': "windySunnyIcon",
+    'Sand, dust whirls': "windySunnyIcon",
+    'Fog': "windySunnyIcon",
+    'Sand': "windySunnyIcon",
+    'Dust': "windySunnyIcon",
+    'Volcanic ash': "windySunnyIcon",
+    'Squalls': "windySunnyIcon",
+    'Tornado': "windySunnyIcon",
   };
 
   const efficientWeatherIcons = {
     'ClearDay': "../../assets/img/weather/sunnyIcon.svg",
     'ClearNight': "../../assets/img/weather/clearNightIcon.svg",
-    'Atmosphere': "../../assets/img/weather/windySunnyIcon.svg",
     'Thunderstorm': "../../assets/img/weather/thundershowersIcon.svg",
     'Drizzle': "../../assets/img/weather/showersIcon.svg",
     'Rain': "../../assets/img/weather/rainyIcon.svg",
@@ -25,6 +32,15 @@ import $ from 'jQuery';
     'CloudsDay': "../../assets/img/weather/partlyCloudyIcon.svg",
     'CloudsNight': "../../assets/img/weather/partlyCloudyNightIcon.svg",
     'Haze': '../../assets/img/weather/windySunnyIcon.svg',
+    'Mist': "../../assets/img/weather/windySunnyIcon.svg",
+    'Smoke': "../../assets/img/weather/windySunnyIcon.svg",
+    'Sand, dust whirls': "../../assets/img/weather/windySunnyIcon.svg",
+    'Fog': "../../assets/img/weather/windySunnyIcon.svg",
+    'Sand': "../../assets/img/weather/windySunnyIcon.svg",
+    'Dust': "../../assets/img/weather/windySunnyIcon.svg",
+    'Volcanic ash': "../../assets/img/weather/windySunnyIcon.svg",
+    'Squalls': "../../assets/img/weather/windySunnyIcon.svg",
+    'Tornado': "../../assets/img/weather/windySunnyIcon.svg",
   };
 
 class Weather extends Component {
@@ -110,6 +126,7 @@ class Weather extends Component {
         });
       } else {
         chrome.storage.sync.get('weather', (weatherObj) => {
+          console.log(weatherObj);
           this.state.temp = weatherObj.weather.temp;
           this.state.humidity = weatherObj.weather.humidity;
           this.state.pressure = weatherObj.weather.pressure;

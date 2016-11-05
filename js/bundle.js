@@ -34208,27 +34208,43 @@
 	var weatherIcons = {
 	  'ClearDay': "sunnyIcon",
 	  'ClearNight': "clearNightIcon",
-	  'Atmosphere': "windySunnyIcon",
 	  'Thunderstorm': "thundershowersIcon",
 	  'Drizzle': "showersIcon",
 	  'Rain': "rainyIcon",
 	  'Snow': "snowyIcon",
 	  'CloudsDay': "partlyCloudyIcon",
 	  'CloudsNight': "partlyCloudyNightIcon",
-	  'Haze': "windySunnyIcon"
+	  'Haze': "windySunnyIcon",
+	  'Mist': "windySunnyIcon",
+	  'Smoke': "windySunnyIcon",
+	  'Sand, dust whirls': "windySunnyIcon",
+	  'Fog': "windySunnyIcon",
+	  'Sand': "windySunnyIcon",
+	  'Dust': "windySunnyIcon",
+	  'Volcanic ash': "windySunnyIcon",
+	  'Squalls': "windySunnyIcon",
+	  'Tornado': "windySunnyIcon"
 	};
 	
 	var efficientWeatherIcons = {
 	  'ClearDay': "../../assets/img/weather/sunnyIcon.svg",
 	  'ClearNight': "../../assets/img/weather/clearNightIcon.svg",
-	  'Atmosphere': "../../assets/img/weather/windySunnyIcon.svg",
 	  'Thunderstorm': "../../assets/img/weather/thundershowersIcon.svg",
 	  'Drizzle': "../../assets/img/weather/showersIcon.svg",
 	  'Rain': "../../assets/img/weather/rainyIcon.svg",
 	  'Snow': "../../assets/img/weather/snowyIcon.svg",
 	  'CloudsDay': "../../assets/img/weather/partlyCloudyIcon.svg",
 	  'CloudsNight': "../../assets/img/weather/partlyCloudyNightIcon.svg",
-	  'Haze': '../../assets/img/weather/windySunnyIcon.svg'
+	  'Haze': '../../assets/img/weather/windySunnyIcon.svg',
+	  'Mist': "../../assets/img/weather/windySunnyIcon.svg",
+	  'Smoke': "../../assets/img/weather/windySunnyIcon.svg",
+	  'Sand, dust whirls': "../../assets/img/weather/windySunnyIcon.svg",
+	  'Fog': "../../assets/img/weather/windySunnyIcon.svg",
+	  'Sand': "../../assets/img/weather/windySunnyIcon.svg",
+	  'Dust': "../../assets/img/weather/windySunnyIcon.svg",
+	  'Volcanic ash': "../../assets/img/weather/windySunnyIcon.svg",
+	  'Squalls': "../../assets/img/weather/windySunnyIcon.svg",
+	  'Tornado': "../../assets/img/weather/windySunnyIcon.svg"
 	};
 	
 	var Weather = function (_Component) {
@@ -34323,6 +34339,7 @@
 	          });
 	        } else {
 	          chrome.storage.sync.get('weather', function (weatherObj) {
+	            console.log(weatherObj);
 	            _this2.state.temp = weatherObj.weather.temp;
 	            _this2.state.humidity = weatherObj.weather.humidity;
 	            _this2.state.pressure = weatherObj.weather.pressure;
