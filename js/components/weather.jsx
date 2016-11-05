@@ -59,7 +59,6 @@ class Weather extends Component {
           let lng = position.coords.longitude;
 
           const success = (data) => {
-            console.log(data);
             let now = new Date();
             let sunrise = new Date(data.sys.sunrise * 1000);
             let sunset = new Date(data.sys.sunset * 1000);
@@ -114,7 +113,6 @@ class Weather extends Component {
         });
       } else {
         chrome.storage.sync.get('weather', (weatherObj) => {
-          console.log(weatherObj);
           this.state.temp = weatherObj.weather.temp;
           this.state.humidity = weatherObj.weather.humidity;
           this.state.pressure = weatherObj.weather.pressure;
@@ -143,7 +141,7 @@ class Weather extends Component {
               position: this.state.weather === el ? "inherit" : "absolute",
               left: "-999em",
             }}
-            data={efficientWeatherIcons[el]}></object>
+            data={efficientWeatherIcons[el]} key={`${el}`}></object>
           ))
         }
         <ul className='weather-info-list'>

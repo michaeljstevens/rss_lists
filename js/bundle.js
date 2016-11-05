@@ -34268,7 +34268,6 @@
 	            var lng = position.coords.longitude;
 	
 	            var success = function success(data) {
-	              console.log(data);
 	              var now = new Date();
 	              var sunrise = new Date(data.sys.sunrise * 1000);
 	              var sunset = new Date(data.sys.sunset * 1000);
@@ -34322,7 +34321,6 @@
 	          });
 	        } else {
 	          chrome.storage.sync.get('weather', function (weatherObj) {
-	            console.log(weatherObj);
 	            _this2.state.temp = weatherObj.weather.temp;
 	            _this2.state.humidity = weatherObj.weather.humidity;
 	            _this2.state.pressure = weatherObj.weather.pressure;
@@ -34354,7 +34352,7 @@
 	              position: _this3.state.weather === el ? "inherit" : "absolute",
 	              left: "-999em"
 	            },
-	            data: efficientWeatherIcons[el] });
+	            data: efficientWeatherIcons[el], key: '' + el });
 	        }),
 	        _react2.default.createElement(
 	          'ul',

@@ -21466,7 +21466,7 @@
 	  'reddit': 'https://www.reddit.com/.rss',
 	  'nytimes': 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
 	  '538': 'http://fivethirtyeight.com/all/feed',
-	  'bbc': 'http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml?edition=int',
+	  'bbc': 'http://feeds.bbci.co.uk/news/rss.xml?edition=int',
 	  'ap': 'http://hosted.ap.org/lineups/USHEADS-rss_2.0.xml?SITE=SCAND&SECTION=HOME',
 	  'npr': 'http://www.npr.org/rss/rss.php?id=1001',
 	  'espn': 'http://www.espn.com/espn/rss/news',
