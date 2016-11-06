@@ -104,6 +104,17 @@ class Root extends Component {
               this.key++;
               this.setState({feedList: feeds});
             }
+          } else if(Object.keys(changes.feeds.newValue).length < Object.keys(changes.feeds.oldValue).length) {
+            let feeds = this.state.feedList;
+            let feedsArr = changes.feeds.newValue;
+            let toRemove;
+            for(let i = 0; i < feeds.length; i++){
+              if (!feedsArr.includes(feeds[i].props.url)) {
+                toRemove = {id: feeds[i].props.id, url: feeds[i].props.url};
+                this.delete(toRemove);
+                break;
+              }
+            }
           }
         } else if(changes.low_power_mode) {
           location.reload();
@@ -209,16 +220,13 @@ class Root extends Component {
   }
 
   render() {
-   
-
-
     return(
       <div className="outer-container" style={{backgroundImage: this.state.background}}>
         {this.state.modalOpen ? this.modal : null}
         <div style={styles.container}>
           <div className="info-container" style={{background: this.state.infoColor}}>
             <div className = "date">
-              <div className="time-of-day">Good {this.state.timeOfDay}</div> 
+              <div className="time-of-day">Good {this.state.timeOfDay}</div>
               <div>{this.formatDate()}</div>
             </div>
             {this.state.loader ? loader : null}

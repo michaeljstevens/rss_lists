@@ -21589,6 +21589,17 @@
 	                _this2.key++;
 	                _this2.setState({ feedList: feeds });
 	              }
+	            } else if (Object.keys(changes.feeds.newValue).length < Object.keys(changes.feeds.oldValue).length) {
+	              var _feeds = _this2.state.feedList;
+	              var _feedsArr = changes.feeds.newValue;
+	              var toRemove = void 0;
+	              for (var i = 0; i < _feeds.length; i++) {
+	                if (!_feedsArr.includes(_feeds[i].props.url)) {
+	                  toRemove = { id: _feeds[i].props.id, url: _feeds[i].props.url };
+	                  _this2.delete(toRemove);
+	                  break;
+	                }
+	              }
 	            }
 	          } else if (changes.low_power_mode) {
 	            location.reload();
@@ -21708,7 +21719,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'outer-container', style: { backgroundImage: this.state.background } },
