@@ -21495,7 +21495,8 @@
 	
 	    _this.state = {
 	      url: null,
-	      low_power_mode: false
+	      low_power_mode: false,
+	      selectedFeeds: []
 	    };
 	    _this.key = 0;
 	    _this.addFeed = _this.addFeed.bind(_this);
@@ -21510,12 +21511,21 @@
 	  }
 	
 	  _createClass(PopupRoot, [{
-	    key: 'updateState',
-	    value: function updateState(field) {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
 	      var _this2 = this;
 	
+	      chrome.storage.sync.get('feeds', function (feeds) {
+	        _this2.setState({ selectedFeeds: feeds.feeds });
+	      });
+	    }
+	  }, {
+	    key: 'updateState',
+	    value: function updateState(field) {
+	      var _this3 = this;
+	
 	      return function (e) {
-	        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+	        _this3.setState(_defineProperty({}, field, e.currentTarget.value));
 	      };
 	    }
 	  }, {
@@ -21527,7 +21537,7 @@
 	  }, {
 	    key: 'addFeed',
 	    value: function addFeed(source, e) {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      e.preventDefault();
 	      if (source) this.state.url = URLs[source];
@@ -21535,17 +21545,18 @@
 	      chrome.storage.sync.get('feeds', function (feedsObj) {
 	        if (Object.keys(feedsObj).length > 0) {
 	          feedsArr = feedsObj.feeds;
-	          feedsArr.push(_this3.state.url);
+	          feedsArr.push(_this4.state.url);
 	        } else {
-	          feedsArr = [_this3.state.url];
+	          feedsArr = [_this4.state.url];
 	        }
 	        chrome.storage.sync.set({ 'feeds': feedsArr });
+	        _this4.setState({ selectedFeeds: feedsArr });
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
+	      var _this5 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -21554,12 +21565,13 @@
 	          'div',
 	          { className: 'popup-icon-container' },
 	          Object.keys(URLs).map(function (source) {
-	            _this4.key++;
+	            _this5.key++;
 	            return _react2.default.createElement(
 	              'div',
-	              { className: 'popup-icon-item-container', key: _this4.key },
+	              { className: 'popup-icon-item-container',
+	                style: { background: _this5.state.selectedFeeds.includes(URLs[source]) ? '#f0f0f0' : 'white' }, key: _this5.key },
 	              _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/' + source + '.png',
-	                onClick: _this4.addFeed.bind(_this4, source) })
+	                onClick: _this5.addFeed.bind(_this5, source) })
 	            );
 	          })
 	        ),

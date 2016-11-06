@@ -140,6 +140,7 @@ li {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+	border-radius: 10px;
 }
 
 .popup-icon-item-container:hover {

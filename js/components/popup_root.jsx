@@ -30,7 +30,8 @@ class PopupRoot extends Component {
     super(props);
     this.state = {
       url: null,
-      low_power_mode: false
+      low_power_mode: false,
+      selectedFeeds: [],
     };
     this.key = 0;
     this.addFeed = this.addFeed.bind(this);
@@ -40,6 +41,12 @@ class PopupRoot extends Component {
       if(obj) {
         this.setState({low_power_mode: obj.low_power_mode});
       }
+    });
+  }
+
+  componentDidMount() {
+    chrome.storage.sync.get('feeds', (feeds) => {
+      this.setState({selectedFeeds: feeds.feeds});
     });
   }
 
@@ -66,6 +73,7 @@ class PopupRoot extends Component {
         feedsArr = [this.state.url];
       }
       chrome.storage.sync.set({'feeds': feedsArr});
+      this.setState({selectedFeeds: feedsArr});
     });
   }
 
@@ -76,7 +84,8 @@ class PopupRoot extends Component {
           {Object.keys(URLs).map(source => {
             this.key ++;
             return (
-            <div className="popup-icon-item-container" key={this.key}>
+            <div className="popup-icon-item-container"
+              style={{background: this.state.selectedFeeds.includes(URLs[source]) ? '#f0f0f0' : 'white'}} key={this.key}>
               <img className="popup-icon" src={`../../assets/img/${source}.png`}
               onClick={this.addFeed.bind(this, source)} />
             </div>
