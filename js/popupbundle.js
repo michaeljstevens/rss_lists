@@ -21499,7 +21499,7 @@
 	      selectedFeeds: []
 	    };
 	    _this.key = 0;
-	    _this.addFeed = _this.addFeed.bind(_this);
+	    _this.addOrRemoveFeed = _this.addOrRemoveFeed.bind(_this);
 	    _this.updateState = _this.updateState.bind(_this);
 	    _this.togglePowerSave = _this.togglePowerSave.bind(_this);
 	    chrome.storage.sync.get('low_power_mode', function (obj) {
@@ -21535,19 +21535,25 @@
 	      this.setState({ low_power_mode: !this.state.low_power_mode });
 	    }
 	  }, {
-	    key: 'addFeed',
-	    value: function addFeed(source, e) {
+	    key: 'addOrRemoveFeed',
+	    value: function addOrRemoveFeed(source, e) {
 	      var _this4 = this;
 	
 	      e.preventDefault();
 	      if (source) this.state.url = URLs[source];
 	      var feedsArr = [];
 	      chrome.storage.sync.get('feeds', function (feedsObj) {
-	        if (Object.keys(feedsObj).length > 0) {
-	          feedsArr = feedsObj.feeds;
-	          feedsArr.push(_this4.state.url);
+	        if (_this4.state.selectedFeeds.includes(_this4.state.url)) {
+	          feedsArr = feedsObj.feeds.filter(function (feed) {
+	            return feed !== _this4.state.url;
+	          });
 	        } else {
-	          feedsArr = [_this4.state.url];
+	          if (Object.keys(feedsObj).length > 0) {
+	            feedsArr = feedsObj.feeds;
+	            feedsArr.push(_this4.state.url);
+	          } else {
+	            feedsArr = [_this4.state.url];
+	          }
 	        }
 	        chrome.storage.sync.set({ 'feeds': feedsArr });
 	        _this4.setState({ selectedFeeds: feedsArr });
@@ -21571,14 +21577,14 @@
 	              { className: 'popup-icon-item-container',
 	                style: { background: _this5.state.selectedFeeds.includes(URLs[source]) ? '#f0f0f0' : 'white' }, key: _this5.key },
 	              _react2.default.createElement('img', { className: 'popup-icon', src: '../../assets/img/' + source + '.png',
-	                onClick: _this5.addFeed.bind(_this5, source) })
+	                onClick: _this5.addOrRemoveFeed.bind(_this5, source) })
 	            );
 	          })
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'new-feed' },
-	          _react2.default.createElement('img', { className: 'new-feed-img', src: '../../assets/img/add.png', onClick: this.addFeed.bind(this, null) }),
+	          _react2.default.createElement('img', { className: 'new-feed-img', src: '../../assets/img/add.png', onClick: this.addOrRemoveFeed.bind(this, null) }),
 	          _react2.default.createElement('input', { placeholder: 'Add Custom Feed Url', className: 'new-feed-input', type: 'text', onChange: this.updateState("url") })
 	        ),
 	        _react2.default.createElement(

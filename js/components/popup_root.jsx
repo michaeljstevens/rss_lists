@@ -34,7 +34,7 @@ class PopupRoot extends Component {
       selectedFeeds: [],
     };
     this.key = 0;
-    this.addFeed = this.addFeed.bind(this);
+    this.addOrRemoveFeed = this.addOrRemoveFeed.bind(this);
     this.updateState = this.updateState.bind(this);
     this.togglePowerSave = this.togglePowerSave.bind(this);
     chrome.storage.sync.get('low_power_mode', obj => {
@@ -61,21 +61,28 @@ class PopupRoot extends Component {
     this.setState({low_power_mode: !this.state.low_power_mode});
   }
 
-   addFeed(source, e) {
+   addOrRemoveFeed(source, e) {
     e.preventDefault();
     if(source) this.state.url = URLs[source];
-    let feedsArr = []
+    let feedsArr = [];
     chrome.storage.sync.get('feeds', feedsObj => {
-      if(Object.keys(feedsObj).length > 0) {
-        feedsArr = feedsObj.feeds;
-        feedsArr.push(this.state.url);
+      if(this.state.selectedFeeds.includes(this.state.url)) {
+        feedsArr = feedsObj.feeds.filter(feed => {
+          return(feed !== this.state.url);
+        });
       } else {
-        feedsArr = [this.state.url];
+        if(Object.keys(feedsObj).length > 0) {
+          feedsArr = feedsObj.feeds;
+          feedsArr.push(this.state.url);
+        } else {
+          feedsArr = [this.state.url];
+        }
       }
       chrome.storage.sync.set({'feeds': feedsArr});
       this.setState({selectedFeeds: feedsArr});
     });
   }
+
 
   render() {
     return(
@@ -87,7 +94,7 @@ class PopupRoot extends Component {
             <div className="popup-icon-item-container"
               style={{background: this.state.selectedFeeds.includes(URLs[source]) ? '#f0f0f0' : 'white'}} key={this.key}>
               <img className="popup-icon" src={`../../assets/img/${source}.png`}
-              onClick={this.addFeed.bind(this, source)} />
+              onClick={this.addOrRemoveFeed.bind(this, source)} />
             </div>
             );
            }
@@ -95,7 +102,7 @@ class PopupRoot extends Component {
         }
         </div>
         <div className="new-feed">
-          <img className="new-feed-img" src={'../../assets/img/add.png'} onClick={this.addFeed.bind(this, null)} />
+          <img className="new-feed-img" src={'../../assets/img/add.png'} onClick={this.addOrRemoveFeed.bind(this, null)} />
           <input placeholder="Add Custom Feed Url" className="new-feed-input" type="text" onChange={this.updateState("url")} />
         </div>
         <div className="animation-switch">
