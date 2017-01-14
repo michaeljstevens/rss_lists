@@ -81,6 +81,7 @@ class Root extends Component {
 
   componentDidMount() {
     chrome.storage.sync.get('feeds', (initFeedsObj) => {
+      
       if (Object.keys(initFeedsObj).length > 0) {
         let initFeedsArr = initFeedsObj.feeds;
         let initFeeds = [];

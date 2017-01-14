@@ -21516,7 +21516,11 @@
 	      var _this2 = this;
 	
 	      chrome.storage.sync.get('feeds', function (feeds) {
-	        _this2.setState({ selectedFeeds: feeds.feeds });
+	        if (feeds.feeds) {
+	          _this2.setState({ selectedFeeds: feeds.feeds });
+	        } else {
+	          _this2.setState({ selectedFeeds: [] });
+	        }
 	      });
 	    }
 	  }, {

@@ -45,8 +45,13 @@ class PopupRoot extends Component {
   }
 
   componentDidMount() {
+
     chrome.storage.sync.get('feeds', (feeds) => {
-      this.setState({selectedFeeds: feeds.feeds});
+      if (feeds.feeds) {
+        this.setState({selectedFeeds: feeds.feeds});
+      } else {
+        this.setState({selectedFeeds: []});
+      }
     });
   }
 

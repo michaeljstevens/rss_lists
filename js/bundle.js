@@ -21564,6 +21564,7 @@
 	      var _this2 = this;
 	
 	      chrome.storage.sync.get('feeds', function (initFeedsObj) {
+	
 	        if (Object.keys(initFeedsObj).length > 0) {
 	          (function () {
 	            var initFeedsArr = initFeedsObj.feeds;
