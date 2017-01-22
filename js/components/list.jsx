@@ -67,7 +67,7 @@ class List extends Component {
 
         link = link[0].innerHTML ? link[0].innerHTML : link[0].getAttribute("href");
         fpLis.push(<a key={this.key} href={link}><li className="outerLink" style={styles.item}>
-        <img src={img ? img : '../../assets/img/no_img.png'} style={styles.image}></img>{title}</li></a>);
+        <img className="list-item-img" src={img ? img : '../../assets/img/no_img.png'} style={styles.image}></img>{title}</li></a>);
         this.key++;
       });
       this.setState({showSpinner: false, fpLis: fpLis});
@@ -115,6 +115,7 @@ const styles = {
     minWidth: 75,
     minHeight: 75,
     marginRight: 10,
+    objectFit: 'cover',
   },
   item: {
     display: 'flex',

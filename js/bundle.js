@@ -21918,7 +21918,7 @@
 	            _react2.default.createElement(
 	              'li',
 	              { className: 'outerLink', style: styles.item },
-	              _react2.default.createElement('img', { src: img ? img : '../../assets/img/no_img.png', style: styles.image }),
+	              _react2.default.createElement('img', { className: 'list-item-img', src: img ? img : '../../assets/img/no_img.png', style: styles.image }),
 	              title
 	            )
 	          ));
@@ -21979,7 +21979,8 @@
 	    height: 75,
 	    minWidth: 75,
 	    minHeight: 75,
-	    marginRight: 10
+	    marginRight: 10,
+	    objectFit: 'cover'
 	  },
 	  item: {
 	    display: 'flex',
@@ -34273,7 +34274,7 @@
 	      });
 	
 	      chrome.storage.sync.get('weatherTime', function (time) {
-	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 600000) {
+	        if (Object.keys(time).length < 1 || new Date().getTime() - time.weatherTime > 3600000) {
 	          navigator.geolocation.getCurrentPosition(function (position) {
 	            var lat = position.coords.latitude;
 	            var lng = position.coords.longitude;

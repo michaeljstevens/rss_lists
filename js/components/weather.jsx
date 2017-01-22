@@ -53,7 +53,7 @@ class Weather extends Component {
     });
 
     chrome.storage.sync.get('weatherTime', (time) => {
-      if(Object.keys(time).length < 1 || (new Date().getTime() - time.weatherTime) > 600000) {
+      if(Object.keys(time).length < 1 || (new Date().getTime() - time.weatherTime) > 3600000) {
         navigator.geolocation.getCurrentPosition(position => {
           let lat = position.coords.latitude;
           let lng = position.coords.longitude;
